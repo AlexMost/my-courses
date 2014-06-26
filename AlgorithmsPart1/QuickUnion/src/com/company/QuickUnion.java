@@ -28,9 +28,10 @@ public class QuickUnion {
     }
 
 
-    public void union(int a, int b) {
-        int root_b = this.root(b);
-        this.id[a] = this.id[root_b];
+    public void union(int p, int q) {
+        int i = this.root(p);
+        int j = this.root(q);
+        this.id[i] = j;
     }
 
     public int [] get_id() {

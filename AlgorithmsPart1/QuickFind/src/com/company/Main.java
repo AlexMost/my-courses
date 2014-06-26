@@ -6,12 +6,12 @@ public class Main {
 
     public static void main(String[] args) {
         QuickFind su = new QuickFind(10);
-        su.join(0, 8);
-        su.join(3, 4);
-        su.join(2, 1);
-        su.join(0, 5);
-        su.join(7, 8);
-        su.join(7, 9);
+        su.join(6, 2);
+        su.join(0, 9);
+        su.join(3, 9);
+        su.join(8, 9);
+        su.join(5, 8);
+        su.join(4, 6);
         System.out.println(Arrays.toString(su.get_id()));
     }
 }
