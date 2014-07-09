@@ -34,3 +34,9 @@ class TestWeightedSumByDiffCriteria(TestCase):
         data = parse_data_from_file('./question1_test_cases/case1.txt')
         result = count_weighted_sum_diff(data)
         self.assertEqual(result, 11336)
+
+    def test_case2(self):
+        data = parse_data_from_file('./question1_test_cases/case2.txt')
+        result = count_weighted_sum_diff(data)
+        self.assertEqual(result, 145924)
+
