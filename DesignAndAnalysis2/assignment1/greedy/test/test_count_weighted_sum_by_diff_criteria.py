@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from unittest import TestCase
-from lib.data_parser import parse_data_from_file
+from lib.data_parser import read_data_for_min_weighted_sum
 from lib.min_weighted_sum import count_weighted_sum_diff, sort_data_by_diff
 
-from test.test_count_weighted_fixtures import fixture_weighted_sum
-from test.test_count_weighted_fixtures import case1_result
-from test.test_count_weighted_fixtures import fixture_for_data_sort
+from test.count_weighted_fixtures import fixture_weighted_sum
+from test.count_weighted_fixtures import case1_result
+from test.count_weighted_fixtures import fixture_for_data_sort
 
 
 class TestWeightedSumByDiffCriteria(TestCase):
@@ -27,16 +27,16 @@ class TestWeightedSumByDiffCriteria(TestCase):
         self.assertEqual(result, 15)
 
     def test_parse_data_from_file(self):
-        result = parse_data_from_file('./question1_test_cases/case1.txt')
+        result = read_data_for_min_weighted_sum('./question1_test_cases/case1.txt')
         self.assertEqual(result, case1_result)
 
     def test_case1(self):
-        data = parse_data_from_file('./question1_test_cases/case1.txt')
+        data = read_data_for_min_weighted_sum('./question1_test_cases/case1.txt')
         result = count_weighted_sum_diff(data)
         self.assertEqual(result, 11336)
 
     def test_case2(self):
-        data = parse_data_from_file('./question1_test_cases/case2.txt')
+        data = read_data_for_min_weighted_sum('./question1_test_cases/case2.txt')
         result = count_weighted_sum_diff(data)
         self.assertEqual(result, 145924)
 
