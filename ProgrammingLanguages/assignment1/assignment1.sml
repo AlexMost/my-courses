@@ -84,3 +84,7 @@ fun number_before_reaching_sum (sum: int, lst: int list) =
     in
         inner_sum (0, sum, lst)
     end
+
+
+fun what_month (day_num: int) =
+    (number_before_reaching_sum (day_num, MONTHS_DAYS)) + 1
