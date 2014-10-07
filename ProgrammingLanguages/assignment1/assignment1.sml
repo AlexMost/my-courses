@@ -1,3 +1,51 @@
+(*  ================  some common helpers ================ *)
+val MONTHS_DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+val LEAP_MONTH_DAYS = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+val MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"]
+
+
+fun get_nth_int (lst: int list, n: int) =
+    if n = 1 then hd lst else get_nth_int (tl lst, n-1)
+
+
+fun any (number: int, lst: int list) =
+    if null lst
+    then false
+    else number = (hd lst) orelse any (number, tl lst)
+
+
+fun filter_unique (lst: int list) =
+    let
+        fun is_unique (el: int, lst: int list) =
+            if null lst
+            then true
+            else
+                if el = hd lst
+                then false
+                else is_unique (el, tl lst)
+    in
+        if null lst
+        then []
+        else
+            if is_unique (hd lst, tl lst)
+            then (hd lst)::filter_unique (tl lst)
+            else filter_unique (tl lst)
+    end
+
+
+fun is_leap_year (year: int) =
+    let
+        val divisible400 = year mod 400 = 0
+        val divisible4 = year mod 4 = 0
+        val divisible100 = year mod 100 = 0
+    in
+        divisible400 orelse (divisible4 andalso not divisible100)
+    end
+
+
 (* Assignment1 homework *)
 (*1*)
 fun is_older (date1: int*int*int, date2: int*int*int) =
@@ -112,7 +160,7 @@ fun reasonable_date (date: int*int*int) =
         val month = #2 date
         val day = #3 date
 
-        fun is_valid_year () = year >= 0
+        fun is_valid_year () = year > 0
 
         fun is_valid_month () = month > 0 andalso month <= 12
 
@@ -125,52 +173,4 @@ fun reasonable_date (date: int*int*int) =
             else validate_day_by_month MONTHS_DAYS
     in
         is_valid_year() andalso is_valid_month() andalso is_valid_day()
-    end
-
-
-(*  ================  some common helpers ================ *)
-val MONTHS_DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-
-val LEAP_MONTH_DAYS = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-
-val MONTHS = ["January", "February", "March", "April", "May", "June", "July",
-    "August", "September", "October", "November", "December"]
-
-
-fun get_nth_int (lst: int list, n: int) =
-    if n = 1 then hd lst else get_nth_int (tl lst, n-1)
-
-
-fun any (number: int, lst: int list) =
-    if null lst
-    then false
-    else number = (hd lst) orelse any (number, tl lst)
-
-
-fun filter_unique (lst: int list) =
-    let
-        fun is_unique (el: int, lst: int list) =
-            if null lst
-            then true
-            else
-                if el = hd lst
-                then false
-                else is_unique (el, tl lst)
-    in
-        if null lst
-        then []
-        else
-            if is_unique (hd lst, tl lst)
-            then (hd lst)::filter_unique (tl lst)
-            else filter_unique (tl lst)
-    end
-
-
-fun is_leap_year (year: int) =
-    let
-        val divisible400 = year mod 400 = 0
-        val divisible4 = year mod 4 = 0
-        val divisible100 = year mod 100 = 0
-    in
-        divisible400 orelse (divisible4 andalso not divisible100)
     end
