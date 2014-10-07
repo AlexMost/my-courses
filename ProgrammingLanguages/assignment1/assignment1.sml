@@ -88,3 +88,25 @@ fun number_before_reaching_sum (sum: int, lst: int list) =
 
 fun what_month (day_num: int) =
     (number_before_reaching_sum (day_num, MONTHS_DAYS)) + 1
+
+
+fun month_range (day1: int, day2: int) =
+    if day1 > day2
+    then []
+    else (what_month day1)::month_range (day1 + 1, day2)
+
+
+fun oldest (dates: (int*int*int) list) =
+    let
+        fun inner_oldest (date: int*int*int, dates: (int*int*int) list) =
+            if null dates
+            then date
+            else
+                if is_older (hd dates, date)
+                then inner_oldest (hd dates, tl dates)
+                else inner_oldest (date, tl dates)
+    in
+        if null dates
+        then NONE
+        else SOME (inner_oldest (hd dates, tl dates))
+    end
