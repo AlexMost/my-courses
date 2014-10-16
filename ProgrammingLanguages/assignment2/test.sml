@@ -35,19 +35,28 @@ val test4 = similar_names(
             {first="F", last="Smith", middle="W"}
         ]
 
-(*val test5 = card_color((Clubs, Num 2)) = Black*)
+val test5 = card_color((Clubs, Num 2)) = Black
+val test52 = card_color((Diamonds, Num 2)) = Red
 
-(*val test6 = card_value((Clubs, Num 2)) = 2*)
+val test6 = card_value((Clubs, Num 2)) = 2
+val test62 = card_value((Clubs, Ace)) = 11
+val test63 = card_value((Clubs, Queen)) = 10
 
-(*val test7 = remove_card([(Hearts, Ace)], (Hearts, Ace), IllegalMove) = []*)
+val test7 = remove_card([(Hearts, Ace)], (Hearts, Ace), IllegalMove) = []
+val test71 = remove_card(
+    [(Hearts, Ace), (Clubs, Num 2)], 
+    (Hearts, Ace),
+    IllegalMove) = [(Clubs, Num 2)]
 
-(*val test8 = all_same_color([(Hearts, Ace), (Hearts, Ace)]) = true*)
+val test8 = all_same_color([(Hearts, Ace), (Hearts, Ace)]) = true
+val test81 = all_same_color([(Hearts, Ace), (Diamonds, Ace)]) = true
+val test82 = all_same_color([(Hearts, Ace), (Clubs, Ace)]) = false
 
-(*val test9 = sum_cards([(Clubs, Num 2),(Clubs, Num 2)]) = 4*)
+val test9 = sum_cards([(Clubs, Num 2),(Clubs, Num 2)]) = 4
 
-(*val test10 = score([(Hearts, Num 2),(Clubs, Num 4)],10) = 4*)
+val test10 = score([(Hearts, Num 2),(Clubs, Num 4)],10) = 4
 
-(*val test11 = officiate([(Hearts, Num 2),(Clubs, Num 4)],[Draw], 15) = 6*)
+val test11 = officiate([(Hearts, Num 2),(Clubs, Num 4)],[Draw], 15) = 6
 
 (*val test12 = officiate([(Clubs,Ace),(Spades,Ace),(Clubs,Ace),(Spades,Ace)],
                        [Draw,Draw,Draw,Draw,Draw],

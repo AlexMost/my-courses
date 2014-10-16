@@ -1,14 +1,9 @@
-(* Dan Grossman, Coursera PL, HW2 Provided Code *)
+(* assignment 2 *)
+fun same_string(s1, s2) = s1 = s2
 
-(* if you use this function to compare two strings (returns true if the same
-   string), then you avoid several of the functions in problem 1 having
-   polymorphic types that may be confusing *)
-fun same_string(s1 : string, s2 : string) =
-    s1 = s2
-
-(* put your solutions for problem 1 here *)
+(* solutions for problem 1 here *)
 (* a *)
-fun all_except_option (s1: string, options: string list) =
+fun all_except_option (s1, options) =
     let 
         fun filter (_, [], false) = NONE
           | filter (res, [], true) = SOME res
@@ -51,8 +46,6 @@ fun similar_names (names, fullname) =
         (make_name f)::(make_names (get_substitutions2 (names, f)))
     end
 
-(* you may assume that Num is always used with values 2, 3, ..., 10
-   though it will not really come up *)
 datatype suit = Clubs | Diamonds | Hearts | Spades
 datatype rank = Jack | Queen | King | Ace | Num of int 
 type card = suit * rank
@@ -62,4 +55,64 @@ datatype move = Discard of card | Draw
 
 exception IllegalMove
 
-(* put your solutions for problem 2 here *)
+(* solutions for problem 2 here *)
+(* a *)
+fun card_color (Clubs, _) = Black
+  | card_color (Spades, _) = Black
+  | card_color _ = Red
+
+(* b *)
+fun card_value (_, Num a) = a
+  | card_value (_, Ace) = 11
+  | card_value _ = 10
+
+(* c *)
+fun remove_card (cs, c, e) =
+    case all_except_option (c, cs) of
+        NONE => raise e
+        | SOME res => res
+
+(* d *)
+fun all_same_color (x::y::xs) =
+    card_color(x) = card_color(y) andalso all_same_color(xs)
+  | all_same_color _ = true
+
+(* e *)
+fun sum_cards cs =
+    let 
+        fun inner_sum ([], acc) = acc
+          | inner_sum (c::xs, acc) = inner_sum (xs, (card_value c) + acc)
+    in
+        inner_sum (cs, 0)
+    end
+
+(* f *)
+fun score (hc, goal) =
+    let
+        val sum = sum_cards hc
+    in
+        if sum > goal then 3 * (sum - goal) else goal - sum
+    end
+
+(* g *)
+fun officiate (cards, moves, goal) =
+    let
+        fun remove (cs, c) = remove_card (cs, c, IllegalMove)
+        fun add (s, c) = s + card_value c
+        fun sub (s, c) = s - card_value c
+        fun game (hc, [], _, _) = score (hc, goal)
+          | game (hc, _, [], _) = score (hc, goal)
+          | game (hc, next_card::cl, move::moves, sum) =
+            case move of
+                Draw =>
+                    if sum = goal
+                    then score (hc, goal)
+                    else game (next_card::hc, cl, moves, add (sum, next_card))
+                | Discard c => 
+                    if sum = goal
+                    then score (hc, goal)
+                    else game (remove (hc, c), cl, moves, sub (sum, next_card))
+    in
+        game ([], cards, moves, 0)
+    end
+
