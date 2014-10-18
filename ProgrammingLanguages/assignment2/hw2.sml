@@ -90,8 +90,10 @@ fun sum_cards cs =
 fun score (hc, goal) =
     let
         val sum = sum_cards hc
+        val same_color = all_same_color hc
+        val preliminary = if sum > goal then 3 * (sum - goal) else goal - sum
     in
-        if sum > goal then 3 * (sum - goal) else goal - sum
+        if same_color then preliminary div 2 else preliminary
     end
 
 (* g *)
