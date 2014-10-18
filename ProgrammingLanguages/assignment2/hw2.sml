@@ -145,3 +145,28 @@ fun score_challenge (hc, goal) =
     in
         get_scores([], hc, [score(hc, goal)])
     end
+
+(* a.2 *)
+fun officiate_challenge (cards, moves, goal) =
+    let
+        fun remove (cs, c) = remove_card (cs, c, IllegalMove)
+        fun add (s, c) = s + card_value c
+        fun sub (s, c) = s - card_value c
+
+        fun game (hc, [], _, sum) = 
+            if sum > goal then score_challenge (hc, goal) else score (hc, goal)
+          | game (hc, _, [], sum) =
+            if sum > goal then score_challenge (hc, goal) else score (hc, goal)
+          | game (hc, next_card::cl, move::moves, sum) =
+            case move of
+                Draw =>
+                    if sum = goal
+                    then score (hc, goal)
+                    else game (next_card::hc, cl, moves, add (sum, next_card))
+                | Discard c => 
+                    if sum = goal
+                    then score (hc, goal)
+                    else game (remove (hc, c), cl, moves, sub (sum, next_card))
+    in
+        game ([], cards, moves, 0)
+    end

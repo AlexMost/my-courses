@@ -70,6 +70,10 @@ val test13_2 = score_challenge([(Clubs,Ace),(Spades,Ace),(Clubs,Ace)], 33) = 0
 val test13_3 = score_challenge(
     [(Clubs, Num 2), (Clubs,Ace), (Spades,Ace), (Clubs,Ace)], 5) = 0
 
+val test14_1 = officiate_challenge(
+    [(Clubs, Num 2), (Clubs,Ace), (Spades,Ace), (Clubs,Ace)],
+    [Draw, Draw, Draw, Draw], 5) = 0
+
 (*val test13 = ((officiate([(Clubs,Jack),(Spades,Num(8))],
                          [Draw,Discard(Hearts,Jack)],
                          42);
