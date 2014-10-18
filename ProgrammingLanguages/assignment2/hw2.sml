@@ -1,4 +1,4 @@
-(* assignment 2 *)
+ (* assignment 2 *)
 fun same_string(s1, s2) = s1 = s2
 
 (* solutions for problem 1 here *)
@@ -27,9 +27,9 @@ fun get_substitutions2 (lst, opt) =
     let
         fun subst ([], acc) = acc
           | subst (x::xs, acc) =
-                case all_except_option (opt, x) of
-                    NONE => subst (xs, acc)
-                    | SOME res => subst (xs, acc @ res)
+            case all_except_option (opt, x) of
+                NONE => subst (xs, acc)
+                | SOME res => subst (xs, acc @ res)
     in
         subst (lst, [])
     end
@@ -102,6 +102,7 @@ fun officiate (cards, moves, goal) =
         fun remove (cs, c) = remove_card (cs, c, IllegalMove)
         fun add (s, c) = s + card_value c
         fun sub (s, c) = s - card_value c
+
         fun game (hc, [], _, _) = score (hc, goal)
           | game (hc, _, [], _) = score (hc, goal)
           | game (hc, next_card::cl, move::moves, sum) =
@@ -118,3 +119,29 @@ fun officiate (cards, moves, goal) =
         game ([], cards, moves, 0)
     end
 
+
+(* challenge problems *)
+fun min (head::tail) =
+    let
+        fun inner_min ([], m) = m
+          | inner_min (x::xs, m) =
+            if x < m then inner_min(xs, x) else inner_min(xs, m)
+    in
+        inner_min (tail, head)
+    end
+
+(* a.1 *)
+fun score_challenge (hc, goal) =
+    let 
+        fun get_scores (_, [], scores) = min scores
+          | get_scores (head, card::tail, scores) =
+            case card of
+                (c, Ace) => get_scores (
+                    (c, Num 1)::head,
+                    tail,
+                    (score (head @ (c, Num 1)::tail, goal))::scores
+                    )
+                | _ => get_scores(card::head, tail, scores)
+    in
+        get_scores([], hc, [score(hc, goal)])
+    end
