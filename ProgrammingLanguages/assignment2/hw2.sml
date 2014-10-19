@@ -1,4 +1,4 @@
- (* assignment 2 *)
+(* assignment 2 *)
 fun same_string(s1, s2) = s1 = s2
 
 (* solutions for problem 1 here *)
@@ -128,7 +128,6 @@ fun min (head::tail) =
     end
 
 (* a.1 *)
-(* TODO: use get substitution *)
 fun score_challenge (hc, goal) =
     let 
         fun get_scores (_, [], scores) = min scores
