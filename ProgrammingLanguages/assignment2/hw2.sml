@@ -68,14 +68,30 @@ fun card_value (_, Num a) = a
 
 (* c *)
 fun remove_card (cs, c, e) =
-    case all_except_option (c, cs) of
-        NONE => raise e
-        | SOME res => res
+    let
+        fun r_cart (_, []) = raise e
+          | r_cart (head, x::tail) =
+            if x = c
+            then head @ tail
+            else r_cart ((head @ [x]), tail)
+    in
+        r_cart ([], cs)
+    end
 
 (* d *)
-fun all_same_color (x::y::xs) =
-    card_color(x) = card_color(y) andalso all_same_color(xs)
-  | all_same_color _ = true
+fun all_same_color ([]) = false
+  | all_same_color (c::cs) =
+    let
+        val color = card_color(c)
+
+        fun same_color ([]) = true
+          | same_color (x::xs) =
+            if card_color (x) = color
+            then same_color xs
+            else false
+    in
+        same_color cs
+    end
 
 (* e *)
 fun sum_cards cs =
@@ -105,11 +121,11 @@ fun officiate (cards, moves, goal) =
           | game (hc, next_card::cl, move::moves) =
             case move of
                 Draw =>
-                    if (sum_cards hc) = goal
+                    if (sum_cards hc) >= goal
                     then score (hc, goal)
                     else game (next_card::hc, cl, moves)
                 | Discard c => 
-                    if (sum_cards hc) = goal
+                    if (sum_cards hc) >= goal
                     then score (hc, goal)
                     else game (remove (hc, c), cl, moves)
     in
@@ -161,11 +177,11 @@ fun officiate_challenge (cards, moves, goal) =
           | game (hc, next_card::cl, move::moves) =
             case move of
                 Draw =>
-                    if (sum_cards hc) = goal
+                    if (sum_cards hc) >= goal
                     then score (hc, goal)
                     else game (next_card::hc, cl, moves)
                 | Discard c => 
-                    if (sum_cards hc) = goal
+                    if (sum_cards hc) >= goal
                     then score (hc, goal)
                     else game (remove (hc, c), cl, moves)
     in

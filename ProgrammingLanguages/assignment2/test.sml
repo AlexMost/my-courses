@@ -47,23 +47,30 @@ val test71 = remove_card(
     [(Hearts, Ace), (Clubs, Num 2)], 
     (Hearts, Ace),
     IllegalMove) = [(Clubs, Num 2)]
+val test72 = remove_card(
+    [(Hearts, Ace), (Clubs, Num 2), (Hearts, Ace)],
+    (Hearts, Ace),
+    IllegalMove) = [(Clubs, Num 2), (Hearts, Ace)] 
 
 val test8 = all_same_color([(Hearts, Ace), (Hearts, Ace)]) = true
 val test81 = all_same_color([(Hearts, Ace), (Diamonds, Ace)]) = true
 val test82 = all_same_color([(Hearts, Ace), (Clubs, Ace)]) = false
+val test83 = all_same_color([(Clubs,Ace),(Spades,Ace),(Diamonds,Ace)]) = false
 
 val test9 = sum_cards([(Clubs, Num 2),(Clubs, Num 2)]) = 4
 
 val test10 = score([(Hearts, Num 2),(Clubs, Num 4)],10) = 4
 
 val test11 = officiate([(Hearts, Num 2),(Clubs, Num 4)],[Draw], 15) = 6
-
 val test12 = officiate([(Clubs,Ace),(Spades,Ace),(Clubs,Ace),(Spades,Ace)],
                        [Draw,Draw,Draw,Draw,Draw],
                        42)
              = 3
-
 val test12_1 = min([1, 3, 10, 2]) = 1
+val test12_2 = officiate(
+    [(Hearts, Ace), (Clubs, Ace)],[Draw, Draw, Draw],
+    10 
+    ) = 1
 
 val test13_1 = score_challenge([(Clubs,Ace),(Spades,Ace),(Clubs,Ace)], 23) = 0
 val test13_2 = score_challenge([(Clubs,Ace),(Spades,Ace),(Clubs,Ace)], 33) = 0
