@@ -7,7 +7,7 @@ use "hw2.sml";
 
 val test1 = all_except_option("string", ["string"]) = SOME []
 val test1_1 = all_except_option("string1", ["string"]) = NONE
-val test12 = all_except_option("string", ["string", "abc", "avf"]) = SOME ["abc", "avf"]
+val test1_2 = all_except_option("string", ["string", "abc", "avf"]) = SOME ["abc", "avf"]
 
 val test2 = get_substitutions1([["foo"],["there"]], "foo") = []
 val test22 = get_substitutions1(
@@ -74,10 +74,22 @@ val test14_1 = officiate_challenge(
     [(Clubs, Num 2), (Clubs,Ace), (Spades,Ace), (Clubs,Ace)],
     [Draw, Draw, Draw, Draw], 5) = 0
 
-(*val test13 = ((officiate([(Clubs,Jack),(Spades,Num(8))],
+val test13 = ((officiate([(Clubs,Jack),(Spades,Num(8))],
                          [Draw,Discard(Hearts,Jack)],
                          42);
                false) 
-              handle IllegalMove => true)*)
+              handle IllegalMove => true)
+
+val test14 = careful_player (
+    [(Clubs,Ace),(Spades,Ace),(Clubs,Ace),(Spades, Ace)],
+    43) = [Draw, Draw, Draw]
+
+val test14_2 = careful_player (
+    [(Clubs,Ace),(Spades,Ace),(Clubs,Ace),(Spades, Ace)],
+    22) = [Draw,Draw]
+
+val test14_3 = careful_player (
+    [(Clubs,Ace),(Spades,Ace),(Clubs,Ace),(Spades, Num 1), (Spades, Ace)],
+    44) = [Draw, Draw, Draw, Draw, Discard (Spades,Num 1), Draw]
              
              

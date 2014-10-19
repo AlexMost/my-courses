@@ -100,23 +100,20 @@ fun score (hc, goal) =
 fun officiate (cards, moves, goal) =
     let
         fun remove (cs, c) = remove_card (cs, c, IllegalMove)
-        fun add (s, c) = s + card_value c
-        fun sub (s, c) = s - card_value c
-
-        fun game (hc, [], _, _) = score (hc, goal)
-          | game (hc, _, [], _) = score (hc, goal)
-          | game (hc, next_card::cl, move::moves, sum) =
+        fun game (hc, [], _) = score (hc, goal)
+          | game (hc, _, []) = score (hc, goal)
+          | game (hc, next_card::cl, move::moves) =
             case move of
                 Draw =>
-                    if sum = goal
+                    if (sum_cards hc) = goal
                     then score (hc, goal)
-                    else game (next_card::hc, cl, moves, add (sum, next_card))
+                    else game (next_card::hc, cl, moves)
                 | Discard c => 
-                    if sum = goal
+                    if (sum_cards hc) = goal
                     then score (hc, goal)
-                    else game (remove (hc, c), cl, moves, sub (sum, next_card))
+                    else game (remove (hc, c), cl, moves)
     in
-        game ([], cards, moves, 0)
+        game ([], cards, moves)
     end
 
 
@@ -131,6 +128,7 @@ fun min (head::tail) =
     end
 
 (* a.1 *)
+(* TODO: use get substitution *)
 fun score_challenge (hc, goal) =
     let 
         fun get_scores (_, [], scores) = min scores
@@ -150,23 +148,67 @@ fun score_challenge (hc, goal) =
 fun officiate_challenge (cards, moves, goal) =
     let
         fun remove (cs, c) = remove_card (cs, c, IllegalMove)
-        fun add (s, c) = s + card_value c
-        fun sub (s, c) = s - card_value c
 
-        fun game (hc, [], _, sum) = 
-            if sum > goal then score_challenge (hc, goal) else score (hc, goal)
-          | game (hc, _, [], sum) =
-            if sum > goal then score_challenge (hc, goal) else score (hc, goal)
-          | game (hc, next_card::cl, move::moves, sum) =
+        fun game (hc, [], _) = 
+            if (sum_cards hc) > goal
+            then score_challenge (hc, goal)
+            else score (hc, goal)
+
+          | game (hc, _, []) =
+            if (sum_cards hc) > goal
+            then score_challenge (hc, goal)
+            else score (hc, goal)
+
+          | game (hc, next_card::cl, move::moves) =
             case move of
                 Draw =>
-                    if sum = goal
+                    if (sum_cards hc) = goal
                     then score (hc, goal)
-                    else game (next_card::hc, cl, moves, add (sum, next_card))
+                    else game (next_card::hc, cl, moves)
                 | Discard c => 
-                    if sum = goal
+                    if (sum_cards hc) = goal
                     then score (hc, goal)
-                    else game (remove (hc, c), cl, moves, sub (sum, next_card))
+                    else game (remove (hc, c), cl, moves)
     in
-        game ([], cards, moves, 0)
+        game ([], cards, moves)
+    end
+
+(* b *)
+fun careful_player (cl, goal) =
+    let
+        fun get_discard (c, hc) =
+            let 
+                fun get_disc (_, []) = NONE
+                  | get_disc (c, x::xs) =
+                    let
+                        val discard = remove_card (hc, x, IllegalMove)
+                        val s = score (c::discard, goal)
+                    in
+                        if s = 0
+                        then SOME x
+                        else get_disc (c, xs)
+                    end
+            in
+                get_disc (c, hc)
+            end
+
+        fun get_move (c1::cl, hc) =
+            case get_discard(c1, hc) of
+                NONE =>
+                    if ((sum_cards hc) + 10) >= goal
+                    then NONE
+                    else SOME Draw
+                | SOME c => SOME (Discard c)    
+
+        fun get_moves ([], _, moves) = moves 
+          | get_moves (c1::cl, hc, moves) =
+            if score (hc, goal) = 0
+            then moves
+            else
+                case get_move (c1::cl, hc) of
+                    SOME Draw => get_moves (cl, c1::hc, moves @ [Draw])
+                    | SOME (Discard c) => moves @ [(Discard c), Draw]
+                    | NONE => moves
+    in
+        get_moves (cl, [], [])
     end
