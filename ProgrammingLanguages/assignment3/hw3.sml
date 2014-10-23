@@ -85,6 +85,45 @@ fun all_answers _ [] = SOME []
   			all_answ (lst, [])
   		end
 
+(* 9 *)
+(* a *)
+val count_wildcards = g (fn () => 1) (fn x => 0)
+
+(* b *)
+val count_wild_and_variable_lengths = g (fn () => 1) size
+
+(* c *)
+fun count_some_var (s, p) = g (fn () => 0) (fn x => if x = s then 1 else 0) p
+
+(* 10 *)
+fun var_strings p =
+	case p of
+	  	Variable x => [x]
+	  	| TupleP ps => List.foldl (fn (p,acc) => (var_strings p) @ acc) [] ps
+	  	| ConstructorP(_,p) => var_strings p
+	  	| _ => []
+
+fun distinct [] = true
+  | distinct (x::xs) =
+	if (List.exists (fn i => i = x) xs) then false else distinct xs
+
+val check_pat = distinct o var_strings
+
+(* 11 *)
+(*fun match (v, p) =
+	case (p, v) of
+		(Wildcard, _) => SOME []
+		| ((Variable s), v) => SOME [(s, v)]
+		| (UnitP, Unit) => SOME []
+		| ((ConstP s), (Const v)) => SOME []
+		| ((TupleP ps), (Tuple vs)) 
+		| ConstructorP of string * pattern*)
+
+
+
+
+
+
 
 
 

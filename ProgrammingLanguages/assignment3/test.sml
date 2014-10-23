@@ -28,13 +28,20 @@ val test7 = first_answer (fn x => if x > 3 then SOME x else NONE) [1,2,3,4,5] = 
 val test8 = all_answers (fn x => if x = 1 then SOME [x] else NONE) [2,3,4,5,6,7] = NONE
 val test8_1 = all_answers (fn x => if x <> 1 then SOME [x] else NONE) [2,3,4,5,6,7] = SOME [2,3,4,5,6,7]
 
-(*val test9a = count_wildcards Wildcard = 1*)
+val test9a = count_wildcards Wildcard = 1
+val test9a_1 = count_wildcards (TupleP [Wildcard, Wildcard]) = 2
 
-(*val test9b = count_wild_and_variable_lengths (Variable("a")) = 1*)
+val test9b = count_wild_and_variable_lengths (Variable("a")) = 1
+val test9b_1 = count_wild_and_variable_lengths (TupleP [Variable("a"), Wildcard]) = 2
 
-(*val test9c = count_some_var ("x", Variable("x")) = 1;*)
+val test9c = count_some_var ("x", Variable("x")) = 1;
 
-(*val test10 = check_pat (Variable("x")) = true*)
+val test10 = check_pat (Variable("x")) = true
+val test10_1 = var_strings (TupleP [Variable("a"), Variable("b"), Variable("c")]) = ["c", "b", "a"]
+val test10_2 = distinct ["a", "b", "c"] = true
+val test10_3 = distinct ["a", "b", "a"] = false
+val test10_4 = check_pat (TupleP [Variable("a"), Variable("b"), Variable("c")]) = true
+val test10_5 = check_pat (TupleP [Variable("a"), Variable("a"), Variable("c")]) = false
 
 (*val test11 = match (Const(1), UnitP) = NONE*)
 
