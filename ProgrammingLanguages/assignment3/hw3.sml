@@ -76,11 +76,11 @@ fun first_answer _ [] = raise NoAnswer
 fun all_answers _ [] = SOME []
   | all_answers f lst =
   	let
-  			fun all_answ ([], acc) = SOME acc
-  			  | all_answ (x::xs, acc) =
-  				case f(x) of
-  					SOME r => all_answ (xs, acc @ r)
-  					| NONE => NONE
+		fun all_answ ([], acc) = SOME acc
+		  | all_answ (x::xs, acc) =
+			case f(x) of
+				SOME r => all_answ (xs, acc @ r)
+				| NONE => NONE
   		in
   			all_answ (lst, [])
   		end
