@@ -110,20 +110,21 @@ fun distinct [] = true
 val check_pat = distinct o var_strings
 
 (* 11 *)
-(*fun match (v, p) =
+fun match (v, p) =
     case (p, v) of
-        (Wildcard, _) => SOME []
-        | ((Variable s), v) => SOME [(s, v)]
-        | (UnitP, Unit) => SOME []
-        | ((ConstP s), (Const v)) => SOME []
-        | ((TupleP ps), (Tuple vs)) 
-        | ConstructorP of string * pattern*)
+          (Wildcard, _)                             => SOME []
+        | ((Variable s), v)                         => SOME [(s, v)]
+        | (UnitP, Unit)                             => SOME []
+        | ((ConstP v), (Const s))                   => SOME []
+        | (ConstructorP(s1, p), Constructor(s2, v)) =>
+            if s1 = s2 then match (v, p) else NONE
+        | ((TupleP ps), (Tuple vs)) =>
+            if (List.length ps) = (List.length vs)
+            then all_answers match (ListPair.zip (vs, ps))
+            else NONE
+        | (_, _)                                    => NONE
 
-
-
-
-
-
-
-
-
+(* 12 *)
+fun first_match v plst =
+  SOME (first_answer (fn p => match (v, p)) plst)
+  handle NoAnswer => NONE

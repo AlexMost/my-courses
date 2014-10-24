@@ -43,7 +43,10 @@ val test10_3 = distinct ["a", "b", "a"] = false
 val test10_4 = check_pat (TupleP [Variable("a"), Variable("b"), Variable("c")]) = true
 val test10_5 = check_pat (TupleP [Variable("a"), Variable("a"), Variable("c")]) = false
 
-(*val test11 = match (Const(1), UnitP) = NONE*)
+val test11 = match (Const(1), UnitP) = NONE
+val test11_1 = match (Const(1), Variable("a")) = SOME [("a", Const(1))]
+val test11_2 = match(Constructor("v", Const 1), ConstructorP("v", Variable "s")) = SOME [("s", Const(1))]
+val test11_3 = match(Tuple [Const(1)], TupleP [(Variable "s")]) = SOME [("s", Const(1))]
 
-(*val test12 = first_match Unit [UnitP] = SOME []*)
+val test12 = first_match Unit [UnitP] = SOME []
 
