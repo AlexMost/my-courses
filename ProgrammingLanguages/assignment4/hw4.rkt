@@ -33,7 +33,7 @@
                    (cons x (lambda () (f (+ 1 x))))))])
   (lambda () (f 1))))
 
-;; (5)
+;; (6)
 (define dan-then-dog
   (letrec ([dog "dog.jpg"]
            [dan "dan.jpg"]
@@ -43,6 +43,10 @@
                    (cons dog (lambda () (f dan)))))])
   (lambda () (f dan))))
 
-;; (6)
-
+;; (7)
+(define (stream-add-zero s)
+  (lambda () (cons 
+              (cons 0 (car (s)))
+              (lambda () (stream-add-zero (cdr s))))))
+  
 
