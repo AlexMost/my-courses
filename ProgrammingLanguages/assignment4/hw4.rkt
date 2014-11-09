@@ -16,7 +16,7 @@
 ;; (3)
 (define (list-nth-mod xs n)
   (cond [(< n 0) (error "list-nth-mod: negative number")]
-        [(= n 0) (error "list-nth-mod: empty list")]
+        [(= (length xs) 0) (error "list-nth-mod: empty list")]
         [#t (car (list-tail xs (remainder n (length xs))))]))
 
 ;; (4)
@@ -48,5 +48,39 @@
   (lambda () (cons 
               (cons 0 (car (s)))
               (lambda () (stream-add-zero (cdr s))))))
-  
 
+;; (8)
+(define (cycle-lists xs ys)
+  (letrec ([f (lambda (n)
+               (cons
+                (cons (list-nth-mod xs n) (list-nth-mod ys n))
+                (lambda () (f (+ 1 n)))))])
+    (lambda () (f 0))))
+
+
+;; (9)
+(define (vector-assoc v vec)
+  (letrec 
+      ([f (lambda (n)
+            (if (< n (vector-length vec))
+                (let ([item (vector-ref vec n)])
+                  (if (and (pair? item) (equal? (car item) v))
+                      item
+                      (f (+ 1 n))))
+                #f))])
+    (f 0)))
+
+;; (10)
+(define (cached-assoc xs n)
+  (letrec
+      ([cache-index 0]
+       [cache (make-vector n #f)])
+    (lambda (v)
+        (or (vector-assoc v cache)
+            (let ([assoc-result (assoc v xs)])
+              (if assoc-result
+                  (begin
+                    (vector-set! cache (remainder cache-index n) assoc-result)
+                    (set! cache-index (+ 1 cache-index)))
+                  '())
+              assoc-result)))))
