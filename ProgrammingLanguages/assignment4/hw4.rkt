@@ -45,9 +45,7 @@
 
 ;; (7)
 (define (stream-add-zero s)
-  (lambda () (cons 
-              (cons 0 (car (s)))
-              (lambda () (stream-add-zero (cdr s))))))
+  (lambda () (cons (cons 0 (car (s))) (stream-add-zero (cdr (s))))))
 
 ;; (8)
 (define (cycle-lists xs ys)
@@ -56,7 +54,6 @@
                 (cons (list-nth-mod xs n) (list-nth-mod ys n))
                 (lambda () (f (+ 1 n)))))])
     (lambda () (f 0))))
-
 
 ;; (9)
 (define (vector-assoc v vec)
@@ -84,3 +81,12 @@
                     (set! cache-index (+ 1 cache-index)))
                   '())
               assoc-result)))))
+
+;; Challenge problems
+;; (11)
+(define-syntax while-less
+  (syntax-rules (do)
+    [(while-less e1 do e2)
+     (letrec ([evaluated-e1 e1]
+              [loop (lambda () (if (> evaluated-e1 e2) (loop) #t))])
+       (loop))]))
