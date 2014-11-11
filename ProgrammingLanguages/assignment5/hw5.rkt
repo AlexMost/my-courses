@@ -29,7 +29,6 @@
 (define (mupllist->racketlist xs)
   (if (aunit? xs) null (cons (apair-e1 xs) (mupllist->racketlist (apair-e2 xs)))))
       
-
 ;; Problem 2
 
 ;; lookup a variable in an environment
@@ -46,6 +45,8 @@
 (define (eval-under-env e env)
   (cond [(var? e) 
          (envlookup env (var-string e))]
+        [(int? e) e]
+        
         [(add? e) 
          (let ([v1 (eval-under-env (add-e1 e) env)]
                [v2 (eval-under-env (add-e2 e) env)])
@@ -54,7 +55,23 @@
                (int (+ (int-num v1) 
                        (int-num v2)))
                (error "MUPL addition applied to non-number")))]
-        ;; CHANGE add more cases here
+        
+        [(ifgreater? e)
+         (let ([v1 (eval-under-env (ifgreater-e1 e) env)]
+               [v2 (eval-under-env (ifgreater-e2 e) env)]
+               [eval-e3 (lambda () (eval-under-env (ifgreater-e3 e) env))]
+               [eval-e4 (lambda () (eval-under-env (ifgreater-e4 e) env))])
+           (if (and (int? v1) (int? v2))
+               (if (> (int-num v1) (int-num v2)) (eval-e3) (eval-e4))
+               (error "MULP ifgreater applied to non-number")))]
+        
+        [(mlet? e)
+         (letrec ([v (eval-under-env (mlet-e e) env)]
+                  [local-env (append 
+                           (filter (lambda (x) (not (equal? (car x) (mlet-var e)))) env)
+                           (list (cons (mlet-var e) v)))])
+             (eval-under-env (mlet-body e) local-env))]
+        
         [#t (error (format "bad MUPL expression: ~v" e))]))
 
 ;; Do NOT change
