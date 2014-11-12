@@ -17,6 +17,9 @@
 (struct aunit ()    #:transparent) ;; unit value -- good for ending a list
 (struct isaunit (e) #:transparent) ;; evaluate to 1 if e is unit else 0
 
+;; my additional struct
+(struct mul  (e1 e2)  #:transparent)  ;; add two expressions
+
 ;; a closure is not in "source" programs; it is what functions evaluate to
 (struct closure (env fun) #:transparent) 
 
@@ -38,14 +41,29 @@
         [(equal? (car (car env)) str) (cdr (car env))]
         [#t (envlookup (cdr env) str)]))
 
+;; Adds binding to the environment
+(define (env+ env v)
+  (append 
+   (filter (lambda (x) (not (equal? (car x) (car v)))) env)
+   (list (cons (car v) (cdr v)))))
+
+;; Adds a list of bindings to the environment
+(define (env++ env vrs)
+  (let ([new-env (lambda () (env+ env (car vrs)))])
+    (if (null? vrs)
+        env
+        (env++ (new-env) (cdr vrs)))))
+  
 ;; Do NOT change the two cases given to you.  
 ;; DO add more cases for other kinds of MUPL expressions.
 ;; We will test eval-under-env by calling it directly even though
 ;; "in real life" it would be a helper function of eval-exp.
 (define (eval-under-env e env)
-  (cond [(var? e) 
-         (envlookup env (var-string e))]
+  (cond [(var? e) (envlookup env (var-string e))]
         [(int? e) e]
+        [(apair? e) e] 
+        [(closure? e) e]
+        [(fun? e) (closure '() e)]
         
         [(add? e) 
          (let ([v1 (eval-under-env (add-e1 e) env)]
@@ -55,6 +73,15 @@
                (int (+ (int-num v1) 
                        (int-num v2)))
                (error "MUPL addition applied to non-number")))]
+        
+        [(mul? e) 
+         (let ([v1 (eval-under-env (mul-e1 e) env)]
+               [v2 (eval-under-env (mul-e2 e) env)])
+           (if (and (int? v1)
+                    (int? v2))
+               (int (* (int-num v1) 
+                       (int-num v2)))
+               (error "MUPL multiplication applied to non-number")))]
         
         [(ifgreater? e)
          (let ([v1 (eval-under-env (ifgreater-e1 e) env)]
@@ -67,11 +94,32 @@
         
         [(mlet? e)
          (letrec ([v (eval-under-env (mlet-e e) env)]
-                  [local-env (append 
-                           (filter (lambda (x) (not (equal? (car x) (mlet-var e)))) env)
-                           (list (cons (mlet-var e) v)))])
+                  [local-env (env+ env (cons (mlet-var e) v))])
              (eval-under-env (mlet-body e) local-env))]
         
+        [(call? e)
+         (letrec ([funexp (eval-under-env (call-funexp e) env)]
+                  [actual (eval-under-env (call-actual e) env)]
+                  [fname (lambda () (fun-nameopt (closure-fun funexp)))]
+                  [fargname (lambda () (fun-formal (closure-fun funexp)))]
+                  [fbody (lambda () (fun-body (closure-fun funexp)))]
+                  [closure-env (lambda ()
+                                 (if (fname)
+                                   (list (cons (fname) funexp) (cons (fargname) actual))
+                                   (list (cons (fargname) actual))))])
+           (cond [(closure? funexp) (eval-under-env (fbody) (env++ env (closure-env)))]
+                 [#t (error "MUPL call applied to non-function")]))]
+        
+        [(snd? e)
+         (letrec ([e-result (eval-under-env (snd-e e) env)])
+           (if (apair? e-result)
+               (eval-under-env (apair-e2 e-result) env)
+               (error "MUPL snd is applied to non-apair")))]
+        
+        [(isaunit? e)
+         (let ([e-result (eval-under-env (isaunit-e e) env)])
+           (if (aunit? e-result) (int 1) (int 0)))]
+                          
         [#t (error (format "bad MUPL expression: ~v" e))]))
 
 ;; Do NOT change
@@ -80,11 +128,17 @@
         
 ;; Problem 3
 
-(define (ifaunit e1 e2 e3) "CHANGE")
+(define (ifaunit e1 e2 e3) (ifgreater (isaunit e1) (int 0) e2 e3))
 
-(define (mlet* lstlst e2) "CHANGE")
+(define (mlet* lstlst e2)
+  (if (null? lstlst)
+      e2
+      (mlet (caar lstlst) (cdar lstlst) (mlet* (cdr lstlst) e2))))
 
-(define (ifeq e1 e2 e3 e4) "CHANGE")
+(define (ifeq e1 e2 e3 e4)
+  (mlet* (list (cons "e1" e1)
+               (cons "e2" e2))
+         (ifgreater (var "e1") (var "e2") e4 (ifgreater (var "e2") (var "e1") e4 e3))))
 
 ;; Problem 4
 
