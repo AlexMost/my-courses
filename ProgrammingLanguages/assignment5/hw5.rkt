@@ -61,9 +61,23 @@
 (define (eval-under-env e env)
   (cond [(var? e) (envlookup env (var-string e))]
         [(int? e) e]
-        [(apair? e) e] 
+        [(aunit? e) e]
         [(closure? e) e]
-        [(fun? e) (closure '() e)]
+        [(apair? e) (apair (eval-under-env (apair-e1 e) env) (eval-under-env (apair-e2 e) env)) ]
+        
+        [(fst? e)
+         (let ([exp (eval-under-env (fst-e e) env)])
+           (if (apair? exp)
+               (apair-e1 exp)
+               (error "MUPL fst applied to non-pair")))]
+        
+        [(snd? e)
+         (let ([exp (eval-under-env (snd-e e) env)])
+           (if (apair? exp)
+               (apair-e2 exp)
+               (error "MUPL snd applied to non-pair")))]
+        
+        [(fun? e) (closure env e)]
         
         [(add? e) 
          (let ([v1 (eval-under-env (add-e1 e) env)]
@@ -103,11 +117,13 @@
                   [fname (lambda () (fun-nameopt (closure-fun funexp)))]
                   [fargname (lambda () (fun-formal (closure-fun funexp)))]
                   [fbody (lambda () (fun-body (closure-fun funexp)))]
-                  [closure-env (lambda ()
-                                 (if (fname)
-                                   (list (cons (fname) funexp) (cons (fargname) actual))
-                                   (list (cons (fargname) actual))))])
-           (cond [(closure? funexp) (eval-under-env (fbody) (env++ env (closure-env)))]
+                  [f-env (lambda ()
+                           (env++
+                            (closure-env funexp)
+                            (if (fname)
+                                (list (cons (fname) funexp) (cons (fargname) actual))
+                                (list (cons (fargname) actual)))))])
+           (cond [(closure? funexp) (eval-under-env (fbody) (f-env))]
                  [#t (error "MUPL call applied to non-function")]))]
         
         [(snd? e)
@@ -127,7 +143,6 @@
   (eval-under-env e null))
         
 ;; Problem 3
-
 (define (ifaunit e1 e2 e3) (ifgreater (isaunit e1) (int 0) e2 e3))
 
 (define (mlet* lstlst e2)
@@ -141,12 +156,20 @@
          (ifgreater (var "e1") (var "e2") e4 (ifgreater (var "e2") (var "e1") e4 e3))))
 
 ;; Problem 4
+(define mupl-map
+  (fun #f "x" (fun "mapper" "list"
+   (ifaunit (var "list")
+            (aunit)
+            (apair (call (var "x") (fst (var "list")))
+                   (call (var "mapper") (snd (var "list"))))))))
 
-(define mupl-map "CHANGE")
 
 (define mupl-mapAddN 
-  (mlet "map" mupl-map
-        "CHANGE (notice map is now in MUPL scope)"))
+  (mlet* (list [cons "map" mupl-map])
+        (fun #f "i" (fun #f "lst"
+         (call (call (var "map")
+                     (fun #f "x" (add (var "i") (var "x"))))
+               (var "lst"))))))
 
 ;; Challenge Problem
 
