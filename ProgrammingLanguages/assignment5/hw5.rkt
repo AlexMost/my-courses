@@ -17,9 +17,6 @@
 (struct aunit ()    #:transparent) ;; unit value -- good for ending a list
 (struct isaunit (e) #:transparent) ;; evaluate to 1 if e is unit else 0
 
-;; my additional struct
-(struct mul  (e1 e2)  #:transparent)  ;; add two expressions
-
 ;; a closure is not in "source" programs; it is what functions evaluate to
 (struct closure (env fun) #:transparent) 
 
@@ -87,15 +84,6 @@
                (int (+ (int-num v1) 
                        (int-num v2)))
                (error "MUPL addition applied to non-number")))]
-        
-        [(mul? e) 
-         (let ([v1 (eval-under-env (mul-e1 e) env)]
-               [v2 (eval-under-env (mul-e2 e) env)])
-           (if (and (int? v1)
-                    (int? v2))
-               (int (* (int-num v1) 
-                       (int-num v2)))
-               (error "MUPL multiplication applied to non-number")))]
         
         [(ifgreater? e)
          (let ([v1 (eval-under-env (ifgreater-e1 e) env)]
@@ -165,11 +153,11 @@
 
 
 (define mupl-mapAddN 
-  (mlet* (list [cons "map" mupl-map])
-        (fun #f "i" (fun #f "lst"
-         (call (call (var "map")
-                     (fun #f "x" (add (var "i") (var "x"))))
-               (var "lst"))))))
+  (mlet "map" mupl-map
+   (fun #f "i" (fun #f "lst"
+    (call
+     (call (var "map") (fun #f "x" (add (var "i") (var "x"))))
+     (var "lst"))))))
 
 ;; Challenge Problem
 
@@ -177,7 +165,35 @@
 
 ;; We will test this function directly, so it must do
 ;; as described in the assignment
-(define (compute-free-vars e) "CHANGE")
+(define (update-freevars s v) ((if (set-member? s v) set-remove set-add) s v))
+  
+(define (compute-free-vars e)
+  (letrec ([compute (lambda (e free-vars)
+    ((cond
+       [(int? e) e]
+       [(aunit? e) e]
+       [(closure? e) e]
+       
+       [(mlet? e)
+        (let ([new-free-vars (update-freevars free-vars (mlet-var e))])
+          (mlet (mlet-var e)
+                (compute (mlet-e e) new-free-vars)
+                (compute (mlet-body e) new-free-vars)))]
+       
+       [(fun? e)
+        (letrec ([new-free-vars-formal (update-freevars free-vars (fun-formal e))]
+                 [new-free-vars
+                  (if (fun-nameopt e)
+                     (update-freevars new-free-vars-formal (fun-nameopt e))
+                     new-free-vars-formal)])
+          (fun-challenge
+           (fun-nameopt fun)
+           (fun-formal fun)
+           (compute (fun-body fun) new-free-vars)
+           new-free-vars))]
+       
+       [#t (error (format "bad MUPL expression: ~v" e))])))])
+    (compute e (set))))
 
 ;; Do NOT share code with eval-under-env because that will make
 ;; auto-grading and peer assessment more difficult, so

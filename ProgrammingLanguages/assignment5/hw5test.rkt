@@ -60,6 +60,9 @@
                    (racketlist->mupllist 
                     (list (int 3) (int 4) (int 9)))))) (list (int 10) (int 11) (int 16)) "combined test")
    
+   ;; challenge test
+   (check-equal? (update-freevars (set 1 2 3) 3) (set 1 2) "test updating free vars")
+   (check-equal? (update-freevars (set 1 2) 3) (set 1 2 3) "test updating free vars2")
    ))
 
 (require rackunit/text-ui)
