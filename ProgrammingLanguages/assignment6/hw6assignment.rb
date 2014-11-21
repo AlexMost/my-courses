@@ -54,7 +54,7 @@ class MyBoard < Board
   end
 
   def use_cheat
-    if @score >= 100
+    if @score >= 100 and !@cheat
         @score -= 100
         @cheat = true
     end
@@ -63,6 +63,7 @@ class MyBoard < Board
   def next_piece
     if @cheat
         @current_block = MyPiece.get_single_square(self)
+        @cheat = false
     else
         @current_block = MyPiece.next_piece(self)
     end
@@ -82,11 +83,6 @@ class MyBoard < Board
 
     remove_filled
     @delay = [@delay - 2, 80].max
-
-    # If that was cheater block
-    if locations.size == 1
-        @cheat = false
-    end
   end
 
 end
