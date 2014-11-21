@@ -63,6 +63,15 @@
    ;; challenge test
    (check-equal? (update-freevars (set 1 2 3) 3) (set 1 2) "test updating free vars")
    (check-equal? (update-freevars (set 1 2) 3) (set 1 2 3) "test updating free vars2")
+   
+   ;; compute free vars test
+   (check-equal? (compute-free-vars (int 1)) (int 1) "test compute free vars")
+   (check-equal? (compute-free-vars (fun "f" "x" (int 1)))
+                 (fun-challenge "f" "x" (int 1) (set "f" "x"))
+                 "test compute free vars in function")
+   (check-equal? (compute-free-vars (mlet "x" (int 2) (fun "f" "x" (int 1))))
+                 (mlet "x" (int 2) (fun-challenge "f" "x" (int 1) (set "f")))
+                 "test compute free vars in mlet")
    ))
 
 (require rackunit/text-ui)
