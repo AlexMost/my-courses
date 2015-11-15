@@ -2,3 +2,4 @@
 *.pyc
 **/*/compiled
 **/*/#*
+.DS_Store
