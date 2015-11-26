@@ -1,3 +1,4 @@
+module CredictCardValidate where
 import           Data.Char
 
 toDigits :: Int -> [Int]
@@ -13,5 +14,3 @@ sumDigits (x:xs)
   | otherwise = x + sumDigits xs
 
 isValidCard = (== 0) . (`mod` 10) . sumDigits . doubleSecond . reverse . toDigits
-
-numValid xs = sum . map (\_ -> 1) $ filter isValidCard xs
