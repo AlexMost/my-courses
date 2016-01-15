@@ -7,14 +7,6 @@
 
 (define two (lambda (f) (lambda (x) (f (f x)))))
 
-(define (add a b)
-  (lambda (f)
-    (lambda (x)
-      ((a f) ((b f) x)))))
 
-(define (church->int fn) ((fn inc) 0))
-
-; > (define four (add two two))
-; > (church->int four)
-; 4
-; > 
+(define (church->int fn)
+  ((fn inc) 0))
