@@ -2,10 +2,9 @@
 (define (inc n) (+ 1 n))
 
 (define zero (lambda (f) (lambda (x) x)))
-
 (define one (lambda (f) (lambda (x) (f x))))
-
 (define two (lambda (f) (lambda (x) (f (f x)))))
+(define three (lambda (f) (lambda (x) (f (f (f x))))))
 
 (define (add a b)
   (lambda (f)

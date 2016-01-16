@@ -1,5 +1,4 @@
-.idea
-*.pyc
-**/*/compiled
-**/*/#*
+*.rkt~
 .DS_Store
+*.pyc
+.idea
