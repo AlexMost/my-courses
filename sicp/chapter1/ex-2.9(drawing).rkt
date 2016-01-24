@@ -50,7 +50,15 @@
     (send dc draw-line x1 y1 x2 y2)))
 
 (define (segments->painter dc segments)
-  (map (lambda (s) (draw-segment dc s)) segments))
+  (lambda (frame)
+    (for-each
+     (lambda (segment)
+       (draw-segment
+        dc
+        (make-segment
+         ((frame-coord-map frame) (start-segment segment))
+         ((frame-coord-map frame) (end-segment segment)))))
+     segments)))
 
 (define (frame->segments f)
   (let ([s1 (make-segment (origin-frame f) (edge1-frame f))]
@@ -68,9 +76,9 @@
 
 (define line1 (make-segment (make-vect 0 0) (make-vect 200 200)))
 (define f1 (make-frame
-               (make-vect 10 10)
-               (make-vect 10 300)
-               (make-vect 300 10)))
+               (make-vect 0 0)
+               (make-vect 0 1)
+               (make-vect 1 0)))
 
 (define frame (new frame%
                    [label "Example"]
@@ -80,8 +88,7 @@
 (new canvas% [parent frame]
              [paint-callback
               (lambda (canvas dc)
-                (draw-segment dc line1)
-                (draw-frame dc f1)
+                ((segments->painter dc (list line1)) f1)
                 )])
 (send frame show #t)
 
