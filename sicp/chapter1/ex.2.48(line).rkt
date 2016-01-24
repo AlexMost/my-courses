@@ -15,7 +15,7 @@
         [y (- (ycor-vect v1) (ycor-vect v2))])
     (make-vect x y)))
 
-(define (scale-vect v s)
+(define (scale-vect s v)
   (make-vect (* (xcor-vect v) s) (* (ycor-vect v) s)))
 
 (define (make-frame origin edge1 edge2)
@@ -31,3 +31,16 @@
 (define (make-segment v1 v2) (cons v1 v2))
 (define (start-segment s) (car s))
 (define (end-segment s) (cdr s))
+
+(define (frame-coord-map frame)
+  (lambda (v)
+    (add-vect (origin-frame frame)
+              (add-vect
+               (scale-vect (xcor-vect v) (edge1-frame frame))
+               (scale-vect (ycor-vect v)(edge2-frame frame))))))
+
+;------ segments painter
+
+
+
+
