@@ -7,11 +7,11 @@
 (define (not-0 l) (filter (lambda (x) (not (=number? x 0))) l))
 
 (define (make-sum . args)
-  (let ([nums (filter number? args)]
+  (let ([nums (not-0 (filter number? args))]
         [not-nums (filter (lambda (x) (not (number? x))) args)])
-    (cond [(= 1 (+ (length (not-0 nums)) (length not-nums)))
-           (car (not-0 (append nums not-nums)))]
-          [(= 0 (+ (length (not-0 nums)) (length not-nums))) 0]
+    (cond [(= 1 (+ (length nums) (length not-nums)))
+           (car (append nums not-nums))]
+          [(= 0 (+ (length nums) (length not-nums))) 0]
           [else (if (not (null? nums))
         (append (list '+ (foldr + 0 nums)) not-nums)
         (append (list '+) not-nums))])))
