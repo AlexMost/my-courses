@@ -12,9 +12,7 @@
     (cond [(= 1 (+ (length nums) (length not-nums)))
            (car (append nums not-nums))]
           [(= 0 (+ (length nums) (length not-nums))) 0]
-          [else (if (not (null? nums))
-        (append (list '+ (foldr + 0 nums)) not-nums)
-        (append (list '+) not-nums))])))
+          [else (not-0 (append (list '+ (foldr + 0 nums)) not-nums))])))
     
 (define (=number? n v)
   (and (number? n) (= n v)))
