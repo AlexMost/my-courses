@@ -47,7 +47,7 @@
           (if (leaf? next-branch)
               (cons (symbol-leaf next-branch)
                     (decode-1 (cdr bits) tree))
-              (decode-1 (cdr bits) tree)))))
+              (decode-1 (cdr bits) next-branch)))))
   (decode-1 bits tree))
 
 
