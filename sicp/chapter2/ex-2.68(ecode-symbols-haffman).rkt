@@ -62,3 +62,26 @@
 
 (decode sample-message sample-tree)
 ; '(A D A B B C A)
+
+(define (in? s l) (foldr (lambda(i r) (or (eq? i s) r)) #f l))
+
+(define (encode-symbol symbol tree)
+  (if (leaf? tree)
+      (if (eq? (symbol-leaf tree) symbol) '() (error "symbol not found"))
+      (if (in? symbol (symbols (left-branch tree)))
+          (cons 0 (encode-symbol symbol (left-branch tree)))
+          (cons 1 (encode-symbol symbol (right-branch tree))))))
+
+; > (encode-symbol 'D sample-tree)
+; '(1 1 0)
+
+(define (encode message tree)
+  (if (null? message)
+      '()
+      (append (encode-symbol (car message) tree)
+              (encode (cdr message) tree))))
+
+; > (encode '(A A A) sample-tree)
+; '(0 0 0)
+; > (encode '(A A C) sample-tree)
+; '(0 0 1 1 1)
