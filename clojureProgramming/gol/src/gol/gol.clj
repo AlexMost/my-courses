@@ -1,5 +1,5 @@
 (ns gol.gol)
 
-(defn render-scene
-  [width height live-cells]
+(defn empty-board
+  [width height]
   (repeat height (repeat width nil)))

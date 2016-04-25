@@ -6,4 +6,4 @@
 
 (defn -main
   [& args]
-  (pprint/pprint (gol/render-scene 10 10 [])))
+  (pprint/pprint (gol/empty-board 10 10)))
