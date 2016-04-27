@@ -3,13 +3,11 @@
 
 
 (defn empty-board
-  "Creates empty board w x h"
   [w h]
   (vec (repeat h (vec (repeat w nil)))))
 
 
 (defn populate
-  "Populates living cells into the empty board"
   [board living-cells]
   (reduce
     (fn [board coordinates] (assoc-in board coordinates :on))
@@ -28,5 +26,26 @@
 (defn count-neighbours
   [board loc]
   (count (filter #(get-in board %) (neighbours loc))))
+
+
+(defn cell-check
+  [board step]
+  (let [n-count (count-neighbours board step)
+        current (get-in board step)
+        new-cell (case n-count
+                   2 current
+                   3 :on
+                   nil)]
+    (if (= current new-cell)
+      board
+      (assoc-in board step new-cell))))
+
+
+(defn game-step
+  [board]
+  (let [h (count board)
+        w (count (nth board 0))
+        indicies (for [x (range 0 h) y (range 0 w)] [x y])]
+        (reduce cell-check board indicies)))
 
 
