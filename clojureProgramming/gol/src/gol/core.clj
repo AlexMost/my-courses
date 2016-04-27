@@ -9,10 +9,21 @@
   (print (str (char 27) "[;H")) ; move cursor to the top left corner of the screen
   )
 
+(def initial-state
+  (let [board (gol/empty-board 10 10)
+        live-cells [[0 0] [0 1] [0 2] [2 0] [1 1] [1 0] [3 3]]]
+    (gol/populate board live-cells)))
+
+
+(defn board-view
+  [board]
+  (map
+    (fn [row] (map #(if (= % nil) " " "*" ) row)) board))
+
 (defn -main
   [& args]
-  (loop []
+  (loop [board initial-state]
     (clear-screen)
-    (println "step")
+    (pprint/pprint (board-view board))
     (Thread/sleep 1000)
-    (recur)))
+    (recur (gol/game-step board))))
