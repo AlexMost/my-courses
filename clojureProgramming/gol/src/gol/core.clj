@@ -11,7 +11,7 @@
 
 (def initial-state
   (let [board (gol/empty-board 10 10)
-        live-cells [[0 0] [0 1] [0 2] [2 0] [1 1] [1 0] [3 3]]]
+        live-cells [[2 0] [2 1] [2 2] [1 2] [0 1]]]
     (gol/populate board live-cells)))
 
 
