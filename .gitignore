@@ -2,3 +2,5 @@
 .DS_Store
 *.pyc
 .idea
+*.o
+CProgrammingLanguage/dist/
