@@ -9,6 +9,12 @@ run1: 1.3.o 1.4.o 1.5.o
 1.7: 1.7.o
 	./dist/1.7
 
+1.8: 1.8.o
+	cat ./fixtures/1.8.txt | ./dist/1.8
+
+1.9: 1.9.o
+	cat ./fixtures/1.9.txt | ./dist/1.9
+
 dist:
 	mkdir -p dist
 
@@ -26,3 +32,9 @@ dist:
 
 1.7.o: chapter1/1.7.c dist
 	cc chapter1/1.7.c -o dist/1.7
+
+1.8.o: chapter1/1.8.c dist
+	cc chapter1/1.8.c -o dist/1.8
+
+1.9.o: chapter1/1.9.c dist
+	cc chapter1/1.9.c -o dist/1.9
