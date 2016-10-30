@@ -8,7 +8,7 @@
 #define HIST_X 10
 #define HIST_Y 10
 
-
+// this one will count the histogram only for the letters
 int main() {
 	int c, i, j, range, tabs, nls, spaces;
 	range = 'z' - 'a';
