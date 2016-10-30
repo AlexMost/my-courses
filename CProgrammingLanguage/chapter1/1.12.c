@@ -27,11 +27,10 @@ int main() {
 			state = IN;
 		}
 
-		if (state == IN) {
+		if (state == IN)
 			putchar(c);
-		}
 	}
-	
+
 	printf("\nsymbols - %d; words - %d; lines - %d\n", nc, nw, nl);
 	return(0);
 }
