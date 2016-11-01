@@ -22,10 +22,10 @@ int htoi(char hex[]) {
 			continue;
 
 		if (hex[i] >= '0' && hex[i] <= '9') {
-			n = n + h_number(hex[i]) * (int)pow(16, p);
+			n = n + h_number(hex[i]) * pow(16, p);
 			p++;
 		} else if (hex[i] >= 'a' && hex[i] <= 'f') {
-			n = n + h_letter(hex[i]) * (int)pow(16, p);
+			n = n + h_letter(hex[i]) * pow(16, p);
 			p++;
 		}
 	}
@@ -38,8 +38,8 @@ int main() {
 	char test1[] = "0xff";
 	char test2[] = "ff";
 	char test3[] = "0xaa";
-	printf("%d\n", htoi(test1));
-	printf("%d\n", htoi(test2));
-	printf("%d\n", htoi(test3));
+	printf("%s - %d\n", test1, htoi(test1));
+	printf("%s - %d\n", test2, htoi(test2));
+	printf("%s - %d\n", test3, htoi(test3));
 	return 0;
 }

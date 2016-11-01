@@ -4,6 +4,12 @@
 2.3: 2.3.o
 	./dist/2.3
 
+2.4: 2.4.o
+	./dist/2.4
+
+2.4.o: chapter2/2.4.c dist
+	cc chapter2/2.4.c -o dist/2.4
+
 2.3.o: chapter2/2.3.c dist
 	cc chapter2/2.3.c -o dist/2.3
 
