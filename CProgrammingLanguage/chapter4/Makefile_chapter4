@@ -1,5 +1,11 @@
 4.1: 4.1.o
 	./dist/4.1
 
+4.2: 4.2.o
+	./dist/4.2
+
+4.2.o: chapter4/4.2.c dist
+	cc chapter4/4.2.c -o dist/4.2
+
 4.1.o: chapter4/4.1.c dist
 	cc chapter4/4.1.c -o dist/4.1
