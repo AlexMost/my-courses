@@ -7,7 +7,7 @@ double atof(char s[]) {
 	int i, sign;
 	char exp_sign;
 	sign = 1;
-
+	exp = 1.0;
 	// strip whitespaces
 	for (i = 0; isspace(s[i]); i++);
 
@@ -41,14 +41,11 @@ double atof(char s[]) {
 
 		exp = pow(10, exp);
 
-		if(exp_sign == '-') {
-			return (sign * val / power) / exp;
-		} else {
-			return (sign * val / power) * exp;
-		}
+		if(exp_sign == '-')
+			exp = 1 / exp;
 	}
 
-	return sign * val / power;
+	return (sign * val / power) * exp;
 }
 
 int main() {
