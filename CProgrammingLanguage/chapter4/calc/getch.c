@@ -2,8 +2,8 @@
 
 #define GETCH_BUFF_SIZE 1000
 
-int buffer[GETCH_BUFF_SIZE];
-int bc = 0;
+static int buffer[GETCH_BUFF_SIZE];
+static int bc = 0;
 
 int getch(void) {
 	int c;
@@ -12,11 +12,11 @@ int getch(void) {
 	} else {
 		c = getchar();
 	}
-	// printf("next char - %c %d\n", c, c);
+
 	return c;
 }
 
-void ungetchar(int c) {
+void ungetchar(const int c) {
 	if (bc == GETCH_BUFF_SIZE) {
 		printf("Error: buffer is full\n");
 	} else {

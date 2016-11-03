@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include "calc.h"
 
-double stack[MAX_STACK_SIZE];
-int sp = 0;
+static double stack[MAX_STACK_SIZE];
+static int sp = 0;
 
-void push(double n) {
+void push(const double n) {
 	if (sp < MAX_STACK_SIZE) {
 		stack[sp++] = n;
 	} else {

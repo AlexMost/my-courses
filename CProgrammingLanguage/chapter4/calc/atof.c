@@ -1,7 +1,7 @@
 #include <ctype.h>
 #include <math.h>
 
-double atof(char s[]) {
+double atof(const char s[]) {
 	double val, power, exp;
 	int i, sign;
 	char exp_sign;
