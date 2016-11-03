@@ -10,20 +10,16 @@ void ungetchar(int c);
 
 
 int getopt(char s[]) {
-	int c, i;
-	i = 0;
+	int c, i = 0;
 
-	while((c = getch()) == SPACE || c == TAB);
-	s[0] = c;
-	if(!isdigit(c)) {
-		s[1] = EOL;
+	while((s[0] = c = getch()) == SPACE || c == TAB);
+
+	s[1] = EOL;
+	if(!isdigit(c))
 		return c;
-	}
 
-	while(isdigit(c = getch())){
-		i++;
-		s[i] = c;
-	}
+	while(isdigit(c = getch()))
+		s[++i] = c;
 
 	ungetchar(c);
 	s[++i] = EOL;
