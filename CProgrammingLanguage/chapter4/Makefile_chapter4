@@ -4,6 +4,13 @@
 4.2: 4.2.o
 	./dist/4.2
 
+4.13: 4.13.o
+	./dist/4.13
+
+
+4.13.o: chapter4/4.13.c dist
+	cc chapter4/4.13.c -o dist/4.13
+
 calc: calc.o
 	cat ./fixtures/calc1.txt | ./dist/calc
 
