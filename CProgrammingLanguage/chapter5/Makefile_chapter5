@@ -1,5 +1,12 @@
 5.1: 5.1.o
 	cat fixtures/5.1.txt | ./dist/5.1
 
+
+5.3: 5.3.o
+	./dist/5.3
+
+5.3.o: chapter5/5.3.c dist
+	cc chapter5/5.3.c -o dist/5.3
+
 5.1.o: chapter5/5.1.c dist
 	cc chapter5/5.1.c chapter4/calc/getch.c -o dist/5.1
