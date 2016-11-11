@@ -7,10 +7,16 @@
 5.4: 5.4.o
 	./dist/5.4
 
+5.8: 5.8.o
+	./dist/5.8
+
+5.8.o: chapter5/5.8.c dist
+	cc chapter5/5.8.c -o dist/5.8
+
 5.7: 5.7.o
 	cat fixtures/5.7.txt | ./dist/5.7
 
-5.7.o: chapter5/5.7.c dist
+ 5.7.o: chapter5/5.7.c dist
 	cc chapter5/alloc.c chapter5/getline.c chapter5/5.7.c -o dist/5.7
 
 5.4.o: chapter5/5.4.c dist
