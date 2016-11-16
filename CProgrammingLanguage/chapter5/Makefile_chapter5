@@ -16,6 +16,12 @@
 5.10: 5.10.o
 	./dist/5.10 11 2 -
 
+5.14: 5.14.o
+	./dist/5.14
+
+5.14.o: chapter5/5.14.c dist
+	cc chapter5/5.14.c -o dist/5.14
+
 5.10.o: chapter5/5.10.c chapter4/calc/stack.c chapter4/calc/calc.h chapter4/calc/getch.c chapter4/calc/getopt.c
 	cc chapter5/5.10.c chapter4/calc/stack.c chapter4/calc/getch.c chapter4/calc/getopt.c -o dist/5.10
 
