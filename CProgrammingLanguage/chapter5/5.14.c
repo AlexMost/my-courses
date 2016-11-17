@@ -7,7 +7,7 @@ int asc(char s1, char s2);
 int desc(char s1, char s2);
 
 int main() {
-	char arr[] = "634152";
+	char arr[] = {'6', '3', '4', '1', '5', '2'};
 	qsort(arr, 0, sizeof(arr) - 1, desc);
 	printf("%s\n", arr);
 	return 0;
