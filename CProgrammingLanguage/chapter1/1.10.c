@@ -19,6 +19,11 @@ int main() {
 			putchar('b');
 			continue;
 		}
+		if (c == SLASH) {
+			putchar('\\');
+			putchar('\\');
+			continue;
+		}
 		putchar(c);
 	}
 
