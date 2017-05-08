@@ -1,11 +1,10 @@
 // entab
-
 #include <stdio.h>
-#include "calc.h"
 #define SPACE ' '
 #define TAB '\t'
 
 const int TAB_SIZE = 4;
+int atoi(char ch[]);
 
 
 int main(int argc, char *argv[]) {
@@ -13,7 +12,7 @@ int main(int argc, char *argv[]) {
 	int tab_size = TAB_SIZE;
 
 	if (argc > 1) {
-		tab_size = atof(argv[1]);
+		tab_size = atoi(argv[1]);
 	}
 
 	int n = tab_size;

@@ -28,6 +28,12 @@
 5.11.o: chapter5/5.11.c dist
 	cc chapter5/5.11.c -o dist/5.11
 
+5.12.o: chapter5/5.12.c dist
+	cc chapter5/5.12.c -o dist/5.12
+
+5.12: 5.12.o
+	echo "wwwtesttesttest" | ./dist/5.12 -3 +3
+
 5.11: 5.11.o
 	echo "	ccc	ccc	ccc" | ./dist/5.11 40
 
