@@ -1,0 +1,5 @@
+6.1.b: chapter6/6.1.c dist
+	cc chapter6/6.1.c chapter4/calc/getch.c -o dist/6.1
+
+6.1: 6.1.b
+	cat fixtures/6.1.c | ./dist/6.1
