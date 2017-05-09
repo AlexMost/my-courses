@@ -31,6 +31,12 @@
 5.12.o: chapter5/5.12.c dist
 	cc chapter5/5.12.c -o dist/5.12
 
+5.13.o: chapter5/5.13.c chapter5/getline.c dist
+	cc chapter5/5.13.c chapter5/getline.c chapter5/alloc.c -o dist/tail
+
+5.13: 5.13.o
+	cat fixtures/5.7.txt | ./dist/tail -n 3
+
 5.12: 5.12.o
 	echo "wwwtesttesttest" | ./dist/5.12 -3 +3
 
@@ -40,7 +46,7 @@
 5.7: 5.7.o
 	cat fixtures/5.7.txt | ./dist/5.7
 
- 5.7.o: chapter5/5.7.c dist
+5.7.o: chapter5/5.7.c dist
 	cc chapter5/alloc.c chapter5/getline.c chapter5/5.7.c -o dist/5.7
 
 5.4.o: chapter5/5.4.c dist

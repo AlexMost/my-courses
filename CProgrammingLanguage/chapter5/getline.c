@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int mgetline(char *s,int lim)
+int mgetline(char *s, int lim)
 {
     int c;
     char *t=s;
@@ -9,8 +9,6 @@ int mgetline(char *s,int lim)
         *s++ = c;
     if( c == '\n')
         *s++ = c;
-
-    *s= '\0';
 
     return s-t;
 }
