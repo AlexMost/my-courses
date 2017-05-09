@@ -57,3 +57,9 @@
 
 5.1.o: chapter5/5.1.c dist
 	cc chapter5/5.1.c chapter4/calc/getch.c -o dist/5.1
+
+map.o: chapter5/map.c dist
+	cc chapter5/map.c -o dist/map
+
+map: map.o
+	./dist/map
