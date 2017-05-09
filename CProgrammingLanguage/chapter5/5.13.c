@@ -4,7 +4,6 @@
 #define MAXLINES 1000
 #define DEFAULT_SIZE 2;
 
-
 int mgetline(char *s, int lim);
 char *alloc(int size);
 void print_lines(char *lines[], int len);

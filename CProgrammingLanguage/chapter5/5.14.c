@@ -6,9 +6,15 @@ void qsort(char s[], int left, int right, int (*comp)(char, char));
 int asc(char s1, char s2);
 int desc(char s1, char s2);
 
-int main() {
+int main(int argc, char *argv[]) {
+	int is_reverse = 0;
+
+	if (argc > 1 && strcmp(argv[1], "-r") == 0) {
+		is_reverse = 1;
+	}
+	
 	char arr[] = {'6', '3', '4', '1', '5', '2'};
-	qsort(arr, 0, sizeof(arr) - 1, desc);
+	qsort(arr, 0, sizeof(arr) - 1, is_reverse ? desc : asc);
 	printf("%s\n", arr);
 	return 0;
 }

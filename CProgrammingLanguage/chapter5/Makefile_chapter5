@@ -17,7 +17,7 @@
 	./dist/5.10 11 2 -
 
 5.14: 5.14.o
-	./dist/5.14
+	./dist/5.14 -r
 
 5.14.o: chapter5/5.14.c dist
 	cc chapter5/5.14.c -o dist/5.14
