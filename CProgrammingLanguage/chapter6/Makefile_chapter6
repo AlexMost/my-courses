@@ -3,3 +3,14 @@
 
 6.1: 6.1.b
 	cat fixtures/6.1.c | ./dist/6.1
+
+word_count.b: chapter6/word_count.c
+word_count.b: chapter6/getword.c
+word_count.b: chapter4/calc/getch.c
+	cc chapter6/word_count.c\
+		chapter6/getword.c\
+		chapter4/calc/getch.c\
+		 -o dist/word_count
+
+word_count: word_count.b
+	echo "now is the time for all good men to come to the aid of their party" | dist/word_count
