@@ -6,11 +6,26 @@
 
 word_count.b: chapter6/word_count.c
 word_count.b: chapter6/getword.c
+word_count.b: chapter6/tree.c
 word_count.b: chapter4/calc/getch.c
 	cc chapter6/word_count.c\
 		chapter6/getword.c\
+		chapter6/tree.c\
 		chapter4/calc/getch.c\
 		 -o dist/word_count
 
 word_count: word_count.b
 	echo "now is the time for all good men to come to the aid of their party" | dist/word_count
+
+6.2.b: chapter6/6.2.c dist
+6.2.b: chapter6/getword.c
+6.2.b: chapter6/tree.c
+6.2.b: chapter4/calc/getch.c
+	cc chapter6/6.2.c\
+		chapter6/getword.c\
+		chapter6/tree.c\
+		chapter4/calc/getch.c\
+		 -o dist/6.2
+
+6.2: 6.2.b
+	echo "zzzzzz1 aaa1 aa2 zzz2 zzz3 aaa2 ccc1 ccc3" | dist/6.2
