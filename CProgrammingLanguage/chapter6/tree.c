@@ -17,7 +17,8 @@ struct tnode *talloc(void) {
 struct tnode *addtree(
 	struct tnode *root,
 	char *word,
-	int (*cmp)(const char *, const char *)) {
+	int (*cmp)(const char *, const char *)
+) {
 	int cond;
 	if (root == NULL) {
 		root = talloc();

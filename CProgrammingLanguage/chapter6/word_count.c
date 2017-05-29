@@ -15,7 +15,7 @@ struct tnode {
 int getword(char *word, int lim);
 struct tnode *addtree(
 	struct tnode *root,
-	char *word, int (*cmp)(const char*, const char*));
+	char *word, int (*cmp)(const char *, const char *));
 struct tnode *talloc(void);
 void treeprint(struct tnode *p);
 

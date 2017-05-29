@@ -13,11 +13,18 @@ struct tnode {
 };
 
 int getword(char *word, int lim);
+
 struct tnode *addtree(
 	struct tnode *root,
-	char *word, int (*cmp)(const char*, const char*));
+	char *word,
+	int (*cmp)(const char*, const char*)
+);
+
 struct tnode *talloc(void);
 void treeprint(struct tnode *p);
+
+int mycomp(char *word, char *word2);
+int limit = 3;
 
 int main() {
 	printf("Word count is working ...\n");
@@ -27,9 +34,10 @@ int main() {
 
 	while(getword(word, MAXWORD) != EOF) {
 		if (isalpha(word[0])) {
-			root = addtree(root, word, &strcmp);
+			root = addtree(root, word, &mycomp);
 		}
 	}
+
 	treeprint(root);
 	return 0;
 }
@@ -38,7 +46,27 @@ int main() {
 void treeprint(struct tnode *p) {
 	if (p != NULL) {
 		treeprint(p->left);
-		printf("%4d %s\n", p->count, p->word);
+		if (p->count >= 2) {
+			printf("%4d %s\n", p->count, p->word);
+		}
 		treeprint(p->right);
 	}
+}
+
+int mycomp(char *word, char *word2) {
+	char c, c2;
+	char *w = word;
+	int i;
+	while((c = *w++) != '\0') {
+		i = w - word - 1;
+		if (i >= limit) break;
+		c2 = word2[i];
+		if (c2 == '\0') break;
+		if (c == c2) continue;
+		if (c > c2) {
+			return 1;
+		}
+		return -1;
+	}
+	return 0;
 }
