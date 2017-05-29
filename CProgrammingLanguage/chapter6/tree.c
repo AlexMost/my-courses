@@ -14,6 +14,16 @@ struct tnode *talloc(void) {
 	return (struct tnode *) malloc(sizeof(struct tnode));
 }
 
+struct tnode *create_tnode(char *word, int count) {
+	struct tnode *node;
+	node = talloc();
+	node->word = strdup(word);
+	node->count = count;
+	node->left = NULL;
+	node->right = NULL;
+	return node;
+}
+
 struct tnode *addtree(
 	struct tnode *root,
 	char *word,
@@ -21,11 +31,7 @@ struct tnode *addtree(
 ) {
 	int cond;
 	if (root == NULL) {
-		root = talloc();
-		root->word = strdup(word);
-		root->count = 1;
-		root->left = NULL;
-		root->right = NULL;
+		root = create_tnode(word, 1);
 	} else if ((cond = (*cmp)(word, root->word)) == 0) {
 		root->count += 1;
 	} else if (cond < 0) {
@@ -38,11 +44,7 @@ struct tnode *addtree(
 
 struct tnode *addnode(struct tnode *tree, struct tnode *to_add) {
 	if (tree == NULL) {
-		tree = talloc();
-		tree->word = strdup(to_add->word);
-		tree->count = to_add->count;
-		tree->left = NULL;
-		tree->right = NULL;
+		tree = create_tnode(to_add->word, to_add->count);
 	} else if (tree->count <= to_add->count) {
 		tree->left = addnode(tree->left, to_add);
 	} else {
