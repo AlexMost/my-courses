@@ -15,7 +15,7 @@ word_count.b: chapter4/calc/getch.c
 		 -o dist/word_count
 
 word_count: word_count.b
-	echo "now is the time for all good men to come to the aid of their party" | dist/word_count
+	echo "now is now all now the time for all good men to come to the aid of their party" | dist/word_count
 
 6.2.b: chapter6/6.2.c dist
 6.2.b: chapter6/getword.c

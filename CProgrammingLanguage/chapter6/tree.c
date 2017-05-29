@@ -35,3 +35,18 @@ struct tnode *addtree(
 	}
 	return root;
 }
+
+struct tnode *addnode(struct tnode *tree, struct tnode *to_add) {
+	if (tree == NULL) {
+		tree = talloc();
+		tree->word = strdup(to_add->word);
+		tree->count = to_add->count;
+		tree->left = NULL;
+		tree->right = NULL;
+	} else if (tree->count <= to_add->count) {
+		tree->left = addnode(tree->left, to_add);
+	} else {
+		tree->right = addnode(tree->right, to_add);
+	}
+	return tree;
+}
