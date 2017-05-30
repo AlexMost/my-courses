@@ -29,3 +29,14 @@ word_count: word_count.b
 
 6.2: 6.2.b
 	echo "zzzzzz1 aaa1 aa2 zzz2 zzz3 aaa2 ccc1 ccc3" | dist/6.2
+
+6.5.b: chapter6/6.5.c dist
+6.5.b: chapter6/hash.c
+6.5.b: chapter4/calc/getch.c
+	cc chapter6/6.5.c\
+		chapter4/calc/getch.c\
+		chapter6/hash.c\
+	 	 -o dist/6.5
+
+6.5: 6.5.b
+	dist/6.5
