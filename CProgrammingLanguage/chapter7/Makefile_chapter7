@@ -4,3 +4,9 @@
 7.1: 7.1.b
 	echo "test Test" | ./dist/7.1
 	echo "test Test" | ./DIST/7.1
+
+7.3.b: chapter7/7.3.c dist
+	cc chapter7/7.3.c -o dist/7.3
+
+7.3: 7.3.b
+	./dist/7.3
