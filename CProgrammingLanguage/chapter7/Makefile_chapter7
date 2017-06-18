@@ -10,3 +10,17 @@
 
 7.3: 7.3.b
 	./dist/7.3
+
+simple_calc.b: chapter7/simple_calc.c dist
+	cc chapter7/simple_calc.c -o dist/simple_calc
+
+simple_calc: simple_calc.b
+	echo "e 1e 1 10     1" | ./dist/simple_calc
+
+
+7.4.b: chapter7/7.4.c chapter7/minscanf.c dist
+	cc chapter7/7.4.c chapter7/minscanf.c -o dist/7.4
+
+7.4: 7.4.b
+	echo "c 66" | ./dist/7.4
+	echo "v 66" | ./dist/7.4
