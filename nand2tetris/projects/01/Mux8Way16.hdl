@@ -30,7 +30,6 @@ CHIP Mux8Way16 {
     And(a=nota, b=realb, out=notaAndb); // (not a) and b
     And(a=notaAndb, b=notc, out=notaAndbAndnotc); // (not a) and b and (not c)
     And(a=notaAndb, b=realc, out=notaAndbAndc); // (not a) and b and c
-    
 
     // S2
     And(a=nota, b=notb, out=notaAndnotb); // (not a) and (not b)
