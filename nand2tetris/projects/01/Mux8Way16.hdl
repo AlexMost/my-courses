@@ -18,5 +18,39 @@ CHIP Mux8Way16 {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    Not(in=sel[2], out=nota);
+    Not(in=sel[1], out=notb);
+    Not(in=sel[0], out=notc);
+    
+    Not(in=nota, out=reala);
+    Not(in=notb, out=realb);
+    Not(in=notc, out=realc);
+
+    // S1
+    And(a=nota, b=realb, out=notaAndb); // (not a) and b
+    And(a=notaAndb, b=notc, out=notaAndbAndnotc); // (not a) and b and (not c)
+    And(a=notaAndb, b=realc, out=notaAndbAndc); // (not a) and b and c
+    
+
+    // S2
+    And(a=nota, b=notb, out=notaAndnotb); // (not a) and (not b)
+    And(a=notaAndnotb, b=realc, out=notaAndnotbAndc); // (not a) and (not b) and c
+
+    // S3
+    And(a=reala, b=realb, out=aAndb); // a and b
+    And(a=aAndb, b=notc, out=aAndbAndnotc); // a and b and (not c)
+    And(a=aAndb, b=realc, out=aAndbAndc); // a and b and c
+
+    // S4
+    And(a=reala, b=notb, out=aAndnotb); // a and (not b)
+    And(a=aAndnotb, b=realc, out=aAndnotbAndc); // a and (not b) and c
+
+    Or(a=notaAndbAndnotc, b=notaAndbAndc, out=s1);
+    Or(a=notaAndnotbAndc, b=notaAndbAndc, out=s2);
+    Or(a=aAndbAndnotc, b=aAndbAndc, out=s3);
+    Or(a=aAndnotbAndc, b=aAndbAndc, out=s4);
+
+    Mux4Way16(a=a, b=b, c=c, d=d, sel[1]=s1, sel[0]=s2, out=mux1);
+    Mux4Way16(a=e, b=f, c=g, d=h, sel[1]=s3, sel[0]=s4, out=mux2);
+    Mux16(a=mux1, b=mux2, sel=reala, out=out);
 }
