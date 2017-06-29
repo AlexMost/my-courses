@@ -55,5 +55,11 @@ CHIP ALU {
     Not16(in=sumxy, out=sumxynot);
     Not16(in=bitwisexy, out=bitwisexynot);
 
-    Mux4Way16(a=bitwisexy, b=bitwisexynot, c=sumxy, d=sumxynot, sel[0]=no, sel[1]=f, out=out);    
+    Mux4Way16(a=bitwisexy, b=bitwisexynot, c=sumxy, d=sumxynot, sel[0]=no, sel[1]=f, out[0..7]=lowout, out[8..15]=highout, out=out);
+
+    // flags
+    Or8Way(in=lowout, out=or1);
+    Or8Way(in=highout, out=or2, out=ng);
+    Or(a=or1, b=or2, out=moreThanZero);
+    Not(in=moreThanZero, out=zr);
 }
