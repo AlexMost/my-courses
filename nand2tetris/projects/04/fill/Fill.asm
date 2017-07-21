@@ -20,9 +20,30 @@ D=A  // D=0
 @color
 M=-1
 
+@prev
+M=0
+
+@cur
+M=0
+
 (KBDLOOP)
 	@KBD
 	D=M
+
+	@cur
+	M=D
+
+	@prev
+	D=D-M
+
+	@KBDLOOP
+	D;JEQ
+
+	@cur
+	D=M
+
+	@prev
+	M=D
 
 	@BLACK
 	D;JNE
