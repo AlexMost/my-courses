@@ -8,10 +8,20 @@
 
 // Put your code here.
 
-	@R2
-	M=0
+@R2
+M=0
 
-(LOOP)
+@R0
+D=M
+@END
+D;JEQ
+
+@R1
+D=M
+@END
+D;JEQ
+
+(LOOP)      // while R1 != 0
 	
 	@R0
 	D=M     // R2 = R1 + R2
@@ -19,7 +29,7 @@
 	M=M+D
 
 	@R1
-	M=M-1
+	M=M-1   // R1 = R - 1
 	D=M
 
 	@LOOP
