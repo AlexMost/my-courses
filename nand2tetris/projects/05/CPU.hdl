@@ -40,12 +40,17 @@ CHIP CPU {
 
     PARTS:
     // Put your code here:
-    Mux16(a=instruction, b=AOut, sel=instruction[15], out=InstrOrAddr);
-    Not(in=instruction[15], out=isAdress);
-    Or(a=isAdress, b=instruction[5], out=ASel);
+
+    Mux16(a=instruction, b=ALUOut, sel=instruction[15], out=InstrOrAddr);
+    Not(in=instruction[15], out=isAInstr);
+    Not(in=isAInstr, out=isCInstr);
+    Or(a=isAInstr, b=instruction[5], out=ASel);
 
     ARegister(in=InstrOrAddr, load=ASel, out=AOut, out[0..14]=addressM);
-    DRegister(in=ALUOut, load=instruction[4], out=DOut);
+
+    And(a=isCInstr, b=instruction[4], out=loadD);
+    DRegister(in=ALUOut, load=loadD, out=DOut);
+
     Mux16(a=AOut, b=inM, sel=instruction[12], out=AddrOrMem);
     ALU(x=DOut, y=AddrOrMem, zx=instruction[11],
                              nx=instruction[10],
@@ -59,6 +64,57 @@ CHIP CPU {
                              zr=zeroRes,
                              ng=negRes);
 
-    Not(in=instruction[12], out=notMem);
-    Not(in=notMem, out=writeM);
+    And(a=instruction[3], b=isCInstr, out=writeM);
+
+    Not(in=zeroRes, out=notZero);
+    Not(in=negRes, out=posRes);
+
+    PC(in=AOut, reset=reset, inc=true, load=needToLoadPC, out[0..14]=pc);
+
+    DMux8Way(
+        in=true,
+            sel[0]=instruction[0],
+            sel[1]=instruction[1],
+            sel[2]=instruction[2],
+        a=noJumpOut,
+        b=JGTOut,
+        c=JEQOut,
+        d=JGEOut,
+        e=JLTOut,
+        f=JNEOut,
+        g=JLEOut,
+        h=JMPOut);
+
+    And(a=noJumpOut, b=false, out=noJMP); // no jump
+
+    And(a=notZero, b=posRes, out=GT);
+    And(a=JGTOut, b=GT, out=JGT);         // JGT
+    
+    And(a=JEQOut, b=zeroRes, out=JEQ);    // JEQ
+
+    Or(a=zeroRes, b=posRes, out=GE);
+    And(a=JGEOut, b=GE, out=JGE);         // JGE
+
+    And(a=JLTOut, b=negRes, out=JLT);     // JLT
+    And(a=JNEOut, b=notZero, out=JNE);    // JNE
+
+    Or(a=zeroRes, b=negRes, out=LE);
+    And(a=JLEOut, b=LE, out=JLE);         // JLE
+
+    And(a=JMPOut, b=true, out=JMP);       // JMP
+
+    Or8Way(
+        in[0]=noJMP,
+        in[1]=JGT,
+        in[2]=JEQ,
+        in[3]=JGE,
+        in[4]=JLT,
+        in[5]=JNE,
+        in[6]=JLE,
+        in[7]=JMP,
+        out=needToJump
+    );
+
+    And(a=needToJump, b=isCInstr, out=needToLoadPC);
+
 }
