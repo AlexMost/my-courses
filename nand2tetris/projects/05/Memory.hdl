@@ -27,5 +27,24 @@ CHIP Memory {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    Not(in=address[14], out=isRAM);                                         // IsRAM
+
+    And16(a[0..14]=address, a[15]=false, 
+    	  b[0..12]=true, b[13..14]=false, b[15]=true,                       // IsKBD
+    	  out[0..7]=lowKBD,
+    	  out[8..15]=highKBD);
+    Or8Way(in=lowKBD, out=lowIsKbdOut);
+    Or8Way(in=highKBD, out=highIsKbdOut);
+    Or(a=lowIsKbdOut, b=highIsKbdOut, out=isNotKbd);
+    Not(in=isNotKbd, out=isKbdMul);
+    And(a=address[14], b=isKbdMul, out=isKbd);
+
+    DMux(in=load, sel=isRAM, a=loadScreen, b=loadRAM);
+
+    RAM16K(in=in, load=loadRAM, address=address[0..13], out=RAMout);
+    Screen(in=in, load=loadScreen, address=address[0..12], out=outScreen);
+    Keyboard(out=kbdOut);
+
+    Mux16(a=outScreen, b=RAMout, sel=isRAM, out=RAMOrScreen);
+    Mux16(a=RAMOrScreen, b=kbdOut, sel=isKbd, out=out);
 }
