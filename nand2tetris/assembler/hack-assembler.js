@@ -3,17 +3,11 @@ const { COMP_MAP } = require('./defs');
 
 const WORD_LEN = 16;
 const COMP_REGEX_WITH_DEST = /=([A-Z!\+\-\|\&01]*);?/;
-const COMP_REGEXT_WITHOUT_DEST = /([A-Z!\+\-\|\&01]*);/
+const COMP_REGEXT_WITHOUT_DEST = /([A-Z]*);/;
+const DEST_REGEX = /([A-Z]*)=/;
 
 function dec2bin(dec){
     return (dec >>> 0).toString(2);
-}
-
-function assembleA(line) {
-	const addr = getAValue(line);
-	const binAddr = dec2bin(addr);
-	const zeros = WORD_LEN - binAddr.length;
-	return `${'0'.repeat(zeros)}${binAddr}`;
 }
 
 function getCompSymb(line) {
@@ -36,9 +30,26 @@ function getComp(line) {
 	return bin;
 }
 
+function getDest(line) {	
+	if (line.includes('=')) {
+		const dest = line.match(DEST_REGEX)[1];
+		const check = (n) => dest.includes(n) ? 1 : 0;
+		return `${check('A')}${check('D')}${check('M')}`;
+	}
+	return '000';
+}
+
+function assembleA(line) {
+	const addr = getAValue(line);
+	const binAddr = dec2bin(addr);
+	const zeros = WORD_LEN - binAddr.length;
+	return `${'0'.repeat(zeros)}${binAddr}`;
+}
+
 function assembleC(line) {
 	const compBin = getComp(line);
-	return `111${compBin}`;
+	const destBin = getDest(line);
+	return `111${compBin}${destBin}`;
 }
 
 module.exports = {};
@@ -47,6 +58,7 @@ if (process.env.NODE_ENV === 'test') {
 	module.exports._test = {
 		assembleA,
 		getCompSymb,
-		getComp
+		getComp,
+		getDest
 	}
 }

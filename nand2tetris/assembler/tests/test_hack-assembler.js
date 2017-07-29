@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const fs = require('fs');
 const { _test } = require('../hack-assembler');
-const { assembleA, getCompSymb, getComp } = _test;
+const { assembleA, getCompSymb, getComp, getDest } = _test;
 
 describe('hack-assembler', () => {
 	it('assembleA should return valid machine code', () => {
@@ -23,5 +23,15 @@ describe('hack-assembler', () => {
 		const input = 'D=D+A';
 		const expected = '0000010';
 		expect(getComp(input)).to.eql(expected);
+	})
+	it('getComp should decode bin with jump', () => {
+		const input = 'D;JGT';
+		const expected = '0001100';
+		expect(getComp(input)).to.eql(expected);
+	})
+	it('getDest should decode dest', () => {
+		const input = 'DM=M+1;JEZ';
+		const expected = '011';
+		expect(getDest(input)).to.eql(expected);
 	})
 });
