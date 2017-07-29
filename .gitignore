@@ -4,3 +4,5 @@
 .idea
 *.o
 CProgrammingLanguage/dist/
+*.log
+node_modules
