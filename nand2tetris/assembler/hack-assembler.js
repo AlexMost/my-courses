@@ -3,7 +3,7 @@ const { COMP_MAP, JMP_MAP } = require('./defs');
 
 const WORD_LEN = 16;
 const COMP_REGEX_WITH_DEST = /=([A-Z!\+\-\|\&01]*);?/;
-const COMP_REGEXT_WITHOUT_DEST = /([A-Z]*);/;
+const COMP_REGEXT_WITHOUT_DEST = /([A-Z01]*);/;
 const DEST_REGEX = /([A-Z]*)=/;
 
 function dec2bin(dec){
@@ -63,7 +63,15 @@ function assembleC(line) {
 	return `111${compBin}${destBin}${jmpBin}`;
 }
 
-module.exports = {};
+function assembleLine(line) {
+	return isAInstr(line) ? assembleA(line) : assembleC(line);
+}
+
+function assemble(lines) {
+	return lines.map(assembleLine);
+}
+
+module.exports = { assemble };
 
 if (process.env.NODE_ENV === 'test') {
 	module.exports._test = {
