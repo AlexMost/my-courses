@@ -97,7 +97,7 @@ function discoverVariables(lines, asmState) {
 		if (!isAInstr(line)) continue;
 		if (isAddr(line)) continue;
 		const varName = getAValue(line);
-		if (asmState.getSymbol(varName)) continue;
+		if (asmState.getSymbol(varName) !== undefined) continue;
 		asmState.setVar(varName);
 	}
 }
