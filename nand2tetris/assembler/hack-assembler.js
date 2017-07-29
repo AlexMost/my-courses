@@ -1,5 +1,5 @@
 const { isAInstr, getAValue } = require('./utils');
-const { COMP_MAP } = require('./defs');
+const { COMP_MAP, JMP_MAP } = require('./defs');
 
 const WORD_LEN = 16;
 const COMP_REGEX_WITH_DEST = /=([A-Z!\+\-\|\&01]*);?/;
@@ -39,6 +39,16 @@ function getDest(line) {
 	return '000';
 }
 
+function getJump(line) {
+	const jmp = line.split(';')[1];
+	if (!jmp) return '000';
+	const jmpBin = JMP_MAP[jmp];
+	if (!jmpBin) {
+		throw new Error(`Can not decode jump command '#{jmp}'`);
+	}
+	return jmpBin;
+}
+
 function assembleA(line) {
 	const addr = getAValue(line);
 	const binAddr = dec2bin(addr);
@@ -49,7 +59,8 @@ function assembleA(line) {
 function assembleC(line) {
 	const compBin = getComp(line);
 	const destBin = getDest(line);
-	return `111${compBin}${destBin}`;
+	const jmpBin = getJump(line);
+	return `111${compBin}${destBin}${jmpBin}`;
 }
 
 module.exports = {};
@@ -59,6 +70,8 @@ if (process.env.NODE_ENV === 'test') {
 		assembleA,
 		getCompSymb,
 		getComp,
-		getDest
+		getDest,
+		getJump,
+		assembleC
 	}
 }
