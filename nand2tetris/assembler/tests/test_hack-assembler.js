@@ -9,9 +9,14 @@ describe('hack-assembler', () => {
 		const expected = '0000000000010000';
 		expect(assembleA(input)).to.eql(expected);
 	});
-	it('getCompSymb should get comp symbolic part', () => {
+	it('getCompSymb should get comp symbolic part with dest', () => {
 		const input = 'M=A+1;JNZ';
 		const expected = 'A+1';
+		expect(getCompSymb(input)).to.eql(expected);
+	})
+	it('getCompSymb should get comp symbolic part without dest', () => {
+		const input = 'D;JNZ';
+		const expected = 'D';
 		expect(getCompSymb(input)).to.eql(expected);
 	})
 	it('getComp should decode bin computation', () => {

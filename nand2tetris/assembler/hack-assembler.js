@@ -2,7 +2,8 @@ const { isAInstr, getAValue } = require('./utils');
 const { COMP_MAP } = require('./defs');
 
 const WORD_LEN = 16;
-const COMP_REGEX = /=([A-Z!\+\-\|\&01]*);?/;
+const COMP_REGEX_WITH_DEST = /=([A-Z!\+\-\|\&01]*);?/;
+const COMP_REGEXT_WITHOUT_DEST = /([A-Z!\+\-\|\&01]*);/
 
 function dec2bin(dec){
     return (dec >>> 0).toString(2);
@@ -16,9 +17,15 @@ function assembleA(line) {
 }
 
 function getCompSymb(line) {
-	const res = line.match(COMP_REGEX);
-	if (!res) throw Error(`failed to parse expression ${line}`);
-	return res[1];
+	if (line.includes('=')) {
+		const res = line.match(COMP_REGEX_WITH_DEST);
+		return res[1];
+	}
+	if (line.includes(';')) {
+		const res = line.match(COMP_REGEXT_WITHOUT_DEST);
+		return res[1];
+	}
+	throw Error(`failed to parse expression '${line}'`);
 }
 
 function getComp(line) {
@@ -31,6 +38,7 @@ function getComp(line) {
 
 function assembleC(line) {
 	const compBin = getComp(line);
+	return `111${compBin}`;
 }
 
 module.exports = {};
