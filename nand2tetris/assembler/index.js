@@ -1,11 +1,12 @@
 const { getLines } = require('./parser');
-const { getDefaultSymbols } = require('./hack-assembler');
+const { AsmState, discoverLabels } = require('./hack-assembler');
 
 function main(filePath) {
 	console.log(`Starting assemble file '${filePath}' ...`);
 	const lines = getLines(filePath);
-	console.log(getDefaultSymbols());
-	console.log(lines);
+	const state = new AsmState();
+	const withLables = discoverLabels(lines, state);
+	const withVariables = discoverVariables(withLables, state);
 }
 
 main(process.argv[2]);
