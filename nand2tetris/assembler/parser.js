@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { isAInstr, getAValue } = require('./utils');
 
 const COMMENT_REGEXP = /\/\/[\s\S]*$/g;
 const SPACE = /\s/g;
@@ -21,7 +22,9 @@ function trimComments(rawLine) {
 }
 
 function stripSpacesAndComments(rawLines) {
-	return rawLines.map((line) => trimComments(line)).filter((line) => line);
+	return rawLines
+	.map((line) => trimComments(line))
+	.filter((line) => line);
 }
 
 function getLines(filePath) {
@@ -60,13 +63,6 @@ function isLabel(line) {
 	return line[0] === '(';
 }
 
-function isACommand(line) {
-	return line[0] === '@';
-}
-
-function getAValue(line) {
-	return line.replace('@', '');
-}
 function isNumeric(str){
     return /^\d+$/.test(str);
 }
@@ -98,7 +94,7 @@ function discoverLabels(lines, asmState) {
 function discoverVariables(lines, asmState) {
 	for (let i = 0; i < lines.length; i++) {
 		const line = lines[i];
-		if (!isACommand(line)) continue;
+		if (!isAInstr(line)) continue;
 		if (isAddr(line)) continue;
 		const varName = getAValue(line);
 		if (asmState.getSymbol(varName)) continue;
@@ -108,7 +104,7 @@ function discoverVariables(lines, asmState) {
 
 function resolveAddresses(lines, asmState) {
 	return lines.map((line) => {
-		if(isACommand(line) && !isAddr(line)) {
+		if(isAInstr(line) && !isAddr(line)) {
 			const symbol = getAValue(line);
 			const addr = asmState.getSymbol(symbol);
 			return `@${addr}`
