@@ -1,5 +1,5 @@
 const { getLines } = require('./parser');
-const { AsmState, discoverLabels } = require('./hack-assembler');
+const { AsmState, discoverLabels, resolveAddresses } = require('./hack-assembler');
 
 function main(filePath) {
 	console.log(`Starting assemble file '${filePath}' ...`);

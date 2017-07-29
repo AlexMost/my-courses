@@ -87,8 +87,20 @@ function discoverVariables(lines, asmState) {
 	}
 }
 
+function resolveAddresses(lines, asmState) {
+	return lines.map((line) => {
+		if(isACommand(line) && !isAddr(line)) {
+			const symbol = getAValue(line);
+			const addr = asmState.getSymbol(symbol);
+			return `@${addr}`
+		}
+		return line;
+	});
+}
+
 module.exports = { 
 	AsmState,
 	discoverLabels,
-	discoverVariables
+	discoverVariables,
+	resolveAddresses
 };
