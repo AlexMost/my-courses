@@ -1,22 +1,27 @@
-const checkArg = (name, arg) => {
+const { SEGMENTS } = require('./defs');
+
+const mustExist = (name, arg) => {
 	if (arg === undefined) {
 		throw new Error(`Argument '${ name }' must be present`)
 	}
 }
 
 class Statement {
-	constructor(command) {
-		checkArg('command', command);
-		this.command = command;
+	constructor(line) {
+		mustExist('line', line);
+		this._line = line;
+	}
+	getLine() {
+		return this._line;
 	}
 }
 
 class PushPop extends Statement {
-	constructor(command, segment, value) {
-		super(command);
+	constructor(segment, value, line) {
+		super(line);
 
-		checkArg('segment', segment);
-		checkArg('value', value);
+		mustExist('segment', segment);
+		mustExist('value', value);
 
 		this._segment = segment;
 		this._value = value;
@@ -32,9 +37,9 @@ class PushPop extends Statement {
 }
 
 class Pop extends PushPop {
-	constructor(command, segment, value) {
-		super(command, segment, value);
-		if (segment == 'constant') {
+	constructor(segment, value, line) {
+		super(segment, value, line);
+		if (segment == SEGMENTS.CONST) {
 			throw new Error(
 				'Can not create Pop statement for the constant segment');
 		}
