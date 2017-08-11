@@ -1,7 +1,16 @@
 const { expect } = require('chai');
-const { _test } = require('../parser');
-const { Push } = require('../types');
+const { _test, parseVMCode } = require('../parser');
+const { Push, Pop } = require('../types');
 const { cleanLine, readRawLines, parseStatement } = _test;
+
+describe('parser parseVMCode', () => {
+	it('should parse vm code to statements', () => {
+		const filepath = './tests/fixtures/test1.vm';
+		const [push, pop] = parseVMCode(filepath);
+		expect(push).to.be.an.instanceof(Push);
+		expect(pop).to.be.an.instanceof(Pop);
+	});
+});
 
 describe('parser cleanLine', () => {
 	it('should parse lines without comments', () => {
@@ -27,5 +36,11 @@ describe('parser parseStatement', () => {
 		const line = 'push constant 10';
 		const stmt = parseStatement(line);
 		expect(stmt).to.be.an.instanceof(Push);
+	});
+
+	it('should parse pop statement', () => {
+		const line = 'pop local 10';
+		const stmt = parseStatement(line);
+		expect(stmt).to.be.an.instanceof(Pop);
 	});
 });

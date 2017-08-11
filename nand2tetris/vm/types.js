@@ -1,6 +1,6 @@
 const checkArg = (name, arg) => {
 	if (arg === undefined) {
-		throw new Error(`Argument ${ name } must be present`)
+		throw new Error(`Argument '${ name }' must be present`)
 	}
 }
 
@@ -11,10 +11,10 @@ class Statement {
 	}
 }
 
-class Push extends Statement {
+class PushPop extends Statement {
 	constructor(command, segment, value) {
 		super(command);
-		
+
 		checkArg('segment', segment);
 		checkArg('value', value);
 
@@ -31,4 +31,16 @@ class Push extends Statement {
 	}
 }
 
-module.exports = { Push }
+class Pop extends PushPop {
+	constructor(command, segment, value) {
+		super(command, segment, value);
+		if (segment == 'constant') {
+			throw new Error(
+				'Can not create Pop statement for the constant segment');
+		}
+	}
+}
+
+class Push extends PushPop {}
+
+module.exports = { Push, Pop }

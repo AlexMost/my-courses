@@ -1,6 +1,6 @@
 const fs = require('fs');
 const EOL = require('os').EOL
-const { Push } = require('./types');
+const { Push, Pop } = require('./types');
 
 const COMMENT_REGEXP = /\/\/[\s\S]*$/g;
 const SPACE = /\s/g;
@@ -13,6 +13,8 @@ function parseStatement(line) {
 	switch (command) {
 		case 'push':
 			return new Push(command, segment, value);
+		case 'pop':
+			return new Pop(command, segment, value);
 		default:
 			throw new Error(`Unknown statement ${ line }`);
 	}
@@ -32,7 +34,7 @@ function readRawLines(filepath) {
 }
 
 function parseVMCode(filepath) {
-	const lines = readRawLines(filepath);
+	return readRawLines(filepath).map(parseStatement);
 }
 
 module.exports = { parseVMCode };
