@@ -1,4 +1,4 @@
-const { SEGMENTS } = require('./defs');
+const { SEGMENTS, SEGMENT_MAP } = require('./defs');
 const EOL = require('os').EOL
 
 function translatePush(push) {
@@ -6,14 +6,13 @@ function translatePush(push) {
 	const value = push.getValue();
 	let segmentPointer;
 
-	switch (segment) {
-		case SEGMENTS.CONST:
-			segmentPointer = 'SP';
-			break;
-		default:
-			throw new Error(`Unknown segment "${segment}"`);
+	if (SEGMENT_MAP[segment]) {
+		segmentPointer = SEGMENT_MAP[segment];
+	} else if(segment === SEGMENTS.STATIC) {
+		const [label] = push.getFilename().split('.');
+		segmentPointer = `${label}.${value}`;
 	}
-
+	
 	const lines = [
 		`// ${push.getLine()}`,
 		`@${value}`,
@@ -26,7 +25,7 @@ function translatePush(push) {
 		`@${segmentPointer}`,
 		`M=M+1`
 	]
-	
+
 	return lines.join(EOL) + EOL;
 }
 

@@ -10,6 +10,12 @@ describe('parser parseVMCode', () => {
 		expect(push).to.be.an.instanceof(Push);
 		expect(pop).to.be.an.instanceof(Pop);
 	});
+
+	it('shlould apply meta to statements', () => {
+		const filepath = './tests/fixtures/static.vm'
+		const [push] = parseVMCode(filepath);
+		expect(push.getFilename()).to.eql('static.vm');
+	});
 });
 
 describe('parser cleanLine', () => {
@@ -34,13 +40,13 @@ describe('parser readRawLines', () => {
 describe('parser parseStatement', () => {
 	it('should parse push statement', () => {
 		const line = 'push constant 10';
-		const stmt = parseStatement(line);
+		const stmt = parseStatement(line, 'test');
 		expect(stmt).to.be.an.instanceof(Push);
 	});
 
 	it('should parse pop statement', () => {
 		const line = 'pop local 10';
-		const stmt = parseStatement(line);
+		const stmt = parseStatement(line, 'test');
 		expect(stmt).to.be.an.instanceof(Pop);
 	});
 });

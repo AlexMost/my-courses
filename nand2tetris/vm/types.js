@@ -7,18 +7,23 @@ const mustExist = (name, arg) => {
 }
 
 class Statement {
-	constructor(line) {
+	constructor({ line, filename }) {
 		mustExist('line', line);
+		mustExist('filename', filename);
 		this._line = line;
+		this._filename = filename;
 	}
 	getLine() {
 		return this._line;
 	}
+	getFilename() {
+		return this._filename;
+	}
 }
 
 class PushPop extends Statement {
-	constructor(segment, value, line) {
-		super(line);
+	constructor(segment, value, meta) {
+		super(meta);
 
 		mustExist('segment', segment);
 		mustExist('value', value);
@@ -37,8 +42,8 @@ class PushPop extends Statement {
 }
 
 class Pop extends PushPop {
-	constructor(segment, value, line) {
-		super(segment, value, line);
+	constructor(segment, value, meta) {
+		super(segment, value, meta);
 		if (segment == SEGMENTS.CONST) {
 			throw new Error(
 				'Can not create Pop statement for the constant segment');

@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const EOL = require('os').EOL
 const { OPS } = require('./defs');
 const { Push, Pop } = require('./types');
@@ -8,13 +9,14 @@ const COMMENT_REGEXP = /\/\/[\s\S]*$/g;
 const id = (i) => i
 const cleanLine = (line) => line.replace(COMMENT_REGEXP, '').trim();
 
-function parseStatement(line) {
+function parseStatement(line, filename) {
 	const [command, segment, value] = line.split(' ');
+	const meta = { line, filename }
 	switch (command) {
 		case OPS.PUSH:
-			return new Push(segment, value, { line });
+			return new Push(segment, value, meta);
 		case OPS.POP:
-			return new Pop(segment, value, { line });
+			return new Pop(segment, value, meta);
 		default:
 			throw new Error(`Unknown statement ${ line }`);
 	}
@@ -26,7 +28,8 @@ function readRawLines(filepath) {
 }
 
 function parseVMCode(filepath) {
-	return readRawLines(filepath).map(parseStatement);
+	return readRawLines(filepath)
+	.map((line) => parseStatement(line, path.basename(filepath)));
 }
 
 module.exports = { parseVMCode };
