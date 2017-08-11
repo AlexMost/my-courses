@@ -22,8 +22,12 @@ const pushArg10 =
 D=A
 @ARG
 A=M
+A=D+A
+D=M
+@SP
+A=M
 M=D
-@ARG
+@SP
 M=M+1
 `
 
@@ -33,8 +37,12 @@ const pushLocal10 =
 D=A
 @LCL
 A=M
+A=D+A
+D=M
+@SP
+A=M
 M=D
-@LCL
+@SP
 M=M+1
 `
 
@@ -44,8 +52,12 @@ const pushStatic10 =
 D=A
 @Foo.10
 A=M
+A=D+A
+D=M
+@SP
+A=M
 M=D
-@Foo.10
+@SP
 M=M+1
 `
 

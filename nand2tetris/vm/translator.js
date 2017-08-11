@@ -13,18 +13,39 @@ function translatePush(push) {
 		segmentPointer = `${label}.${value}`;
 	}
 	
-	const lines = [
-		`// ${push.getLine()}`,
-		`@${value}`,
-		`D=A`,
+	let lines;
+	if (segment === SEGMENTS.CONST) {
+		lines = [
+			`// ${push.getLine()}`,
+			`@${value}`,
+			'D=A',
 
-		`@${segmentPointer}`,
-		'A=M',
-		'M=D',
+			`@${segmentPointer}`,
+			'A=M',
+			'M=D',
 
-		`@${segmentPointer}`,
-		`M=M+1`
-	]
+			'@SP',
+			'M=M+1'
+		]
+	} else {
+		lines = [
+			`// ${push.getLine()}`,
+			`@${value}`,
+			`D=A`,
+
+			`@${segmentPointer}`,
+			'A=M',
+			'A=D+A',
+			'D=M',
+
+			'@SP',
+			'A=M',
+			'M=D',
+
+			'@SP',
+			'M=M+1',
+		]
+	}
 
 	return lines.join(EOL) + EOL;
 }
