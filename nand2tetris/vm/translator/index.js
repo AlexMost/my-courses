@@ -1,7 +1,6 @@
-module.exports = {  };
+module.exports = { };
 
 if (process.env.NODE_ENV === 'test') {
-	module.exports._test = {
-		translatePush
-	}
+    module.exports._test = {
+    };
 }

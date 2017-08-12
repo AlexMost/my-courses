@@ -8,8 +8,8 @@
   },
   "scripts": {
     "test": "npm run fix && NODE_ENV=test mocha tests",
-    "lint": "eslint *.js tests",
-    "fix": "eslint --fix *.js tests"
+    "lint": "eslint *.js tests translator",
+    "fix": "eslint --fix *.js tests translator"
   },
   "author": "",
   "license": "ISC",
