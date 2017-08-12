@@ -46,6 +46,30 @@ M=D
 M=M-1
 `;
 
+const popPointer0 =
+`// pop pointer 0
+@SP
+A=M
+D=M
+@THIS
+A=M
+M=D
+@SP
+M=M-1
+`;
+
+const popPointer1 =
+`// pop pointer 1
+@SP
+A=M
+D=M
+@THAT
+A=M
+M=D
+@SP
+M=M-1
+`;
+
 describe('translator translatePop', () => {
     it('should translate pop arg', () => {
         const pop = parseStatement('pop argument 2', 'test');
@@ -61,5 +85,15 @@ describe('translator translatePop', () => {
         const pop = parseStatement('pop temp 2', 'Foo.vm');
         const result = translatePop(pop);
         expect(result).to.eql(popTemp2);
+    });
+    it('should translate pop pointer 0', () => {
+        const pop = parseStatement('pop pointer 0', 'Foo.vm');
+        const result = translatePop(pop);
+        expect(result).to.eql(popPointer0);
+    });
+    it('should translate pop pointer 1', () => {
+        const pop = parseStatement('pop pointer 1', 'Foo.vm');
+        const result = translatePop(pop);
+        expect(result).to.eql(popPointer1);
     });
 });
