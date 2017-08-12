@@ -75,6 +75,30 @@ M=D
 M=M+1
 `
 
+const pushPointer0 =
+`// push pointer 0
+@THIS
+A=M
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+`
+
+const pushPointer1 =
+`// push pointer 1
+@THAT
+A=M
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+`
+
 describe('translator translatePush', () => {
 	it('should translate push constant', () => {
 		const push = parseStatement('push constant 10', 'test');
@@ -104,5 +128,17 @@ describe('translator translatePush', () => {
 		const push = parseStatement('push temp 2', 'Foo.vm');
 		const result = translatePush(push);
 		expect(result).to.eql(pushTemp2);
+	});
+
+	it('should translate push pointer 0', () => {
+		const push = parseStatement('push pointer 0', 'Foo.vm');
+		const result = translatePush(push);
+		expect(result).to.eql(pushPointer0);
+	});
+
+	it('should translate push pointer 1', () => {
+		const push = parseStatement('push pointer 1', 'Foo.vm');
+		const result = translatePush(push);
+		expect(result).to.eql(pushPointer1);
 	});
 });
