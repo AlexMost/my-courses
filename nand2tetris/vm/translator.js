@@ -11,6 +11,8 @@ function translatePush(push) {
 	} else if(segment === SEGMENTS.STATIC) {
 		const [label] = push.getFilename().split('.');
 		segmentPointer = `${label}.${value}`;
+	} else if (segment === SEGMENTS.TEMP) {
+		segmentPointer = `R${value + 5}`;
 	}
 	
 	let lines;

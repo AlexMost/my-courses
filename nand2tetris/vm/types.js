@@ -29,7 +29,7 @@ class PushPop extends Statement {
 		mustExist('value', value);
 
 		this._segment = segment;
-		this._value = value;
+		this._value = parseInt(value, 10);
 	}
 
 	getSegment() {

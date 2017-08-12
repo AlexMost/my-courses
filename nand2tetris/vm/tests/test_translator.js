@@ -60,6 +60,20 @@ M=D
 @SP
 M=M+1
 `
+const pushTemp2 =
+`// push temp 2
+@2
+D=A
+@R7
+A=M
+A=D+A
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+`
 
 describe('translator translatePush', () => {
 	it('should translate push constant', () => {
@@ -86,4 +100,9 @@ describe('translator translatePush', () => {
 		expect(result).to.eql(pushStatic10);
 	});
 
+	it('should translate push temp', () => {
+		const push = parseStatement('push temp 2', 'Foo.vm');
+		const result = translatePush(push);
+		expect(result).to.eql(pushTemp2);
+	});
 });
