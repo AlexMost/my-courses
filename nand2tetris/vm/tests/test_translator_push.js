@@ -1,8 +1,7 @@
 const { expect } = require('chai');
 const { _test } = require('../translator/push');
 const { _test: testParser } = require('../parser');
-const { Push, Pop } = require('../types');
-const { SEGMENTS } = require('../defs');
+const { Push } = require('../types');
 const { translatePush } = _test;
 const { parseStatement } = testParser;
 

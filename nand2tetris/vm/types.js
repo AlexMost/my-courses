@@ -46,11 +46,23 @@ class Pop extends PushPop {
 		super(segment, value, meta);
 		if (segment == SEGMENTS.CONST) {
 			throw new Error(
-				'Can not create Pop statement for the constant segment');
+				'Can not execute pop for the constant');
 		}
 	}
 }
 
 class Push extends PushPop {}
 
-module.exports = { Push, Pop }
+function assertPush(obj) {
+	if (! obj instanceof Push) {
+		throw Error(`Expected Push type, actual ${typeof push}`);
+	}
+}
+
+function assertPop(obj) {
+	if (! obj instanceof Pop) {
+		throw Error(`Expected Pop type, actual ${typeof push}`);
+	}
+}
+
+module.exports = { Push, Pop, assertPush, assertPop }
