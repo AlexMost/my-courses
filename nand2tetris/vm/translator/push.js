@@ -1,6 +1,5 @@
 const { SEGMENTS, SEGMENT_MAP } = require('../defs');
 const EOL = require('os').EOL;
-const { lineInfo } = require('./utils');
 const { assertPush } = require('../types');
 
 function pushFromSegmentMap(push) {
@@ -19,7 +18,7 @@ function pushFromSegmentMap(push) {
             if (SEGMENT_MAP[segment]) {
                 segmentPointer = SEGMENT_MAP[segment];
             } else {
-                throw new Error(`Unknown segment name ${push.getLine()}`);
+                throw new Error(`Unknown segment name '${push.getLine()}'`);
             }
 
     }
@@ -102,7 +101,7 @@ function translatePush(push) {
             lines = pushFromSegmentMap(push);
     }
 
-    return lineInfo(lines, push).join(EOL) + EOL;
+    return lines.join(EOL);
 }
 
 module.exports = { translatePush };

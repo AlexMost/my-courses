@@ -7,18 +7,16 @@ const { translatePush } = _test;
 const { parseStatement } = testParser;
 
 const pushConst10 =
-`// push constant 10
-@10
+`@10
 D=A
 @SP
 A=M
 M=D
 @SP
-M=M+1
-`;
+M=M+1`;
+
 const pushArg10 =
-`// push argument 10
-@10
+`@10
 D=A
 @ARG
 A=M
@@ -28,12 +26,10 @@ D=M
 A=M
 M=D
 @SP
-M=M+1
-`;
+M=M+1`;
 
 const pushLocal10 =
-`// push local 10
-@10
+`@10
 D=A
 @LCL
 A=M
@@ -43,12 +39,10 @@ D=M
 A=M
 M=D
 @SP
-M=M+1
-`;
+M=M+1`;
 
 const pushStatic10 =
-`// push static 10
-@10
+`@10
 D=A
 @Foo.10
 A=M
@@ -58,11 +52,10 @@ D=M
 A=M
 M=D
 @SP
-M=M+1
-`;
+M=M+1`;
+
 const pushTemp2 =
-`// push temp 2
-@2
+`@2
 D=A
 @R7
 A=M
@@ -72,32 +65,27 @@ D=M
 A=M
 M=D
 @SP
-M=M+1
-`;
+M=M+1`;
 
 const pushPointer0 =
-`// push pointer 0
-@THIS
+`@THIS
 A=M
 D=M
 @SP
 A=M
 M=D
 @SP
-M=M+1
-`;
+M=M+1`;
 
 const pushPointer1 =
-`// push pointer 1
-@THAT
+`@THAT
 A=M
 D=M
 @SP
 A=M
 M=D
 @SP
-M=M+1
-`;
+M=M+1`;
 
 describe('translator translatePush', () => {
     it('should translate push constant', () => {

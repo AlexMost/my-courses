@@ -1,6 +1,5 @@
 const { assertPop } = require('../types');
 const { SEGMENTS, SEGMENT_MAP } = require('../defs');
-const { lineInfo } = require('./utils');
 const EOL = require('os').EOL;
 
 function popStatic(pop) {
@@ -109,7 +108,7 @@ function translatePop(pop) {
         throw new Error(`Unknown segment name ${pop.getLine()}`);
     }
 
-    return lineInfo(lines, pop).join(EOL) + EOL;
+    return lines.join(EOL);
 }
 
 module.exports = { translatePop };

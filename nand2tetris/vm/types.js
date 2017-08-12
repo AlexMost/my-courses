@@ -7,7 +7,9 @@ const mustExist = (name, arg) => {
 };
 
 class Statement {
-    constructor({ line, filename }) {
+    constructor(meta) {
+        mustExist('meta', meta);
+        const { line, filename } = meta;
         mustExist('line', line);
         mustExist('filename', filename);
         this._line = line;

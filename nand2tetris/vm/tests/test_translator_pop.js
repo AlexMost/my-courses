@@ -7,8 +7,7 @@ const { translatePop } = _test;
 const { parseStatement } = testParser;
 
 const popArg2 =
-`// pop argument 2
-@2
+`@2
 D=A
 @ARG
 D=M+D
@@ -21,54 +20,45 @@ D=M
 A=M
 M=D
 @SP
-M=M-1
-`;
+M=M-1`;
 
 const popStatic2 =
-`// pop static 2
-@SP
+`@SP
 A=M
 D=M
 @Foo.2
 M=D
 @SP
-M=M-1
-`;
+M=M-1`;
 
 const popTemp2 =
-`// pop temp 2
-@SP
+`@SP
 A=M
 D=M
 @R7
 M=D
 @SP
-M=M-1
-`;
+M=M-1`;
 
 const popPointer0 =
-`// pop pointer 0
-@SP
+`@SP
 A=M
 D=M
 @THIS
 A=M
 M=D
 @SP
-M=M-1
-`;
+M=M-1`;
 
 const popPointer1 =
-`// pop pointer 1
-@SP
+`@SP
 A=M
 D=M
 @THAT
 A=M
 M=D
 @SP
-M=M-1
-`;
+M=M-1`;
 
 describe('translator translatePop', () => {
     it('should translate pop arg', () => {
