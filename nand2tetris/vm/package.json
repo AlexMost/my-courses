@@ -7,12 +7,22 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "NODE_ENV=test mocha tests"
+    "test": "npm run fix && NODE_ENV=test mocha tests",
+    "lint": "eslint *.js tests",
+    "fix": "eslint --fix *.js tests"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@evo/eslint-config-uaprom": "^2.0.2",
     "chai": "^4.1.0",
+    "eslint": "^3.19.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
     "mocha": "^3.4.2"
+  },
+  "dependencies": {
+    "@evo/eslint-config-uaprom": "^2.0.2"
   }
 }

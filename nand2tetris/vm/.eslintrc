@@ -1,0 +1,10 @@
+{
+	"extends": "@evo/eslint-config-uaprom",
+	"env": {
+		"node": true
+	},
+	"rules": {
+		"import/no-commonjs": 0,
+		"no-underscore-dangle": ["error", {"allowAfterThis": true, "allow": ["_test"]}]
+	}
+}
