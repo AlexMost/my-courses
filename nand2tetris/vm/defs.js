@@ -17,7 +17,9 @@ SEGMENT_MAP[SEGMENTS.THAT] = 'THAT';
 
 const OPS = {
     PUSH: 'push',
-    POP: 'pop'
+    POP: 'pop',
+    ADD: 'add',
+    SUB: 'sub'
 };
 
 module.exports = { SEGMENTS, OPS, SEGMENT_MAP };

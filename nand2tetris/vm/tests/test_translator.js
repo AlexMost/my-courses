@@ -29,6 +29,26 @@ M=D
 @SP
 M=M-1`;
 
+const addResult =
+`// add
+@SP
+A=M
+D=M
+A=A-1
+M=D+M
+@SP
+M=M-1`;
+
+const subResult =
+`// sub
+@SP
+A=M
+D=M
+A=A-1
+M=M-D
+@SP
+M=M-1`
+
 describe('translator', () => {
     it('should translate push', () => {
         const input = `push constant 1`;
@@ -39,5 +59,15 @@ describe('translator', () => {
         const input = `pop argument 1`;
         const result = translate(input, 'Foo.vm');
         expect(result).to.eql(popResult);
+    });
+    it('should translate add', () => {
+        const input = `add`;
+        const result = translate(input, 'Foo.vm');
+        expect(result).to.eql(addResult);
+    });
+    it('should translate sub', () => {
+        const input = `sub`;
+        const result = translate(input, 'Foo.vm');
+        expect(result).to.eql(subResult);
     });
 });

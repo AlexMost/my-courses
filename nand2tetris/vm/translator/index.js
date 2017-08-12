@@ -1,8 +1,11 @@
 const EOL = require('os').EOL;
-const { translatePop } = require('./pop');
-const { translatePush } = require('./push');
 const { Pop, Push } = require('../types');
 const { OPS } = require('../defs');
+
+const { translatePop } = require('./pop');
+const { translatePush } = require('./push');
+const { translateAdd } = require('./add');
+const { translateSub } = require('./sub');
 
 function translateLine(rawLine, filename) {
     const [command, segment, value] = rawLine.split(' ');
@@ -12,6 +15,10 @@ function translateLine(rawLine, filename) {
             return translatePush(new Push(segment, value, meta));
         case OPS.POP:
             return translatePop(new Pop(segment, value, meta));
+        case OPS.ADD:
+            return translateAdd();
+        case OPS.SUB:
+            return translateSub();
         default:
             throw new Error(`Unknown command '${command}' in ${rawLine}`);
     }
@@ -31,8 +38,3 @@ function translate(rawContent, filename) {
 }
 
 module.exports = { translate };
-
-if (process.env.NODE_ENV === 'test') {
-    module.exports._test = {
-    };
-}

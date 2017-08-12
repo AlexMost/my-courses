@@ -22,8 +22,5 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
     "mocha": "^3.4.2"
-  },
-  "dependencies": {
-    "@evo/eslint-config-uaprom": "^2.0.2"
   }
 }
