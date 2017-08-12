@@ -34,6 +34,17 @@ M=D
 M=M-1
 `
 
+const popTemp2 =
+`// pop temp 2
+@SP
+A=M
+D=M
+@R7
+M=D
+@SP
+M=M-1
+`
+
 describe('translator translatePop', () => {
 	it('should translate pop arg', () => {
 		const pop = parseStatement('pop argument 2', 'test');
@@ -44,5 +55,10 @@ describe('translator translatePop', () => {
 		const pop = parseStatement('pop static 2', 'Foo.vm');
 		const result = translatePop(pop);
 		expect(result).to.eql(popStatic2);
+	});
+	it('should translate pop temp', () => {
+		const pop = parseStatement('pop temp 2', 'Foo.vm');
+		const result = translatePop(pop);
+		expect(result).to.eql(popTemp2);
 	});
 });

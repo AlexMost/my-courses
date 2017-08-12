@@ -4,10 +4,24 @@ const { lineInfo } = require('./utils');
 const EOL = require('os').EOL
 
 function popStatic(pop) {
-	const segment = pop.getSegment();
 	const value = pop.getValue();
 	const [label] = pop.getFilename().split('.');
 	segmentPointer = `${label}.${value}`
+	return [
+		'@SP',
+		'A=M',
+		'D=M',
+
+		`@${segmentPointer}`,
+		`M=D`,
+
+		'@SP',
+		'M=M-1'
+	];
+}
+
+function popTemp(pop) {
+	segmentPointer = `R${pop.getValue() + 5}`;
 	return [
 		'@SP',
 		'A=M',
@@ -56,8 +70,9 @@ function translatePop(pop) {
 		lines = popToSegmentMap(pop);
 	} else if (SEGMENTS.STATIC === segment) {
 		lines = popStatic(pop);
-	} 
-	else {
+	} else if (SEGMENTS.TEMP === segment) {
+		lines = popTemp(pop);
+	} else {
 		throw new Error(`Unknown segment name ${pop.getLine()}`);
 	}
 	
