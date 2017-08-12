@@ -3,15 +3,33 @@ const { SEGMENTS, SEGMENT_MAP } = require('../defs');
 const { lineInfo } = require('./utils');
 const EOL = require('os').EOL
 
+function popStatic(pop) {
+	const segment = pop.getSegment();
+	const value = pop.getValue();
+	const [label] = pop.getFilename().split('.');
+	segmentPointer = `${label}.${value}`
+	return [
+		'@SP',
+		'A=M',
+		'D=M',
+
+		`@${segmentPointer}`,
+		`M=D`,
+
+		'@SP',
+		'M=M-1'
+	];
+}
+
 function popToSegmentMap(pop) {
 	const segment = pop.getSegment();
 	const value = pop.getValue();
-	segmentName = SEGMENT_MAP[segment];
+	segmentPointer = SEGMENT_MAP[segment];
 
-	lines = [
+	return [
 		`@${value}`,
 		'D=A',
-		`@${segmentName}`,
+		`@${segmentPointer}`,
 		'D=M+D',
 		'@POPTMP',
 		'M=D',
@@ -27,7 +45,6 @@ function popToSegmentMap(pop) {
 		'@SP',
 		'M=M-1'
 	]
-	return lines;
 }
 
 function translatePop(pop) {
@@ -37,8 +54,11 @@ function translatePop(pop) {
 
 	if (SEGMENT_MAP[segment]) {
 		lines = popToSegmentMap(pop);
-	} else {
-		throw new Error(`Unknown segment name ${push.getLine()}`);
+	} else if (SEGMENTS.STATIC === segment) {
+		lines = popStatic(pop);
+	} 
+	else {
+		throw new Error(`Unknown segment name ${pop.getLine()}`);
 	}
 	
 	return lineInfo(lines, pop).join(EOL) + EOL;

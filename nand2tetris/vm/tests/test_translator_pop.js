@@ -23,10 +23,26 @@ M=D
 M=M-1
 `
 
+const popStatic2 =
+`// pop static 2
+@SP
+A=M
+D=M
+@Foo.2
+M=D
+@SP
+M=M-1
+`
+
 describe('translator translatePop', () => {
 	it('should translate pop arg', () => {
 		const pop = parseStatement('pop argument 2', 'test');
 		const result = translatePop(pop);
 		expect(result).to.eql(popArg2);
+	});
+	it('should translate pop static', () => {
+		const pop = parseStatement('pop static 2', 'Foo.vm');
+		const result = translatePop(pop);
+		expect(result).to.eql(popStatic2);
 	});
 });
