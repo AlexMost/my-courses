@@ -1,39 +1,29 @@
 const EOL = require('os').EOL;
-const { Pop, Push } = require('../types');
-const { OPS } = require('../defs');
+const { Pop, Push, Add, Sub } = require('../types');
 
 const { translatePop } = require('./pop');
 const { translatePush } = require('./push');
 const { translateAdd } = require('./add');
 const { translateSub } = require('./sub');
 
-function translateLine(rawLine, filename) {
-    const [command, segment, value] = rawLine.split(' ');
-    const meta = { line: rawLine, filename };
-    switch (command) {
-        case OPS.PUSH:
-            return translatePush(new Push(segment, value, meta));
-        case OPS.POP:
-            return translatePop(new Pop(segment, value, meta));
-        case OPS.ADD:
-            return translateAdd();
-        case OPS.SUB:
-            return translateSub();
-        default:
-            throw new Error(`Unknown command '${command}' in ${rawLine}`);
+function vmAST2ASM(vmNode) {
+    let asmResult;
+    if (vmNode instanceof Pop) {
+        asmResult = translatePop(vmNode);
+    } else if (vmNode instanceof Push) {
+        asmResult = translatePush(vmNode);
+    } else if (vmNode instanceof Add) {
+        asmResult = translateAdd(vmNode);
+    } else if (vmNode instanceof Sub) {
+        asmResult = translateSub(vmNode);
+    } else {
+        throw new Error(`Unsupported vmNode type ${typeof vmNode}`);
     }
+    return `// ${vmNode.getLine()}${EOL}${asmResult}`;
 }
 
-function appendLineInfo(strLine, asm) {
-    const lineInfo = `// ${strLine}${EOL}`;
-    return lineInfo + asm;
-}
-
-function translate(rawContent, filename) {
-    const strLines = rawContent.split(EOL).map((rawStr) => {
-        const asm = translateLine(rawStr, filename);
-        return appendLineInfo(rawStr, asm);
-    });
+function translate(vmAST) {
+    const strLines = vmAST.map(vmAST2ASM);
     return strLines.join(EOL);
 }
 

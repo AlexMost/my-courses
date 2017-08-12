@@ -55,6 +55,10 @@ class Pop extends PushPop {
 
 class Push extends PushPop {}
 
+class Add extends Statement {}
+
+class Sub extends Statement {}
+
 function assertPush(obj) {
     if (!(obj instanceof Push)) {
         throw Error(`Expected Push type, actual ${typeof push}`);
@@ -67,4 +71,4 @@ function assertPop(obj) {
     }
 }
 
-module.exports = { Push, Pop, assertPush, assertPop };
+module.exports = { Push, Pop, assertPush, assertPop, Add, Sub };

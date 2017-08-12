@@ -1,21 +1,42 @@
 /* eslint-env mocha */
 const { expect } = require('chai');
-const { _test, parseVMCode } = require('../parser');
+const { _test, parseVMAST } = require('../parser');
 const { Push, Pop } = require('../types');
 
-const { cleanLine, readRawLines, parseStatement } = _test;
+const { cleanLine, parseStatement } = _test;
 
-describe('parser parseVMCode', () => {
+const content =
+`
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/07/MemoryAccess/BasicTest/BasicTest.vm
+
+// Executes pop and push commands using the virtual memory segments.
+push constant 10
+pop local 0 // comment
+`;
+const staticContent =
+`
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/07/MemoryAccess/BasicTest/BasicTest.vm
+
+// Executes pop and push commands using the virtual memory segments.
+push static 5
+`;
+
+describe('parser parseVMAST', () => {
     it('should parse vm code to statements', () => {
-        const filepath = './tests/fixtures/test1.vm';
-        const [push, pop] = parseVMCode(filepath);
+        const [push, pop] = parseVMAST(content, 'static.vm');
         expect(push).to.be.an.instanceof(Push);
         expect(pop).to.be.an.instanceof(Pop);
     });
 
     it('shlould apply meta to statements', () => {
         const filepath = './tests/fixtures/static.vm';
-        const [push] = parseVMCode(filepath);
+        const [push] = parseVMAST(staticContent, filepath);
         expect(push.getFilename()).to.eql('static.vm');
     });
 });
@@ -28,14 +49,6 @@ describe('parser cleanLine', () => {
     it('should return empty string for only comment line', () => {
         const line = '// comment';
         expect(cleanLine(line)).to.eql('');
-    });
-});
-
-describe('parser readRawLines', () => {
-    it('should parse lines without comments', () => {
-        const filepath = './tests/fixtures/test1.vm';
-        const expected = ['push constant 10', 'pop local 0'];
-        expect(readRawLines(filepath)).to.eql(expected);
     });
 });
 

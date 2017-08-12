@@ -1,8 +1,7 @@
-const fs = require('fs');
 const path = require('path');
 const EOL = require('os').EOL;
 const { OPS } = require('./defs');
-const { Push, Pop } = require('./types');
+const { Push, Pop, Add, Sub } = require('./types');
 
 const COMMENT_REGEXP = /\/\/[\s\S]*$/g;
 
@@ -17,27 +16,25 @@ function parseStatement(line, filename) {
             return new Push(segment, value, meta);
         case OPS.POP:
             return new Pop(segment, value, meta);
+        case OPS.ADD:
+            return new Add(meta);
+        case OPS.SUB:
+            return new Sub(meta);
         default:
             throw new Error(`Unknown statement ${line}`);
     }
 }
 
-function readRawLines(filepath) {
-    const raw = fs.readFileSync(filepath).toString();
-    return raw.split(EOL).map(cleanLine).filter(id);
-}
-
-function parseVMCode(filepath) {
-    return readRawLines(filepath)
+function parseVMAST(rawContent, filepath) {
+    return rawContent.split(EOL).map(cleanLine).filter(id)
     .map((line) => parseStatement(line, path.basename(filepath)));
 }
 
-module.exports = { parseVMCode };
+module.exports = { parseVMAST };
 
 if (process.env.NODE_ENV === 'test') {
     module.exports._test = {
         cleanLine,
-        readRawLines,
         parseStatement
     };
 }
