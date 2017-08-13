@@ -21,6 +21,12 @@ const OPS = {
     ADD: 'add',
     SUB: 'sub',
     EQ: 'eq',
+    LT: 'lt',
+    GT: 'gt',
+    NEG: 'neg',
+    AND: 'and',
+    OR: 'or',
+    NOT: 'not',
 };
 
 module.exports = { SEGMENTS, OPS, SEGMENT_MAP };

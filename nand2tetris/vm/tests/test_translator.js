@@ -68,7 +68,7 @@ M=M-1
 A=M
 D=M
 A=A-1
-D=D-M
+D=M-D
 @EQTRUE.0
 D;JEQ
 @SP
@@ -83,6 +83,70 @@ A=M
 A=A-1
 M=-1
 (END.0)`;
+
+const ltResult =
+`// lt
+@SP
+M=M-1
+@SP
+A=M
+D=M
+A=A-1
+D=M-D
+@EQTRUE.0
+D;JLT
+@SP
+A=M
+A=A-1
+M=0
+@END.0
+0;JMP
+(EQTRUE.0)
+@SP
+A=M
+A=A-1
+M=-1
+(END.0)`;
+
+const gtResult =
+`// gt
+@SP
+M=M-1
+@SP
+A=M
+D=M
+A=A-1
+D=M-D
+@EQTRUE.0
+D;JGT
+@SP
+A=M
+A=A-1
+M=0
+@END.0
+0;JMP
+(EQTRUE.0)
+@SP
+A=M
+A=A-1
+M=-1
+(END.0)`;
+
+const negResult =
+`// neg
+@SP
+A=M
+M=-M`;
+
+const andResult =
+`// and
+@SP
+M=M-1
+@SP
+A=M
+D=M
+A=A-1
+M=M&D`;
 
 describe('translator', () => {
     it('should translate push', () => {
@@ -115,5 +179,25 @@ describe('translator', () => {
         const input = `eq`;
         const result = translate(parseVMAST(input, 'Foo.vm'));
         expect(result).to.eql(eqResult);
+    });
+    it('should translate lt', () => {
+        const input = `lt`;
+        const result = translate(parseVMAST(input, 'Foo.vm'));
+        expect(result).to.eql(ltResult);
+    });
+    it('should translate gt', () => {
+        const input = `gt`;
+        const result = translate(parseVMAST(input, 'Foo.vm'));
+        expect(result).to.eql(gtResult);
+    });
+    it('should translate neg', () => {
+        const input = `neg`;
+        const result = translate(parseVMAST(input, 'Foo.vm'));
+        expect(result).to.eql(negResult);
+    });
+    it('should translate and', () => {
+        const input = `and`;
+        const result = translate(parseVMAST(input, 'Foo.vm'));
+        expect(result).to.eql(andResult);
     });
 });
