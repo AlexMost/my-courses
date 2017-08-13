@@ -4,9 +4,12 @@ function translateAdd() {
     const lines = [
         '@SP',
         'A=M',
+
+        'A=A-1',
         'D=M',
         'A=A-1',
-        'M=D+M',
+        'M=M+D',
+
         '@SP',
         'M=M-1'
     ];

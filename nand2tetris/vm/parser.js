@@ -21,7 +21,7 @@ function parseStatement(line, filename) {
         case OPS.SUB:
             return new Sub(meta);
         default:
-            throw new Error(`Unknown statement ${line}`);
+            throw new Error(`Unknown operation '${line}'`);
     }
 }
 
