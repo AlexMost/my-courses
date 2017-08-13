@@ -14,51 +14,51 @@ D=M+D
 @POPTMP
 M=D
 @SP
+M=M-1
+@SP
 A=M
 D=M
 @POPTMP
 A=M
-M=D
-@SP
-M=M-1`;
+M=D`;
 
 const popStatic2 =
 `@SP
+M=M-1
+@SP
 A=M
 D=M
 @Foo.2
-M=D
-@SP
-M=M-1`;
+M=D`;
 
 const popTemp2 =
 `@SP
+M=M-1
+@SP
 A=M
 D=M
 @R7
-M=D
-@SP
-M=M-1`;
+M=D`;
 
 const popPointer0 =
 `@SP
+M=M-1
+@SP
 A=M
 D=M
 @THIS
 A=M
-M=D
-@SP
-M=M-1`;
+M=D`;
 
 const popPointer1 =
 `@SP
+M=M-1
+@SP
 A=M
 D=M
 @THAT
 A=M
-M=D
-@SP
-M=M-1`;
+M=D`;
 
 describe('translator translatePop', () => {
     it('should translate pop arg', () => {

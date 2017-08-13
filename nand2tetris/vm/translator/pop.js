@@ -8,14 +8,14 @@ function popStatic(pop) {
     const segmentPointer = `${label}.${value}`;
     return [
         '@SP',
+        'M=M-1',
+
+        '@SP',
         'A=M',
         'D=M',
 
         `@${segmentPointer}`,
         `M=D`,
-
-        '@SP',
-        'M=M-1'
     ];
 }
 
@@ -23,14 +23,14 @@ function popTemp(pop) {
     const segmentPointer = `R${pop.getValue() + 5}`;
     return [
         '@SP',
+        'M=M-1',
+
+        '@SP',
         'A=M',
         'D=M',
 
         `@${segmentPointer}`,
         `M=D`,
-
-        '@SP',
-        'M=M-1'
     ];
 }
 
@@ -52,15 +52,15 @@ function popPointer(pop) {
 
     return [
         '@SP',
+        'M=M-1',
+
+        '@SP',
         'A=M',
         'D=M',
 
         `@${targetSegment}`,
         'A=M',
         'M=D',
-
-        '@SP',
-        'M=M-1'
     ];
 }
 
@@ -79,15 +79,15 @@ function popToSegmentMap(pop) {
         'M=D',
 
         '@SP',
+        'M=M-1',
+
+        '@SP',
         'A=M',
         'D=M',
 
         '@POPTMP',
         'A=M',
         'M=D',
-
-        '@SP',
-        'M=M-1'
     ];
 }
 

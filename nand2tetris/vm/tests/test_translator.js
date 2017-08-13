@@ -36,13 +36,13 @@ D=M+D
 @POPTMP
 M=D
 @SP
+M=M-1
+@SP
 A=M
 D=M
 @POPTMP
 A=M
-M=D
-@SP
-M=M-1`;
+M=D`;
 
 const addResult =
 `// add
