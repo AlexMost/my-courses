@@ -3,15 +3,13 @@ const EOL = require('os').EOL;
 function translateAdd() {
     const lines = [
         '@SP',
-        'A=M',
+        'M=M-1',
 
-        'A=A-1',
+        '@SP',
+        'A=M',
         'D=M',
         'A=A-1',
         'M=M+D',
-
-        '@SP',
-        'M=M-1'
     ];
 
     return lines.join(EOL);

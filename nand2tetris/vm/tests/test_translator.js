@@ -47,24 +47,22 @@ M=D`;
 const addResult =
 `// add
 @SP
+M=M-1
+@SP
 A=M
-A=A-1
 D=M
 A=A-1
-M=M+D
-@SP
-M=M-1`;
+M=M+D`;
 
 const subResult =
 `// sub
 @SP
+M=M-1
+@SP
 A=M
-A=A-1
 D=M
 A=A-1
-M=M-D
-@SP
-M=M-1`;
+M=M-D`;
 
 describe('translator', () => {
     it('should translate push', () => {
