@@ -19,7 +19,8 @@ const OPS = {
     PUSH: 'push',
     POP: 'pop',
     ADD: 'add',
-    SUB: 'sub'
+    SUB: 'sub',
+    EQ: 'eq',
 };
 
 module.exports = { SEGMENTS, OPS, SEGMENT_MAP };

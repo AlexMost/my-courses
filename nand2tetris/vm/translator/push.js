@@ -2,27 +2,30 @@ const { SEGMENTS, SEGMENT_MAP } = require('../defs');
 const EOL = require('os').EOL;
 const { assertPush } = require('../types');
 
+const { asmLines } = require('./utils');
+
 function pushFromSegmentMap(push) {
     const segment = push.getSegment();
     const value = push.getValue();
     const segmentPointer = SEGMENT_MAP[segment];
 
-    return [
-        `@${value}`,
-        `D=A`,
+    return asmLines(`
+        @${value}
+        D=A
 
-        `@${segmentPointer}`,   // D = *SEGMENT[value]
-        'A=M',
-        'A=D+A',
-        'D=M',
+        @${segmentPointer}   // D = *SEGMENT[value]
+        A=M
+        A=D+A
+        D=M
 
-        '@SP',    // *SP=D
-        'A=M',
-        'M=D',
+        @SP    // *SP=D
+        A=M
+        M=D
 
-        '@SP',     // SP++
-        'M=M+1',
-    ];
+        @SP     // SP++
+        M=M+1
+        `
+    );
 }
 
 function pushTemp(push) {

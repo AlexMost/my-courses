@@ -59,6 +59,8 @@ class Add extends Statement {}
 
 class Sub extends Statement {}
 
+class Eq extends Statement {}
+
 function assertPush(obj) {
     if (!(obj instanceof Push)) {
         throw Error(`Expected Push type, actual ${typeof push}`);
@@ -71,4 +73,33 @@ function assertPop(obj) {
     }
 }
 
-module.exports = { Push, Pop, assertPush, assertPop, Add, Sub };
+function assertEq(obj) {
+    if (!(obj instanceof Eq)) {
+        throw Error(`Expected Eq type, actual ${typeof push}`);
+    }
+}
+
+function assertAdd(obj) {
+    if (!(obj instanceof Add)) {
+        throw Error(`Expected Add type, actual ${typeof push}`);
+    }
+}
+
+function assertSub(obj) {
+    if (!(obj instanceof Sub)) {
+        throw Error(`Expected Add type, actual ${typeof push}`);
+    }
+}
+
+module.exports = { Push,
+    Pop,
+    Add,
+    Sub,
+    Eq,
+
+    assertPush,
+    assertPop,
+    assertEq,
+    assertAdd,
+    assertSub,
+};

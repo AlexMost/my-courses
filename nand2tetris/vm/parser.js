@@ -1,7 +1,7 @@
 const path = require('path');
 const EOL = require('os').EOL;
 const { OPS } = require('./defs');
-const { Push, Pop, Add, Sub } = require('./types');
+const { Push, Pop, Add, Sub, Eq } = require('./types');
 
 const COMMENT_REGEXP = /\/\/[\s\S]*$/g;
 
@@ -20,6 +20,8 @@ function parseStatement(line, filename) {
             return new Add(meta);
         case OPS.SUB:
             return new Sub(meta);
+        case OPS.EQ:
+            return new Eq(meta);
         default:
             throw new Error(`Unknown operation '${line}'`);
     }
@@ -30,7 +32,7 @@ function parseVMAST(rawContent, filepath) {
     .map((line) => parseStatement(line, path.basename(filepath)));
 }
 
-module.exports = { parseVMAST };
+module.exports = { parseVMAST, cleanLine };
 
 if (process.env.NODE_ENV === 'test') {
     module.exports._test = {

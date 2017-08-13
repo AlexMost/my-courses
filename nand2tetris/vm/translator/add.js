@@ -1,6 +1,9 @@
 const EOL = require('os').EOL;
+const { assertAdd } = require('../types');
 
-function translateAdd() {
+function translateAdd(add) {
+    assertAdd(add);
+
     const lines = [
         '@SP',
         'M=M-1',

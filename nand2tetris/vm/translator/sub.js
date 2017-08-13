@@ -1,6 +1,9 @@
 const EOL = require('os').EOL;
+const { assertSub } = require('../types');
 
-function translateSub() {
+function translateSub(sub) {
+    assertSub(sub);
+
     const lines = [
         '@SP',
         'M=M-1',
