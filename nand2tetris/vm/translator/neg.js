@@ -6,6 +6,7 @@ function translateNeg(neg) {
     return asmText(`
         @SP
         A=M
+        A=A-1
         M=-M
     `);
 }

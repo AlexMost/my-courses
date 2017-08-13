@@ -2,7 +2,7 @@ const path = require('path');
 const EOL = require('os').EOL;
 const { OPS } = require('./defs');
 const { Push, Pop, Add, Sub, Eq, Lt, Gt, Neg,
-And } = require('./types');
+And, Or, Not } = require('./types');
 
 const COMMENT_REGEXP = /\/\/[\s\S]*$/g;
 
@@ -31,6 +31,10 @@ function parseStatement(line, filename, idx) {
             return new Neg(meta);
         case OPS.AND:
             return new And(meta);
+        case OPS.OR:
+            return new Or(meta);
+        case OPS.NOT:
+            return new Not(meta);
         default:
             throw new Error(`Unknown operation '${line}'`);
     }

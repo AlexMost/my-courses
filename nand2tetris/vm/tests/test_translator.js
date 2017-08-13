@@ -136,6 +136,7 @@ const negResult =
 `// neg
 @SP
 A=M
+A=A-1
 M=-M`;
 
 const andResult =
@@ -147,6 +148,23 @@ A=M
 D=M
 A=A-1
 M=M&D`;
+
+const orResult =
+`// or
+@SP
+M=M-1
+@SP
+A=M
+D=M
+A=A-1
+M=M|D`;
+
+const notResult =
+`// not
+@SP
+A=M
+A=A-1
+M=!M`;
 
 describe('translator', () => {
     it('should translate push', () => {
@@ -199,5 +217,15 @@ describe('translator', () => {
         const input = `and`;
         const result = translate(parseVMAST(input, 'Foo.vm'));
         expect(result).to.eql(andResult);
+    });
+    it('should translate or', () => {
+        const input = `or`;
+        const result = translate(parseVMAST(input, 'Foo.vm'));
+        expect(result).to.eql(orResult);
+    });
+    it('should translate not', () => {
+        const input = `not`;
+        const result = translate(parseVMAST(input, 'Foo.vm'));
+        expect(result).to.eql(notResult);
     });
 });

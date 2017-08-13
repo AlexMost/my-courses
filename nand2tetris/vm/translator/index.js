@@ -1,6 +1,6 @@
 const EOL = require('os').EOL;
 const { Pop, Push, Add,
-    Sub, Eq, Lt, Gt, Neg, And } = require('../types');
+    Sub, Eq, Lt, Gt, Neg, And, Or, Not } = require('../types');
 
 const { translatePop } = require('./pop');
 const { translatePush } = require('./push');
@@ -11,6 +11,8 @@ const { translateLt } = require('./lt');
 const { translateGt } = require('./gt');
 const { translateNeg } = require('./neg');
 const { translateAnd } = require('./and');
+const { translateOr } = require('./or');
+const { translateNot } = require('./not');
 
 function vmAST2ASM(vmNode) {
     let asmResult;
@@ -32,6 +34,10 @@ function vmAST2ASM(vmNode) {
         asmResult = translateNeg(vmNode);
     } else if (vmNode instanceof And) {
         asmResult = translateAnd(vmNode);
+    } else if (vmNode instanceof Or) {
+        asmResult = translateOr(vmNode);
+    } else if (vmNode instanceof Not) {
+        asmResult = translateNot(vmNode);
     } else {
         throw new Error(`Unsupported vmNode type ${typeof vmNode}`);
     }
