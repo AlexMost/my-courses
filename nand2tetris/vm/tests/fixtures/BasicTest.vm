@@ -17,6 +17,7 @@ push constant 45
 pop that 5
 pop that 2
 push constant 510
+// OK
 pop temp 6
 push local 0
 push that 5

@@ -3,25 +3,9 @@ const EOL = require('os').EOL;
 const { assertPush } = require('../types');
 
 function pushFromSegmentMap(push) {
-    const segment = push.getSegment(); const value = push.getValue();
-    const [label] = push.getFilename().split('.');
-
-    let segmentPointer;
-    switch (segment) {
-        case SEGMENTS.STATIC:
-            segmentPointer = `${label}.${value}`;
-            break;
-        case SEGMENTS.TEMP:
-            segmentPointer = `R${value + 5}`;
-            break;
-        default:
-            if (SEGMENT_MAP[segment]) {
-                segmentPointer = SEGMENT_MAP[segment];
-            } else {
-                throw new Error(`Unknown segment name '${push.getLine()}'`);
-            }
-
-    }
+    const segment = push.getSegment();
+    const value = push.getValue();
+    const segmentPointer = SEGMENT_MAP[segment];
 
     return [
         `@${value}`,
@@ -37,6 +21,37 @@ function pushFromSegmentMap(push) {
         'M=D',
 
         '@SP',     // SP++
+        'M=M+1',
+    ];
+}
+
+function pushTemp(push) {
+    const value = push.getValue() + 5;
+    return [
+        `@R${value}`,
+        'D=M',
+
+        '@SP',
+        'A=M',
+        'M=D',
+
+        '@SP',
+        'M=M+1',
+    ];
+}
+
+function pushStatic(push) {
+    const value = push.getValue();
+    const [label] = push.getFilename().split('.');
+    return [
+        `@${label}.${value}`,
+        'D=M',
+
+        '@SP',
+        'A=M',
+        'M=D',
+
+        '@SP',
         'M=M+1',
     ];
 }
@@ -97,8 +112,19 @@ function translatePush(push) {
         case SEGMENTS.POINTER:
             lines = pushPointer(push);
             break;
+        case SEGMENTS.TEMP:
+            lines = pushTemp(push);
+            break;
+        case SEGMENTS.STATIC:
+            lines = pushStatic(push);
+            break;
         default:
-            lines = pushFromSegmentMap(push);
+            if (SEGMENT_MAP[segment]) {
+                lines = pushFromSegmentMap(push);
+            } else {
+                throw new Error(`Unknown segment name ${push.getLine()}`);
+            }
+
     }
 
     return lines.join(EOL);

@@ -42,11 +42,7 @@ M=D
 M=M+1`;
 
 const pushStatic10 =
-`@10
-D=A
-@Foo.10
-A=M
-A=D+A
+`@Foo.10
 D=M
 @SP
 A=M
@@ -55,11 +51,7 @@ M=D
 M=M+1`;
 
 const pushTemp2 =
-`@2
-D=A
-@R7
-A=M
-A=D+A
+`@R7
 D=M
 @SP
 A=M

@@ -15,11 +15,7 @@ M=M+1`;
 
 const staticResult =
 `// push static 1
-@1
-D=A
 @Foo.1
-A=M
-A=D+A
 D=M
 @SP
 A=M
