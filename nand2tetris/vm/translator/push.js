@@ -89,7 +89,6 @@ function pushPointer(push) {
 
     return [
         `@${readSegment}`, // D = *THIS/THAT
-        'A=M',
         'D=M',
 
         '@SP',

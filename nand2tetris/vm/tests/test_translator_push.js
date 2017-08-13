@@ -61,7 +61,6 @@ M=M+1`;
 
 const pushPointer0 =
 `@THIS
-A=M
 D=M
 @SP
 A=M
@@ -71,7 +70,6 @@ M=M+1`;
 
 const pushPointer1 =
 `@THAT
-A=M
 D=M
 @SP
 A=M

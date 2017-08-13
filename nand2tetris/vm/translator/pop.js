@@ -59,7 +59,6 @@ function popPointer(pop) {
         'D=M',
 
         `@${targetSegment}`,
-        'A=M',
         'M=D',
     ];
 }

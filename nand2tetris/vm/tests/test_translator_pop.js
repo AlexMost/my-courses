@@ -47,7 +47,6 @@ M=M-1
 A=M
 D=M
 @THIS
-A=M
 M=D`;
 
 const popPointer1 =
@@ -57,7 +56,6 @@ M=M-1
 A=M
 D=M
 @THAT
-A=M
 M=D`;
 
 describe('translator translatePop', () => {
