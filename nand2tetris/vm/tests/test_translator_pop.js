@@ -60,27 +60,27 @@ M=D`;
 
 describe('translator translatePop', () => {
     it('should translate pop arg', () => {
-        const pop = parseStatement('pop argument 2', 'test');
+        const pop = parseStatement('pop argument 2', 'test', 1);
         const result = translatePop(pop);
         expect(result).to.eql(popArg2);
     });
     it('should translate pop static', () => {
-        const pop = parseStatement('pop static 2', 'Foo.vm');
+        const pop = parseStatement('pop static 2', 'Foo.vm', 1);
         const result = translatePop(pop);
         expect(result).to.eql(popStatic2);
     });
     it('should translate pop temp', () => {
-        const pop = parseStatement('pop temp 2', 'Foo.vm');
+        const pop = parseStatement('pop temp 2', 'Foo.vm', 1);
         const result = translatePop(pop);
         expect(result).to.eql(popTemp2);
     });
     it('should translate pop pointer 0', () => {
-        const pop = parseStatement('pop pointer 0', 'Foo.vm');
+        const pop = parseStatement('pop pointer 0', 'Foo.vm', 1);
         const result = translatePop(pop);
         expect(result).to.eql(popPointer0);
     });
     it('should translate pop pointer 1', () => {
-        const pop = parseStatement('pop pointer 1', 'Foo.vm');
+        const pop = parseStatement('pop pointer 1', 'Foo.vm', 1);
         const result = translatePop(pop);
         expect(result).to.eql(popPointer1);
     });

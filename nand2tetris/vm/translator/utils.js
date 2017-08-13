@@ -5,4 +5,8 @@ const asmLines = (raw) => {
     return raw.split(EOL).map(cleanLine).filter((l) => l);
 };
 
-module.exports = { asmLines };
+const asmText = (raw) => {
+    return asmLines(raw).join(EOL);
+};
+
+module.exports = { asmLines, asmText };

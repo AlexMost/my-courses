@@ -1,9 +1,10 @@
-const { asmLines } = require('./utils');
+const { asmText } = require('./utils');
 const { assertEq } = require('../types');
 
 function translateEq(eq) {
     assertEq(eq);
-    return asmLines(`
+    const id = eq.getId();
+    return asmText(`
         @SP
         M=M-1
 
@@ -14,22 +15,22 @@ function translateEq(eq) {
         A=A-1
         D=D-M
 
-        @EQTRUE
+        @EQTRUE.${id}
         D;JEQ
         @SP
         A=M
         A=A-1
         M=0
-        @END
+        @END.${id}
         0;JMP
 
-        (EQTRUE)
+        (EQTRUE.${id})
         @SP
         A=M
         A=A-1
         M=-1
 
-        (END)
+        (END.${id})
         `
         );
 }

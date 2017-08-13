@@ -1,0 +1,3 @@
+push constant 10
+push constant 1
+eq

@@ -60,6 +60,30 @@ D=M
 A=A-1
 M=M-D`;
 
+const eqResult =
+`// eq
+@SP
+M=M-1
+@SP
+A=M
+D=M
+A=A-1
+D=D-M
+@EQTRUE.0
+D;JEQ
+@SP
+A=M
+A=A-1
+M=0
+@END.0
+0;JMP
+(EQTRUE.0)
+@SP
+A=M
+A=A-1
+M=-1
+(END.0)`;
+
 describe('translator', () => {
     it('should translate push', () => {
         const input = `push constant 1`;
@@ -86,5 +110,10 @@ describe('translator', () => {
         const input = `sub`;
         const result = translate(parseVMAST(input, 'Foo.vm'));
         expect(result).to.eql(subResult);
+    });
+    it('should translate eq', () => {
+        const input = `eq`;
+        const result = translate(parseVMAST(input, 'Foo.vm'));
+        expect(result).to.eql(eqResult);
     });
 });

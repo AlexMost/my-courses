@@ -55,13 +55,13 @@ describe('parser cleanLine', () => {
 describe('parser parseStatement', () => {
     it('should parse push statement', () => {
         const line = 'push constant 10';
-        const stmt = parseStatement(line, 'test');
+        const stmt = parseStatement(line, 'test', 1);
         expect(stmt).to.be.an.instanceof(Push);
     });
 
     it('should parse pop statement', () => {
         const line = 'pop local 10';
-        const stmt = parseStatement(line, 'test');
+        const stmt = parseStatement(line, 'test', 1);
         expect(stmt).to.be.an.instanceof(Pop);
     });
 });

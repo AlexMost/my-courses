@@ -79,43 +79,43 @@ M=M+1`;
 
 describe('translator translatePush', () => {
     it('should translate push constant', () => {
-        const push = parseStatement('push constant 10', 'test');
+        const push = parseStatement('push constant 10', 'test', 1);
         const result = translatePush(push);
         expect(result).to.eql(pushConst10);
     });
 
     it('should translate push arg', () => {
-        const push = parseStatement('push argument 10', 'test');
+        const push = parseStatement('push argument 10', 'test', 1);
         const result = translatePush(push);
         expect(result).to.eql(pushArg10);
     });
 
     it('should translate push local', () => {
-        const push = parseStatement('push local 10', 'test');
+        const push = parseStatement('push local 10', 'test', 1);
         const result = translatePush(push);
         expect(result).to.eql(pushLocal10);
     });
 
     it('should translate push static', () => {
-        const push = parseStatement('push static 10', 'Foo.vm');
+        const push = parseStatement('push static 10', 'Foo.vm', 1);
         const result = translatePush(push);
         expect(result).to.eql(pushStatic10);
     });
 
     it('should translate push temp', () => {
-        const push = parseStatement('push temp 2', 'Foo.vm');
+        const push = parseStatement('push temp 2', 'Foo.vm', 1);
         const result = translatePush(push);
         expect(result).to.eql(pushTemp2);
     });
 
     it('should translate push pointer 0', () => {
-        const push = parseStatement('push pointer 0', 'Foo.vm');
+        const push = parseStatement('push pointer 0', 'Foo.vm', 1);
         const result = translatePush(push);
         expect(result).to.eql(pushPointer0);
     });
 
     it('should translate push pointer 1', () => {
-        const push = parseStatement('push pointer 1', 'Foo.vm');
+        const push = parseStatement('push pointer 1', 'Foo.vm', 1);
         const result = translatePush(push);
         expect(result).to.eql(pushPointer1);
     });

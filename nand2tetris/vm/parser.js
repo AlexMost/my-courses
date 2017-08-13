@@ -8,9 +8,9 @@ const COMMENT_REGEXP = /\/\/[\s\S]*$/g;
 const id = (i) => i;
 const cleanLine = (line) => line.replace(COMMENT_REGEXP, '').trim();
 
-function parseStatement(line, filename) {
+function parseStatement(line, filename, idx) {
     const [command, segment, value] = line.split(' ');
-    const meta = { line, filename };
+    const meta = { id: idx, line, filename };
     switch (command) {
         case OPS.PUSH:
             return new Push(segment, value, meta);
@@ -29,7 +29,7 @@ function parseStatement(line, filename) {
 
 function parseVMAST(rawContent, filepath) {
     return rawContent.split(EOL).map(cleanLine).filter(id)
-    .map((line) => parseStatement(line, path.basename(filepath)));
+    .map((line, i) => parseStatement(line, path.basename(filepath), i));
 }
 
 module.exports = { parseVMAST, cleanLine };
