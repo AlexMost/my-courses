@@ -179,6 +179,11 @@ D=M
 @MY_LABEL.Foo
 D;JGT`;
 
+const gotoResult =
+`// goto MY_LABEL
+@MY_LABEL.Foo
+0;JMP`;
+
 describe('translator', () => {
     it('should translate push', () => {
         const input = `push constant 1`;
@@ -252,5 +257,10 @@ describe('translator', () => {
         const input = `if-goto MY_LABEL`;
         const result = translate(parseVMAST(input, 'Foo.vm'));
         expect(result).to.eql(ifgotoResult);
+    });
+    it('should translate goto', () => {
+        const input = `goto MY_LABEL`;
+        const result = translate(parseVMAST(input, 'Foo.vm'));
+        expect(result).to.eql(gotoResult);
     });
 });

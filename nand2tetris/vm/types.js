@@ -102,6 +102,8 @@ class Label extends Statement {
 
 class IfGoTo extends Label {}
 
+class GoTo extends Label {}
+
 module.exports = {
     Push,
     Pop,
@@ -116,6 +118,7 @@ module.exports = {
     Not,
     Label,
     IfGoTo,
+    GoTo,
 
     assertPush: makeAssert(Push),
     assertPop: makeAssert(Pop),
@@ -130,4 +133,5 @@ module.exports = {
     assertNot: makeAssert(Not),
     assertLabel: makeAssert(Label),
     assertIfGoTo: makeAssert(IfGoTo),
+    assertGoTo: makeAssert(GoTo),
 };

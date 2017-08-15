@@ -29,6 +29,7 @@ const OPS = {
     NOT: 'not',
     LABEL: 'label',
     IFGOTO: 'if-goto',
+    GOTO: 'goto'
 };
 
 module.exports = { SEGMENTS, OPS, SEGMENT_MAP };
