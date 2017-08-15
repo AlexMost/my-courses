@@ -1,6 +1,7 @@
 const EOL = require('os').EOL;
 const { Pop, Push, Add,
-    Sub, Eq, Lt, Gt, Neg, And, Or, Not, Label } = require('../types');
+    Sub, Eq, Lt, Gt, Neg, And, Or, Not, Label, IfGoTo
+} = require('../types');
 
 const { translatePop } = require('./pop');
 const { translatePush } = require('./push');
@@ -14,6 +15,7 @@ const { translateAnd } = require('./and');
 const { translateOr } = require('./or');
 const { translateNot } = require('./not');
 const { translateLabel } = require('./label');
+const { translateIfGoTo } = require('./if-go-to');
 
 function vmAST2ASM(vmNode) {
     let asmResult;
@@ -39,6 +41,8 @@ function vmAST2ASM(vmNode) {
         asmResult = translateOr(vmNode);
     } else if (vmNode instanceof Not) {
         asmResult = translateNot(vmNode);
+    } else if (vmNode instanceof IfGoTo) {
+        asmResult = translateIfGoTo(vmNode);
     } else if (vmNode instanceof Label) {
         asmResult = translateLabel(vmNode);
     } else {

@@ -170,6 +170,15 @@ const labelResult =
 `// label MY_LABEL
 (MY_LABEL.Foo)`;
 
+const ifgotoResult =
+`// if-goto MY_LABEL
+@SP
+M=M-1
+A=M
+D=M
+@MY_LABEL.Foo
+D;JGT`;
+
 describe('translator', () => {
     it('should translate push', () => {
         const input = `push constant 1`;
@@ -237,5 +246,11 @@ describe('translator', () => {
         const input = `label MY_LABEL`;
         const result = translate(parseVMAST(input, 'Foo.vm'));
         expect(result).to.eql(labelResult);
+    });
+
+    it('should translate if-goto', () => {
+        const input = `if-goto MY_LABEL`;
+        const result = translate(parseVMAST(input, 'Foo.vm'));
+        expect(result).to.eql(ifgotoResult);
     });
 });

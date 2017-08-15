@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 const { expect } = require('chai');
 const { _test, parseVMAST } = require('../parser');
-const { Push, Pop, Label } = require('../types');
+const { Push, Pop, Label, IfGoTo } = require('../types');
 
 const { cleanLine, parseStatement } = _test;
 
@@ -69,6 +69,13 @@ describe('parser parseStatement', () => {
         const line = 'label MY_LABEL';
         const stmt = parseStatement(line, 'Foo.vm', 1);
         expect(stmt).to.be.an.instanceof(Label);
+        expect(stmt.getLabel()).to.be.eql('MY_LABEL.Foo');
+    });
+
+    it('should parse if-goto statement', () => {
+        const line = 'if-goto MY_LABEL';
+        const stmt = parseStatement(line, 'Foo.vm', 1);
+        expect(stmt).to.be.an.instanceof(IfGoTo);
         expect(stmt.getLabel()).to.be.eql('MY_LABEL.Foo');
     });
 });
