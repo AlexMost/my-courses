@@ -7,6 +7,14 @@ const mustExist = (name, arg) => {
     }
 };
 
+const makeAssert = (Type) => {
+    return (obj) => {
+        if (!(obj instanceof Type)) {
+            throw new Error(`Expected ${Type.name} type, actual ${typeof obj}`);
+        }
+    };
+};
+
 class Statement {
     constructor(meta) {
         mustExist('meta', meta);
@@ -77,69 +85,13 @@ class Or extends Statement {}
 
 class Not extends Statement {}
 
-function assertPush(obj) {
-    if (!(obj instanceof Push)) {
-        throw Error(`Expected Push type, actual ${typeof obj}`);
+class Label extends Statement {
+    constructor(label, meta) {
+        super(meta);
+        this._label = label;
     }
-}
-
-function assertPop(obj) {
-    if (!(obj instanceof Pop)) {
-        throw Error(`Expected Pop type, actual ${typeof obj}`);
-    }
-}
-
-function assertEq(obj) {
-    if (!(obj instanceof Eq)) {
-        throw Error(`Expected Eq type, actual ${typeof obj}`);
-    }
-}
-
-function assertAdd(obj) {
-    if (!(obj instanceof Add)) {
-        throw Error(`Expected Add type, actual ${typeof obj}`);
-    }
-}
-
-function assertSub(obj) {
-    if (!(obj instanceof Sub)) {
-        throw Error(`Expected Add type, actual ${typeof obj}`);
-    }
-}
-
-function assertLt(obj) {
-    if (!(obj instanceof Lt)) {
-        throw Error(`Expected Lt type, actual ${typeof obj}`);
-    }
-}
-
-function assertGt(obj) {
-    if (!(obj instanceof Gt)) {
-        throw Error(`Expected Gt type, actual ${typeof obj}`);
-    }
-}
-
-function assertNeg(obj) {
-    if (!(obj instanceof Neg)) {
-        throw Error(`Expected Neg type, actual ${typeof obj}`);
-    }
-}
-
-function assertAnd(obj) {
-    if (!(obj instanceof And)) {
-        throw Error(`Expected And type, actual ${typeof obj}`);
-    }
-}
-
-function assertOr(obj) {
-    if (!(obj instanceof Or)) {
-        throw Error(`Expected Or type, actual ${typeof obj}`);
-    }
-}
-
-function assertNot(obj) {
-    if (!(obj instanceof Not)) {
-        throw Error(`Expected Not type, actual ${typeof obj}`);
+    getLabel() {
+        return `${this._label}.${this.getFilename()}`;
     }
 }
 
@@ -155,16 +107,18 @@ module.exports = {
     And,
     Or,
     Not,
+    Label,
 
-    assertPush,
-    assertPop,
-    assertEq,
-    assertAdd,
-    assertSub,
-    assertLt,
-    assertGt,
-    assertNeg,
-    assertAnd,
-    assertOr,
-    assertNot,
+    assertPush: makeAssert(Push),
+    assertPop: makeAssert(Pop),
+    assertEq: makeAssert(Eq),
+    assertAdd: makeAssert(Add),
+    assertSub: makeAssert(Sub),
+    assertLt: makeAssert(Lt),
+    assertGt: makeAssert(Gt),
+    assertNeg: makeAssert(Neg),
+    assertAnd: makeAssert(And),
+    assertOr: makeAssert(Or),
+    assertNot: makeAssert(Not),
+    assertLabel: makeAssert(Label),
 };
