@@ -166,6 +166,10 @@ A=M
 A=A-1
 M=!M`;
 
+const labelResult =
+`// label MY_LABEL
+(MY_LABEL.Foo)`;
+
 describe('translator', () => {
     it('should translate push', () => {
         const input = `push constant 1`;
@@ -227,5 +231,11 @@ describe('translator', () => {
         const input = `not`;
         const result = translate(parseVMAST(input, 'Foo.vm'));
         expect(result).to.eql(notResult);
+    });
+
+    it('should translate label', () => {
+        const input = `label MY_LABEL`;
+        const result = translate(parseVMAST(input, 'Foo.vm'));
+        expect(result).to.eql(labelResult);
     });
 });

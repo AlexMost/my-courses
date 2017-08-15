@@ -1,6 +1,6 @@
 const EOL = require('os').EOL;
 const { Pop, Push, Add,
-    Sub, Eq, Lt, Gt, Neg, And, Or, Not } = require('../types');
+    Sub, Eq, Lt, Gt, Neg, And, Or, Not, Label } = require('../types');
 
 const { translatePop } = require('./pop');
 const { translatePush } = require('./push');
@@ -13,6 +13,7 @@ const { translateNeg } = require('./neg');
 const { translateAnd } = require('./and');
 const { translateOr } = require('./or');
 const { translateNot } = require('./not');
+const { translateLabel } = require('./label');
 
 function vmAST2ASM(vmNode) {
     let asmResult;
@@ -38,8 +39,10 @@ function vmAST2ASM(vmNode) {
         asmResult = translateOr(vmNode);
     } else if (vmNode instanceof Not) {
         asmResult = translateNot(vmNode);
+    } else if (vmNode instanceof Label) {
+        asmResult = translateLabel(vmNode);
     } else {
-        throw new Error(`Unsupported vmNode type ${typeof vmNode}`);
+        throw new Error(`Unsupported vmNode type '${vmNode.constructor.name}'`);
     }
     return `// ${vmNode.getLine()}${EOL}${asmResult}`;
 }

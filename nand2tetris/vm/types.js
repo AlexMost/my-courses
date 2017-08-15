@@ -22,16 +22,21 @@ class Statement {
         mustExist('line', line);
         mustExist('id', id);
         mustExist('filename', filename);
-        const [label] = path.basename(filename).split(['.']);
-        this.getId = () => `${label}.${id}`;
+
         this._line = line;
-        this._filename = filename;
+        this._id = id;
+
+        const [fileWithoutExt] = path.basename(filename).split(['.']);
+        this._filename = fileWithoutExt;
     }
     getLine() {
         return this._line;
     }
     getFilename() {
         return this._filename;
+    }
+    getId() {
+        return `${this.getFilename()}.${this._id}`;
     }
 }
 

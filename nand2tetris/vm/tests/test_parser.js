@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 const { expect } = require('chai');
 const { _test, parseVMAST } = require('../parser');
-const { Push, Pop } = require('../types');
+const { Push, Pop, Label } = require('../types');
 
 const { cleanLine, parseStatement } = _test;
 
@@ -37,7 +37,7 @@ describe('parser parseVMAST', () => {
     it('shlould apply meta to statements', () => {
         const filepath = './tests/fixtures/static.vm';
         const [push] = parseVMAST(staticContent, filepath);
-        expect(push.getFilename()).to.eql('static.vm');
+        expect(push.getFilename()).to.eql('static');
     });
 });
 
@@ -63,5 +63,12 @@ describe('parser parseStatement', () => {
         const line = 'pop local 10';
         const stmt = parseStatement(line, 'test', 1);
         expect(stmt).to.be.an.instanceof(Pop);
+    });
+
+    it('should parse label statement', () => {
+        const line = 'label MY_LABEL';
+        const stmt = parseStatement(line, 'Foo.vm', 1);
+        expect(stmt).to.be.an.instanceof(Label);
+        expect(stmt.getLabel()).to.be.eql('MY_LABEL.Foo');
     });
 });

@@ -27,6 +27,7 @@ const OPS = {
     AND: 'and',
     OR: 'or',
     NOT: 'not',
+    LABEL: 'label',
 };
 
 module.exports = { SEGMENTS, OPS, SEGMENT_MAP };
