@@ -69,20 +69,20 @@ A=M
 D=M
 A=A-1
 D=M-D
-@EQTRUE.0
+@EQTRUE.Foo.0
 D;JEQ
 @SP
 A=M
 A=A-1
 M=0
-@END.0
+@END.Foo.0
 0;JMP
-(EQTRUE.0)
+(EQTRUE.Foo.0)
 @SP
 A=M
 A=A-1
 M=-1
-(END.0)`;
+(END.Foo.0)`;
 
 const ltResult =
 `// lt
@@ -93,20 +93,20 @@ A=M
 D=M
 A=A-1
 D=M-D
-@EQTRUE.0
+@EQTRUE.Foo.0
 D;JLT
 @SP
 A=M
 A=A-1
 M=0
-@END.0
+@END.Foo.0
 0;JMP
-(EQTRUE.0)
+(EQTRUE.Foo.0)
 @SP
 A=M
 A=A-1
 M=-1
-(END.0)`;
+(END.Foo.0)`;
 
 const gtResult =
 `// gt
@@ -117,20 +117,20 @@ A=M
 D=M
 A=A-1
 D=M-D
-@EQTRUE.0
+@EQTRUE.Foo.0
 D;JGT
 @SP
 A=M
 A=A-1
 M=0
-@END.0
+@END.Foo.0
 0;JMP
-(EQTRUE.0)
+(EQTRUE.Foo.0)
 @SP
 A=M
 A=A-1
 M=-1
-(END.0)`;
+(END.Foo.0)`;
 
 const negResult =
 `// neg

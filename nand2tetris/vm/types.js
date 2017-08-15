@@ -1,4 +1,5 @@
 const { SEGMENTS } = require('./defs');
+const path = require('path');
 
 const mustExist = (name, arg) => {
     if (arg === undefined) {
@@ -13,7 +14,8 @@ class Statement {
         mustExist('line', line);
         mustExist('id', id);
         mustExist('filename', filename);
-        this.getId = () => id;
+        const [label] = path.basename(filename).split(['.']);
+        this.getId = () => `${label}.${id}`;
         this._line = line;
         this._filename = filename;
     }
