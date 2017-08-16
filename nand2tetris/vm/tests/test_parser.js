@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 const { expect } = require('chai');
 const { _test, parseVMAST } = require('../parser');
-const { Push, Pop, Label, IfGoTo } = require('../types');
+const { Push, Pop, Label, IfGoTo, Func, Return } = require('../types');
 
 const { cleanLine, parseStatement } = _test;
 
@@ -77,5 +77,19 @@ describe('parser parseStatement', () => {
         const stmt = parseStatement(line, 'Foo.vm', 1);
         expect(stmt).to.be.an.instanceof(IfGoTo);
         expect(stmt.getLabel()).to.be.eql('MY_LABEL.Foo');
+    });
+
+    it('should parse function', () => {
+        const line = 'function SimpleFunction.test 2';
+        const fn = parseStatement(line, 'SimpleFunction.vm', 1);
+        expect(fn).to.be.an.instanceof(Func);
+        expect(fn.getLabel()).to.be.eql('SimpleFunction.test');
+        expect(fn.getNArgs()).to.be.eql(2);
+    });
+
+    it('should parse return', () => {
+        const line = 'return';
+        const fn = parseStatement(line, 'SimpleFunction.vm', 1);
+        expect(fn).to.be.an.instanceof(Return);
     });
 });

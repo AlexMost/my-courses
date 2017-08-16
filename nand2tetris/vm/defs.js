@@ -15,7 +15,7 @@ SEGMENT_MAP[SEGMENTS.ARGUMENT] = 'ARG';
 SEGMENT_MAP[SEGMENTS.THIS] = 'THIS';
 SEGMENT_MAP[SEGMENTS.THAT] = 'THAT';
 
-const OPS = {
+const TOKENS = {
     PUSH: 'push',
     POP: 'pop',
     ADD: 'add',
@@ -29,7 +29,9 @@ const OPS = {
     NOT: 'not',
     LABEL: 'label',
     IFGOTO: 'if-goto',
-    GOTO: 'goto'
+    GOTO: 'goto',
+    FUNC: 'function',
+    RETURN: 'return',
 };
 
-module.exports = { SEGMENTS, OPS, SEGMENT_MAP };
+module.exports = { SEGMENTS, TOKENS, SEGMENT_MAP };

@@ -15,7 +15,7 @@ const makeAssert = (Type) => {
     };
 };
 
-class Statement {
+class Token {
     constructor(meta) {
         mustExist('meta', meta);
         const { id, line, filename } = meta;
@@ -40,7 +40,7 @@ class Statement {
     }
 }
 
-class PushPop extends Statement {
+class PushPop extends Token {
     constructor(segment, value, meta) {
         super(meta);
 
@@ -72,25 +72,25 @@ class Pop extends PushPop {
 
 class Push extends PushPop {}
 
-class Add extends Statement {}
+class Add extends Token {}
 
-class Sub extends Statement {}
+class Sub extends Token {}
 
-class Eq extends Statement {}
+class Eq extends Token {}
 
-class Lt extends Statement {}
+class Lt extends Token {}
 
-class Gt extends Statement {}
+class Gt extends Token {}
 
-class Neg extends Statement {}
+class Neg extends Token {}
 
-class And extends Statement {}
+class And extends Token {}
 
-class Or extends Statement {}
+class Or extends Token {}
 
-class Not extends Statement {}
+class Not extends Token {}
 
-class Label extends Statement {
+class Label extends Token {
     constructor(label, meta) {
         super(meta);
         this._label = label;
@@ -103,6 +103,24 @@ class Label extends Statement {
 class IfGoTo extends Label {}
 
 class GoTo extends Label {}
+
+class Func extends Token {
+    constructor(label, nArgs, meta) {
+        super(meta);
+        mustExist('label', label);
+        mustExist('nArgs', nArgs);
+        this._label = label;
+        this._nArgs = parseInt(nArgs, 10);
+    }
+    getLabel() {
+        return this._label;
+    }
+    getNArgs() {
+        return this._nArgs;
+    }
+}
+
+class Return extends Token {}
 
 module.exports = {
     Push,
@@ -119,6 +137,8 @@ module.exports = {
     Label,
     IfGoTo,
     GoTo,
+    Func,
+    Return,
 
     assertPush: makeAssert(Push),
     assertPop: makeAssert(Pop),
@@ -134,4 +154,6 @@ module.exports = {
     assertLabel: makeAssert(Label),
     assertIfGoTo: makeAssert(IfGoTo),
     assertGoTo: makeAssert(GoTo),
+    assertFunction: makeAssert(Func),
+    assertReturn: makeAssert(Return),
 };

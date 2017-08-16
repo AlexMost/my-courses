@@ -1,8 +1,9 @@
 const path = require('path');
 const EOL = require('os').EOL;
-const { OPS } = require('./defs');
+const { TOKENS } = require('./defs');
 const { Push, Pop, Add, Sub, Eq, Lt, Gt, Neg,
-And, Or, Not, Label, IfGoTo, GoTo } = require('./types');
+And, Or, Not, Label, IfGoTo, GoTo, Func, Return
+} = require('./types');
 
 const COMMENT_REGEXP = /\/\/[\s\S]*$/g;
 
@@ -10,37 +11,42 @@ const id = (i) => i;
 const cleanLine = (line) => line.replace(COMMENT_REGEXP, '').trim();
 
 function parseStatement(line, filename, idx) {
+    /* eslint complexity: 0 */
     const [command, segment, value] = line.split(' ');
     const meta = { id: idx, line, filename };
     switch (command) {
-        case OPS.PUSH:
+        case TOKENS.PUSH:
             return new Push(segment, value, meta);
-        case OPS.POP:
+        case TOKENS.POP:
             return new Pop(segment, value, meta);
-        case OPS.ADD:
+        case TOKENS.ADD:
             return new Add(meta);
-        case OPS.SUB:
+        case TOKENS.SUB:
             return new Sub(meta);
-        case OPS.EQ:
+        case TOKENS.EQ:
             return new Eq(meta);
-        case OPS.LT:
+        case TOKENS.LT:
             return new Lt(meta);
-        case OPS.GT:
+        case TOKENS.GT:
             return new Gt(meta);
-        case OPS.NEG:
+        case TOKENS.NEG:
             return new Neg(meta);
-        case OPS.AND:
+        case TOKENS.AND:
             return new And(meta);
-        case OPS.OR:
+        case TOKENS.OR:
             return new Or(meta);
-        case OPS.NOT:
+        case TOKENS.NOT:
             return new Not(meta);
-        case OPS.LABEL:
+        case TOKENS.LABEL:
             return new Label(segment, meta);
-        case OPS.IFGOTO:
+        case TOKENS.IFGOTO:
             return new IfGoTo(segment, meta);
-        case OPS.GOTO:
+        case TOKENS.GOTO:
             return new GoTo(segment, meta);
+        case TOKENS.FUNC:
+            return new Func(segment, value, meta);
+        case TOKENS.RETURN:
+            return new Return(meta);
         default:
             throw new Error(`Unknown operation '${line}'`);
     }
