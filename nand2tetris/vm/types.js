@@ -154,6 +154,6 @@ module.exports = {
     assertLabel: makeAssert(Label),
     assertIfGoTo: makeAssert(IfGoTo),
     assertGoTo: makeAssert(GoTo),
-    assertFunction: makeAssert(Func),
+    assertFunc: makeAssert(Func),
     assertReturn: makeAssert(Return),
 };
