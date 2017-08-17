@@ -32,6 +32,7 @@ const TOKENS = {
     GOTO: 'goto',
     FUNC: 'function',
     RETURN: 'return',
+    CALL: 'call',
 };
 
 module.exports = { SEGMENTS, TOKENS, SEGMENT_MAP };

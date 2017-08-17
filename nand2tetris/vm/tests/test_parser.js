@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 const { expect } = require('chai');
 const { _test, parseVMAST } = require('../parser');
-const { Push, Pop, Label, IfGoTo, Func, Return } = require('../types');
+const { Push, Pop, Label, IfGoTo, Func, Return, Call } = require('../types');
 
 const { cleanLine, parseStatement } = _test;
 
@@ -91,5 +91,13 @@ describe('parser parseStatement', () => {
         const line = 'return';
         const fn = parseStatement(line, 'SimpleFunction.vm', 1);
         expect(fn).to.be.an.instanceof(Return);
+    });
+
+    it('should parse call', () => {
+        const line = 'call SimpleFunction.main 0';
+        const fn = parseStatement(line, 'SimpleFunction.vm', 1);
+        expect(fn).to.be.an.instanceof(Call);
+        expect(fn.getLabel()).to.be.eql('SimpleFunction.main');
+        expect(fn.getNArgs()).to.be.eql(0);
     });
 });

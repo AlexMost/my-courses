@@ -2,7 +2,7 @@ const path = require('path');
 const EOL = require('os').EOL;
 const { TOKENS } = require('./defs');
 const { Push, Pop, Add, Sub, Eq, Lt, Gt, Neg,
-And, Or, Not, Label, IfGoTo, GoTo, Func, Return
+And, Or, Not, Label, IfGoTo, GoTo, Func, Return, Call
 } = require('./types');
 
 const COMMENT_REGEXP = /\/\/[\s\S]*$/g;
@@ -47,6 +47,8 @@ function parseStatement(line, filename, idx) {
             return new Func(segment, value, meta);
         case TOKENS.RETURN:
             return new Return(meta);
+        case TOKENS.CALL:
+            return new Call(segment, value, meta);
         default:
             throw new Error(`Unknown operation '${line}'`);
     }

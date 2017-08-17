@@ -122,6 +122,8 @@ class Func extends Token {
 
 class Return extends Token {}
 
+class Call extends Func {}
+
 module.exports = {
     Push,
     Pop,
@@ -139,6 +141,7 @@ module.exports = {
     GoTo,
     Func,
     Return,
+    Call,
 
     assertPush: makeAssert(Push),
     assertPop: makeAssert(Pop),
@@ -156,4 +159,5 @@ module.exports = {
     assertGoTo: makeAssert(GoTo),
     assertFunc: makeAssert(Func),
     assertReturn: makeAssert(Return),
+    assertCall: makeAssert(Call),
 };
