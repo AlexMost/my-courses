@@ -1,7 +1,7 @@
 const EOL = require('os').EOL;
 const { Pop, Push, Add,
     Sub, Eq, Lt, Gt, Neg, And, Or, Not, Label, IfGoTo, GoTo,
-    Func, Return
+    Func, Return, Call
 } = require('../types');
 
 const { translatePop } = require('./pop');
@@ -20,6 +20,7 @@ const { translateIfGoTo } = require('./if-goto');
 const { translateGoTo } = require('./goto');
 const { translateFunc } = require('./function');
 const { translateReturn } = require('./return');
+const { translateCall } = require('./call');
 
 function vmAST2ASM(vmNode) {
     /* eslint complexity: 0 */
@@ -56,6 +57,8 @@ function vmAST2ASM(vmNode) {
         asmResult = translateFunc(vmNode);
     } else if (vmNode instanceof Return) {
         asmResult = translateReturn(vmNode);
+    } else if (vmNode instanceof Call) {
+        asmResult = translateCall(vmNode);
     } else {
         throw new Error(`Unsupported vmNode type '${vmNode.constructor.name}'`);
     }
