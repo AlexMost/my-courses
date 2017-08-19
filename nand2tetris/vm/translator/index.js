@@ -53,12 +53,12 @@ function vmAST2ASM(vmNode) {
         asmResult = translateGoTo(vmNode);
     } else if (vmNode instanceof Label) {
         asmResult = translateLabel(vmNode);
-    } else if (vmNode instanceof Func) {
-        asmResult = translateFunc(vmNode);
-    } else if (vmNode instanceof Return) {
-        asmResult = translateReturn(vmNode);
     } else if (vmNode instanceof Call) {
         asmResult = translateCall(vmNode);
+    } else if (vmNode instanceof Return) {
+        asmResult = translateReturn(vmNode);
+    } else if (vmNode instanceof Func) {
+        asmResult = translateFunc(vmNode);
     } else {
         throw new Error(`Unsupported vmNode type '${vmNode.constructor.name}'`);
     }

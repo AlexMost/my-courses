@@ -5,8 +5,8 @@ function translateFunc(func) {
     assertFunc(func);
     const id = func.getId();
     const nArgs = func.getNArgs();
-
-    return asmText(`
+    if (nArgs > 0) {
+        return asmText(`
         (${func.getLabel()})
 
         @${nArgs}
@@ -29,7 +29,11 @@ function translateFunc(func) {
             @LOOP.${id}
             D;JGT
 
-    `);
+        `);
+    }
+
+    return asmText(`(${func.getLabel()})`);
+    
 }
 
 module.exports = { translateFunc };

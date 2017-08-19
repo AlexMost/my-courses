@@ -58,9 +58,9 @@ function translateCall(call) {
         @5
         D=A
         @SP
-        D=M-D
+        D=M-D // D = SP - 5
         @ARG
-        M=D
+        M=D   // ARG = D
         @${nArgs}
         D=A
         @ARG

@@ -15,7 +15,8 @@ function translateReturn(ret) {
         @5
         D=A
         @endFrame
-        D=M-D
+        A=M-D
+        D=M
         @retAddr
         M=D
 
