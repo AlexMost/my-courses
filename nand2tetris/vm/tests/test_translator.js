@@ -203,6 +203,7 @@ D=M
 @LOOP.Foo.0
 D;JGT`;
 
+
 const ret =
 `// return
 @LCL
@@ -212,7 +213,8 @@ M=D
 @5
 D=A
 @endFrame
-D=M-D
+A=M-D
+D=M
 @retAddr
 M=D
 @SP

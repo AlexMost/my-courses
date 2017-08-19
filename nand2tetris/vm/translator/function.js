@@ -33,7 +33,6 @@ function translateFunc(func) {
     }
 
     return asmText(`(${func.getLabel()})`);
-    
 }
 
 module.exports = { translateFunc };
