@@ -177,7 +177,7 @@ M=M-1
 A=M
 D=M
 @MY_LABEL.Foo
-D;JGT`;
+D;JNE`;
 
 const gotoResult =
 `// goto MY_LABEL

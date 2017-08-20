@@ -67,6 +67,9 @@ function vmAST2ASM(vmNode) {
 
 
 function translate(vmAST) {
+    // TODO: handle label naming inside functions
+    // use the function scope for that
+    // use reduce here
     const strLines = vmAST.map(vmAST2ASM);
     return strLines.join(EOL);
 }

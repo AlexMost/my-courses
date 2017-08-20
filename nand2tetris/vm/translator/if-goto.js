@@ -10,7 +10,7 @@ function translateIfGoTo(ifgoto) {
         D=M    // D = *SP
 
         @${ifgoto.getLabel()}  // go-to label if > 0
-        D;JGT
+        D;JNE
     `);
 }
 
