@@ -1,0 +1,68 @@
+class Snake {
+   field Point head;
+   field List snakeList;
+
+   constructor Snake new(int Ax, int Ay) {
+      let snakeList = List.new(Point.new(Ax, Ay), null);
+      return this;
+   }
+
+   method void draw() {
+      var Point p;
+      var List lst;
+      let lst = snakeList;
+
+      while(~(lst = null)) {
+         let p = lst.getData();
+         do p.draw();
+         let lst = lst.getNext();
+      }
+
+      return;
+   }
+
+   method void moveUp() {
+      do move(head.getX(), head.getY() - head.getSize());
+      return;
+   }
+
+   method void moveDown() {
+      var Point head;
+      let head = snakeList.getData();
+      do move(head.getX(), head.getY() + head.getSize());
+      return;
+   }
+
+   method void moveLeft() {
+      var Point head;
+      let head = snakeList.getData();
+      do move(head.getX() - head.getSize(), head.getY());
+      return;
+   }
+
+   method void moveRight() {
+      var Point head;
+      let head = snakeList.getData();
+      do move(head.getX() + head.getSize(), head.getY());
+      return;
+   }
+
+   method void move(int x, int y) {
+      var List tmp;
+      var List prev;
+      let snakeList = List.new(Point.new(x, y), snakeList);
+      let tmp = snakeList;
+      while(~(tmp = null)) {
+         let prev = tmp;
+         let tmp = tmp.getNext();
+      }
+      do prev.setNext(null);
+      do draw();
+      return;
+   }
+
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+}

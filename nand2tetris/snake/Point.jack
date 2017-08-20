@@ -1,0 +1,44 @@
+class Point {
+
+   field int x, y;
+   field int size;
+
+   constructor Point new(int Ax, int Ay) {
+      let x = Ax;
+      let y = Ay;
+      let size = 5;
+      return this;
+   }
+
+   method int getX() {
+      return x;
+   }
+
+   method int getY() {
+      return y;
+   }
+
+   method int getSize() {
+      return size;
+   }
+
+   /** Disposes this square. */
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /** Draws the square on the screen. */
+   method void draw() {
+      do Screen.setColor(true);
+      do Screen.drawRectangle(x, y, x + size, y + size);
+      return;
+   }
+
+   /** Erases the square from the screen. */
+   method void erase() {
+      do Screen.setColor(false);
+      do Screen.drawRectangle(x, y, x + size, y + size);
+      return;
+   }
+}

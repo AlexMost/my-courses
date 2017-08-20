@@ -1,0 +1,148 @@
+function Snake.new 0
+push constant 2
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+push argument 1
+call Point.new 2
+push constant 0
+call List.new 2
+pop this 1
+push pointer 0
+return
+function Snake.draw 2
+push argument 0
+pop pointer 0
+push this 1
+pop local 1
+label WHILE_EXP0
+push local 1
+push constant 0
+eq
+not
+not
+if-goto WHILE_END0
+push local 1
+call List.getData 1
+pop local 0
+push local 0
+call Point.draw 1
+pop temp 0
+push local 1
+call List.getNext 1
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Snake.moveUp 0
+push argument 0
+pop pointer 0
+push pointer 0
+push this 0
+call Point.getX 1
+push this 0
+call Point.getY 1
+push this 0
+call Point.getSize 1
+sub
+call Snake.move 3
+pop temp 0
+push constant 0
+return
+function Snake.moveDown 1
+push argument 0
+pop pointer 0
+push this 1
+call List.getData 1
+pop local 0
+push pointer 0
+push local 0
+call Point.getX 1
+push local 0
+call Point.getY 1
+push local 0
+call Point.getSize 1
+add
+call Snake.move 3
+pop temp 0
+push constant 0
+return
+function Snake.moveLeft 1
+push argument 0
+pop pointer 0
+push this 1
+call List.getData 1
+pop local 0
+push pointer 0
+push local 0
+call Point.getX 1
+push local 0
+call Point.getSize 1
+sub
+push local 0
+call Point.getY 1
+call Snake.move 3
+pop temp 0
+push constant 0
+return
+function Snake.moveRight 1
+push argument 0
+pop pointer 0
+push this 1
+call List.getData 1
+pop local 0
+push pointer 0
+push local 0
+call Point.getX 1
+push local 0
+call Point.getSize 1
+add
+push local 0
+call Point.getY 1
+call Snake.move 3
+pop temp 0
+push constant 0
+return
+function Snake.move 2
+push argument 0
+pop pointer 0
+push argument 1
+push argument 2
+call Point.new 2
+push this 1
+call List.new 2
+pop this 1
+push this 1
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 0
+eq
+not
+not
+if-goto WHILE_END0
+push local 0
+pop local 1
+push local 0
+call List.getNext 1
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push local 1
+push constant 0
+call List.setNext 2
+pop temp 0
+push pointer 0
+call Snake.draw 1
+pop temp 0
+push constant 0
+return
+function Snake.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

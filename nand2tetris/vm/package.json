@@ -10,7 +10,10 @@
     "test": "npm run fix && NODE_ENV=test mocha tests",
     "rawtest": "NODE_ENV=test mocha tests",
     "lint": "eslint *.js tests translator",
-    "fix": "eslint --fix *.js tests translator"
+    "fix": "eslint --fix *.js tests translator",
+    "wp": "webpack",
+    "lang": "echo 'nodejs' >> ./dist/lang.txt",
+    "build": "npm run wp && npm run lang"
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +24,7 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
-    "mocha": "^3.4.2"
+    "mocha": "^3.4.2",
+    "webpack": "^3.5.5"
   }
 }
