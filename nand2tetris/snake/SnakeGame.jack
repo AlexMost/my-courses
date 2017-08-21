@@ -1,11 +1,45 @@
 class SnakeGame {
    field Snake snake; 
    field int direction; // 0=none, 1=up, 2=down, 3=left, 4=right
+   field Point apple;
+   field Array applePos;
+   field int currentPos;
 
    constructor SnakeGame new() {
       let snake = Snake.new(20, 20);
+      let apple = Point.new(50, 50);
       let direction = 4;
+      let applePos = Array.new(10);
+
+      let currentPos = 0;
+      let applePos[0] = 20;
+      let applePos[1] = 20;
+      let applePos[2] = 50;
+      let applePos[3] = 50;
+      let applePos[4] = 100;
+      let applePos[5] = 100;
+      let applePos[6] = 150;
+      let applePos[7] = 150;
+      let applePos[8] = 90;
+      let applePos[9] = 90;
+      let applePos[10] = 30;
+      let applePos[11] = 30;
+
+      do apple.draw();
       return this;
+   }
+
+   method void newApple() {
+      var int x, y;
+      if (currentPos = 10) {
+         let currentPos = 0;
+      }
+      let x = applePos[currentPos];
+      let y = applePos[currentPos + 1];
+      let apple = Point.new(x, y);
+      let currentPos = currentPos + 1;
+      do apple.draw();
+      return;
    }
 
    method void dispose() {
@@ -24,8 +58,10 @@ class SnakeGame {
    }
 
    method void run() {
+      var Point head;
       var char key;
       var boolean exit;
+      var int hx, hy, ax, ay;
       let exit = false;
       
       while (~exit) {
@@ -43,7 +79,18 @@ class SnakeGame {
          if (key = 132 & ~(direction = 3)) {
             let direction = 4;
          }   // right arrow
-         do moveSnake();
+
+         let head = snake.getHead();
+         let hx = head.getX();
+         let hy = head.getY();
+         let ax = apple.getX();
+         let ay = apple.getY();
+         if (hx = ax & hy = ay) {
+            do snake.eatApple(apple);
+            do newApple();
+         } else {
+            do moveSnake();
+         }
      }
      return;
    }

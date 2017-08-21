@@ -1,14 +1,161 @@
 function SnakeGame.new 0
-push constant 2
+push constant 5
 call Memory.alloc 1
 pop pointer 0
 push constant 20
 push constant 20
 call Snake.new 2
 pop this 0
+push constant 50
+push constant 50
+call Point.new 2
+pop this 2
 push constant 4
 pop this 1
+push constant 10
+call Array.new 1
+pop this 3
+push constant 0
+pop this 4
+push constant 0
+push this 3
+add
+push constant 20
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push this 3
+add
+push constant 20
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push this 3
+add
+push constant 50
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push this 3
+add
+push constant 50
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 4
+push this 3
+add
+push constant 100
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 5
+push this 3
+add
+push constant 100
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 6
+push this 3
+add
+push constant 150
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 7
+push this 3
+add
+push constant 150
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 8
+push this 3
+add
+push constant 90
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 9
+push this 3
+add
+push constant 90
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 10
+push this 3
+add
+push constant 30
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 11
+push this 3
+add
+push constant 30
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push this 2
+call Point.draw 1
+pop temp 0
 push pointer 0
+return
+function SnakeGame.newApple 2
+push argument 0
+pop pointer 0
+push this 4
+push constant 10
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+pop this 4
+label IF_FALSE0
+push this 4
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 0
+push this 4
+push constant 1
+add
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 1
+push local 0
+push local 1
+call Point.new 2
+pop this 2
+push this 4
+push constant 1
+add
+pop this 4
+push this 2
+call Point.draw 1
+pop temp 0
+push constant 0
 return
 function SnakeGame.dispose 0
 push argument 0
@@ -69,19 +216,19 @@ call Sys.wait 1
 pop temp 0
 push constant 0
 return
-function SnakeGame.run 2
+function SnakeGame.run 7
 push argument 0
 pop pointer 0
 push constant 0
-pop local 1
+pop local 2
 label WHILE_EXP0
-push local 1
+push local 2
 not
 not
 if-goto WHILE_END0
 call Keyboard.keyPressed 0
-pop local 0
-push local 0
+pop local 1
+push local 1
 push constant 81
 eq
 if-goto IF_TRUE0
@@ -89,9 +236,9 @@ goto IF_FALSE0
 label IF_TRUE0
 push constant 0
 not
-pop local 1
+pop local 2
 label IF_FALSE0
-push local 0
+push local 1
 push constant 131
 eq
 push this 1
@@ -105,7 +252,7 @@ label IF_TRUE1
 push constant 1
 pop this 1
 label IF_FALSE1
-push local 0
+push local 1
 push constant 133
 eq
 push this 1
@@ -119,7 +266,7 @@ label IF_TRUE2
 push constant 2
 pop this 1
 label IF_FALSE2
-push local 0
+push local 1
 push constant 130
 eq
 push this 1
@@ -133,7 +280,7 @@ label IF_TRUE3
 push constant 3
 pop this 1
 label IF_FALSE3
-push local 0
+push local 1
 push constant 132
 eq
 push this 1
@@ -147,9 +294,44 @@ label IF_TRUE4
 push constant 4
 pop this 1
 label IF_FALSE4
+push this 0
+call Snake.getHead 1
+pop local 0
+push local 0
+call Point.getX 1
+pop local 3
+push local 0
+call Point.getY 1
+pop local 4
+push this 2
+call Point.getX 1
+pop local 5
+push this 2
+call Point.getY 1
+pop local 6
+push local 3
+push local 5
+eq
+push local 4
+and
+push local 6
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push this 0
+push this 2
+call Snake.eatApple 2
+pop temp 0
+push pointer 0
+call SnakeGame.newApple 1
+pop temp 0
+goto IF_END5
+label IF_FALSE5
 push pointer 0
 call SnakeGame.moveSnake 1
 pop temp 0
+label IF_END5
 goto WHILE_EXP0
 label WHILE_END0
 push constant 0

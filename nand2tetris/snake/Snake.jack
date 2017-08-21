@@ -50,6 +50,21 @@ class Snake {
       return;
    }
 
+   method void eatApple(Point apple) {
+      var Point p;
+      var int i;
+      let i = size - 1;
+      while (~(i = -1)) {
+         let p = buffer[i];
+         let buffer[i + 1] = p;
+         let i = i - 1;
+      }
+      let buffer[0] = apple;
+      let size = size + 1;
+      do draw();
+      return;
+   }
+
    method void move(Point newHead) {
       var Point p;
       var int i;
@@ -64,6 +79,10 @@ class Snake {
       do p.dispose();
       do draw();
       return;
+   }
+
+   method Point getHead() {
+      return buffer[0];
    }
 
    method void dispose() {
