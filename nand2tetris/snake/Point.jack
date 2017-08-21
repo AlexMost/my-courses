@@ -24,6 +24,7 @@ class Point {
 
    /** Disposes this square. */
    method void dispose() {
+      do erase();
       do Memory.deAlloc(this);
       return;
    }

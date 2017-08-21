@@ -1,62 +1,67 @@
 class Snake {
-   field Point head;
-   field List snakeList;
+   field int size;
+   field Array buffer;
 
    constructor Snake new(int Ax, int Ay) {
-      let snakeList = List.new(Point.new(Ax, Ay), null);
+      var Point head;
+      let size = 1;
+      let buffer = Array.new(100);
+      let buffer[0] = Point.new(Ax, Ay);
       return this;
    }
 
    method void draw() {
+      var int i;
       var Point p;
-      var List lst;
-      let lst = snakeList;
-
-      while(~(lst = null)) {
-         let p = lst.getData();
+      let i = 0;
+      while(~(i = size)) {
+         let p = buffer[i];
          do p.draw();
-         let lst = lst.getNext();
+         let i = i + 1;
       }
-
       return;
    }
 
    method void moveUp() {
-      do move(head.getX(), head.getY() - head.getSize());
+      var Point head;
+      let head = buffer[0];
+      do move(Point.new(head.getX(), head.getY() - head.getSize()));
       return;
    }
 
    method void moveDown() {
       var Point head;
-      let head = snakeList.getData();
-      do move(head.getX(), head.getY() + head.getSize());
+      let head = buffer[0];
+      do move(Point.new(head.getX(), head.getY() + head.getSize()));
       return;
    }
 
    method void moveLeft() {
       var Point head;
-      let head = snakeList.getData();
-      do move(head.getX() - head.getSize(), head.getY());
+      let head = buffer[0];
+      do move(Point.new(head.getX() - head.getSize(), head.getY()));
       return;
    }
 
    method void moveRight() {
       var Point head;
-      let head = snakeList.getData();
-      do move(head.getX() + head.getSize(), head.getY());
+      let head = buffer[0];
+      do move(Point.new(head.getX() + head.getSize(), head.getY()));
       return;
    }
 
-   method void move(int x, int y) {
-      var List tmp;
-      var List prev;
-      let snakeList = List.new(Point.new(x, y), snakeList);
-      let tmp = snakeList;
-      while(~(tmp = null)) {
-         let prev = tmp;
-         let tmp = tmp.getNext();
+   method void move(Point newHead) {
+      var Point p;
+      var int i;
+      let i = size - 1;
+      while (~(i = -1)) {
+         let p = buffer[i];
+         let buffer[i + 1] = p;
+         let i = i - 1;
       }
-      do prev.setNext(null);
+      let buffer[0] = newHead;
+      let p = buffer[size]; // tail
+      do p.dispose();
       do draw();
       return;
    }
