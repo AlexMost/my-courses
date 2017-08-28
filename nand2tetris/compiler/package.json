@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run fix && NODE_ENV=test mocha tests/**/*.js",
-    "rawtest": "NODE_ENV=test mocha tests",
+    "rawtest": "NODE_ENV=test mocha tests/**/*.js",
     "lint": "eslint *.js tests translator",
     "fix": "eslint --fix *.js tests tokenizer"
   },
