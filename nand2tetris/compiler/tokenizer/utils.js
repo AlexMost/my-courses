@@ -5,7 +5,7 @@ const COMMENT_REGEXP = /\/\/[\s\S]*$/g;
 const SYMBOL_REGEXP = /\{|\}|\(|\)|\[|\]|\.|,|;|\+|-|\*|\/|&|\||<|>|=|~/;
 const INTEGER_CONST = /^\d+$/;
 const IDENTIFIER = /^[a-zA-Z_][a-zA-Z_0-9]*$/;
-const STRING = /^'.*'$/;
+const STRING = /^".*"$/;
 
 function isSpace(ch) {
     return ch.match(/\s/);
@@ -60,7 +60,7 @@ function parseTokens(rawLine) {
         }
         tmpToken = '';
         while (rawLine[i] !== undefined &&
-            (isDigit(rawLine[i]) || isAlpha(rawLine[i]) || rawLine[i] === '\'')) {
+            (isDigit(rawLine[i]) || isAlpha(rawLine[i]) || rawLine[i] === '"')) {
             tmpToken += rawLine[i];
             i += 1;
         }
