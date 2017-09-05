@@ -30,6 +30,12 @@ function isIdentifier(word) {
     return word.match(IDENTIFIER);
 }
 
+function validateIntConst(ident) {
+    if (ident < 0 || ident > 32767) {
+        throw new Error(`Invalid identifier ${ident} (must be in range [0..32767])`);
+    }
+}
+
 const id = (i) => i;
 const cleanLine = (line) => line.replace(COMMENT_REGEXP, '').trim();
 
@@ -55,7 +61,9 @@ function parseTokens(rawLine) {
         }
         i -= 1;
         if (isIntegerConstant(tmpToken)) {
-            tokens.push(new Token(TOKENS.INTEGER_CONST, parseInt(tmpToken, 10)));
+            const intConst = parseInt(tmpToken, 10);
+            validateIntConst(intConst);
+            tokens.push(new Token(TOKENS.INTEGER_CONST, intConst));
             continue;
         }
         if (isIdentifier(tmpToken)) {
@@ -66,6 +74,7 @@ function parseTokens(rawLine) {
             }
             continue;
         }
+        throw new Error(`Unexpected token '${tmpToken}'`);
     }
     return tokens;
 }

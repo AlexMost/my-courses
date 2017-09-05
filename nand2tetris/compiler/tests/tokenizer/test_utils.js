@@ -27,4 +27,9 @@ describe('tokenizer utils parseTokens', () => {
         ]
         );
     });
+    it('should throw unexpected token', () => {
+        const input = `let 3x = 5;`;
+        const fn = () => parseTokens(input);
+        expect(fn).to.throw('Unexpected token \'3x\'');
+    });
 });
