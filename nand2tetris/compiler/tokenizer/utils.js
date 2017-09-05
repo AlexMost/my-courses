@@ -3,8 +3,9 @@ const { Token, TOKENS, isReserved } = require('./types');
 
 const COMMENT_REGEXP = /\/\/[\s\S]*$/g;
 const SYMBOL_REGEXP = /\{|\}|\(|\)|\[|\]|\.|,|;|\+|-|\*|\/|&|\||<|>|=|~/;
-const INTEGER_CONST = /^\d*$/;
+const INTEGER_CONST = /^\d+$/;
 const IDENTIFIER = /^[a-zA-Z_][a-zA-Z_0-9]*$/;
+const STRING = /^'.*'$/;
 
 function isSpace(ch) {
     return ch.match(/\s/);
@@ -28,6 +29,10 @@ function isIntegerConstant(word) {
 
 function isIdentifier(word) {
     return word.match(IDENTIFIER);
+}
+
+function isString(word) {
+    return word.match(STRING);
 }
 
 function validateIntConst(ident) {
@@ -55,11 +60,11 @@ function parseTokens(rawLine) {
         }
         tmpToken = '';
         while (rawLine[i] !== undefined &&
-            (isDigit(rawLine[i]) || isAlpha(rawLine[i]))) {
+            (isDigit(rawLine[i]) || isAlpha(rawLine[i]) || rawLine[i] === '\'')) {
             tmpToken += rawLine[i];
             i += 1;
         }
-        i -= 1;
+        if (tmpToken) i -= 1;
         if (isIntegerConstant(tmpToken)) {
             const intConst = parseInt(tmpToken, 10);
             validateIntConst(intConst);
@@ -72,6 +77,10 @@ function parseTokens(rawLine) {
             } else {
                 tokens.push(new Token(TOKENS.IDENTIFIER, tmpToken));
             }
+            continue;
+        }
+        if (isString(tmpToken)) {
+            tokens.push(new Token(TOKENS.STRING_CONST, tmpToken));
             continue;
         }
         throw new Error(`Unexpected token '${tmpToken}'`);

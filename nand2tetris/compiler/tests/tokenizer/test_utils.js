@@ -32,4 +32,17 @@ describe('tokenizer utils parseTokens', () => {
         const fn = () => parseTokens(input);
         expect(fn).to.throw('Unexpected token \'3x\'');
     });
+    it('should parse string constants', () => {
+        const input = `let x = 'test';`;
+        const tokens = parseTokens(input);
+        const result = tokens.map((token) => [token.getType(), token.getValue()]);
+        expect(result).to.eql([
+                ['KEYWORD', 'let'],
+                ['IDENTIFIER', 'x'],
+                ['SYMBOL', '='],
+                ['STRING_CONST', '\'test\''],
+                ['SYMBOL', ';'],
+        ]
+        );
+    });
 });
