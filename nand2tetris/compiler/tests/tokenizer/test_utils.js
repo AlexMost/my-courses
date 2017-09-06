@@ -10,7 +10,7 @@ describe('tokenizer utils parseTokens', () => {
                 ['keyword', 'let'],
                 ['identifier', 'x'],
                 ['symbol', '='],
-                ['integerConst', 5],
+                ['integerConstant', 5],
                 ['symbol', ';'],
         ]
         );
@@ -28,7 +28,7 @@ describe('tokenizer utils parseTokens', () => {
                 ['keyword', 'let'],
                 ['identifier', 'x'],
                 ['symbol', '='],
-                ['stringConst', '"test"'],
+                ['stringConstant', 'test'],
                 ['symbol', ';'],
         ]
         );

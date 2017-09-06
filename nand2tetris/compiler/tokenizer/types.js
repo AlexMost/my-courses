@@ -2,8 +2,8 @@ const TOKENS = {
     KEYWORD: 'keyword',
     SYMBOL: 'symbol',
     IDENTIFIER: 'identifier',
-    INTEGER_CONST: 'integerConst',
-    STRING_CONST: 'stringConst',
+    INTEGER_CONST: 'integerConstant',
+    STRING_CONST: 'stringConstant',
 };
 
 const validTokens = new Set(Object.keys(TOKENS).map((k) => TOKENS[k]));

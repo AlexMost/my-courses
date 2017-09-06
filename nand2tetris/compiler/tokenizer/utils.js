@@ -81,9 +81,22 @@ function parseTokens(rawLine) {
             tokens.push(new Token(TOKENS.SYMBOL, rawLine[i]));
             continue;
         }
+
         tmpToken = '';
+
+        // handle strings
+        if (rawLine[i] === '"') {
+            i += 1;
+            while(rawLine[i] !== undefined && rawLine[i] !== '"') {
+                tmpToken += rawLine[i];
+                i += 1;
+            }
+            tokens.push(new Token(TOKENS.STRING_CONST, tmpToken));
+            continue;
+        }
+
         while (rawLine[i] !== undefined &&
-            (isDigit(rawLine[i]) || isAlpha(rawLine[i]) || rawLine[i] === '"')) {
+            (isDigit(rawLine[i]) || isAlpha(rawLine[i]))) {
             tmpToken += rawLine[i];
             i += 1;
         }
@@ -102,10 +115,7 @@ function parseTokens(rawLine) {
             }
             continue;
         }
-        if (isString(tmpToken)) {
-            tokens.push(new Token(TOKENS.STRING_CONST, tmpToken));
-            continue;
-        }
+
         throw new Error(`Unexpected token '${tmpToken}'`);
     }
     return tokens;

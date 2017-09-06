@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { expect } = require('chai');
 const { parseTokens } = require('../../tokenizer/utils');
 const { dumpTokens } = require('../../tokenizer/dump');
@@ -7,14 +8,22 @@ const expected =
 <keyword> let </keyword>
 <identifier> x </identifier>
 <symbol> = </symbol>
-<integerConst> 5 </integerConst>
+<integerConstant> 5 </integerConstant>
 <symbol> ; </symbol>
-</tokens>`
+</tokens>
+`
 
 describe('tokenizer utils parseTokens', () => {
     it('should parse tokens', () => {
         const input = `let x = 5;`;
         const result = dumpTokens(parseTokens(input));
         expect(result).to.eql(expected);
+    });
+    it('should parse Square', () => {
+        const rawFile = fs.readFileSync('./tests/fixtures/Main.jack').toString();
+        const xmlMain = fs.readFileSync('./tests/fixtures/MainT.xml').toString();
+        const tokens = parseTokens(rawFile);
+        const xmlResult = dumpTokens(tokens);
+        expect(xmlResult).to.eql(xmlMain);
     });
 });
