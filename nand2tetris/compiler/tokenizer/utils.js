@@ -41,6 +41,10 @@ function validateIntConst(ident) {
     }
 }
 
+function removeMultilineComments(rawText) {
+
+}
+
 const id = (i) => i;
 const cleanLine = (line) => line.replace(COMMENT_REGEXP, '').trim();
 
@@ -54,6 +58,25 @@ function parseTokens(rawLine) {
     let tmpToken = '';
     for (let i = 0; i < rawLine.length; i += 1) {
         if (isSpace(rawLine[i])) continue;
+
+        // simple comments
+        if (rawLine[i] === '/' && rawLine[i + 1] === '/') {
+            while(rawLine[i] !== EOL) {
+                i += 1;
+            }
+            continue;
+        }
+
+        // strip multiline comments
+        if (rawLine[i] === '/' && rawLine[i + 1] === '*' && rawLine[i + 2] === '*') {
+            i += 3;
+            while(!(rawLine[i] === '*' && rawLine[i + 1] === '/')) {
+                i += 1;
+            }
+            i += 1;
+            continue;
+        }
+
         if (isSymbol(rawLine[i])) {
             tokens.push(new Token(TOKENS.SYMBOL, rawLine[i]));
             continue;
