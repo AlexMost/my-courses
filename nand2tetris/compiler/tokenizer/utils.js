@@ -91,11 +91,9 @@ function parseTokens(rawLine) {
             continue;
         }
         if (isIdentifier(tmpToken)) {
-            if (isReserved(tmpToken)) {
-                tokens.push(new Token(TOKENS.KEYWORD, tmpToken));
-            } else {
-                tokens.push(new Token(TOKENS.IDENTIFIER, tmpToken));
-            }
+            tokens.push(
+                new Token(isReserved(tmpToken) ? TOKENS.KEYWORD : TOKENS.IDENTIFIER, tmpToken));
+
             continue;
         }
 
