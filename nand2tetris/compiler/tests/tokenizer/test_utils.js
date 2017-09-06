@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { parseLines, parseTokens } = require('../../tokenizer/utils');
+const { parseTokens } = require('../../tokenizer/utils');
 
 describe('tokenizer utils parseTokens', () => {
     it('should parse tokens', () => {

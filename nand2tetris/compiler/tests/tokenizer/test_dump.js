@@ -3,7 +3,7 @@ const { expect } = require('chai');
 const { parseTokens } = require('../../tokenizer/utils');
 const { dumpTokens } = require('../../tokenizer/dump');
 
-const expected = 
+const expected =
 `<tokens>
 <keyword> let </keyword>
 <identifier> x </identifier>
@@ -11,7 +11,7 @@ const expected =
 <integerConstant> 5 </integerConstant>
 <symbol> ; </symbol>
 </tokens>
-`
+`;
 
 describe('tokenizer utils parseTokens', () => {
     it('should parse tokens', () => {

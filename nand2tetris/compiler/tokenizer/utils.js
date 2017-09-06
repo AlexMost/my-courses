@@ -1,11 +1,9 @@
 const EOL = require('os').EOL;
 const { Token, TOKENS, isReserved } = require('./types');
 
-const COMMENT_REGEXP = /\/\/[\s\S]*$/g;
 const SYMBOL_REGEXP = /\{|\}|\(|\)|\[|\]|\.|,|;|\+|-|\*|\/|&|\||<|>|=|~/;
 const INTEGER_CONST = /^\d+$/;
 const IDENTIFIER = /^[a-zA-Z_][a-zA-Z_0-9]*$/;
-const STRING = /^".*"$/;
 
 function isSpace(ch) {
     return ch.match(/\s/);
@@ -31,29 +29,14 @@ function isIdentifier(word) {
     return word.match(IDENTIFIER);
 }
 
-function isString(word) {
-    return word.match(STRING);
-}
-
 function validateIntConst(ident) {
     if (ident < 0 || ident > 32767) {
         throw new Error(`Invalid identifier ${ident} (must be in range [0..32767])`);
     }
 }
 
-function removeMultilineComments(rawText) {
-
-}
-
-const id = (i) => i;
-const cleanLine = (line) => line.replace(COMMENT_REGEXP, '').trim();
-
-function parseLines(rawContent) {
-    return rawContent.split(EOL).map(cleanLine).filter(id);
-}
-
 function parseTokens(rawLine) {
-    /* eslint-disable no-continue */
+    /* eslint no-continue:0 complexity:0 */
     const tokens = [];
     let tmpToken = '';
     for (let i = 0; i < rawLine.length; i += 1) {
@@ -61,7 +44,7 @@ function parseTokens(rawLine) {
 
         // simple comments
         if (rawLine[i] === '/' && rawLine[i + 1] === '/') {
-            while(rawLine[i] !== EOL) {
+            while (rawLine[i] !== EOL) {
                 i += 1;
             }
             continue;
@@ -70,7 +53,7 @@ function parseTokens(rawLine) {
         // strip multiline comments
         if (rawLine[i] === '/' && rawLine[i + 1] === '*' && rawLine[i + 2] === '*') {
             i += 3;
-            while(!(rawLine[i] === '*' && rawLine[i + 1] === '/')) {
+            while (!(rawLine[i] === '*' && rawLine[i + 1] === '/')) {
                 i += 1;
             }
             i += 1;
@@ -87,7 +70,7 @@ function parseTokens(rawLine) {
         // handle strings
         if (rawLine[i] === '"') {
             i += 1;
-            while(rawLine[i] !== undefined && rawLine[i] !== '"') {
+            while (rawLine[i] !== undefined && rawLine[i] !== '"') {
                 tmpToken += rawLine[i];
                 i += 1;
             }
@@ -121,4 +104,4 @@ function parseTokens(rawLine) {
     return tokens;
 }
 
-module.exports = { parseLines, parseTokens };
+module.exports = { parseTokens };

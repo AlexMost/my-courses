@@ -44,7 +44,7 @@ class Token {
         this._value = value;
     }
     toXML() {
-        return `<${this.getType()}> ${this.getValue()} </${this.getType()}>`
+        return `<${this.getType()}> ${this.getValue()} </${this.getType()}>`;
     }
     getType() {
         return this._type;
