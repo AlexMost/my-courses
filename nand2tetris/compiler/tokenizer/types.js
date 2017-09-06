@@ -1,10 +1,12 @@
 const TOKENS = {
-    KEYWORD: 'KEYWORD',
-    SYMBOL: 'SYMBOL',
-    IDENTIFIER: 'IDENTIFIER',
-    INTEGER_CONST: 'INTEGER_CONST',
-    STRING_CONST: 'STRING_CONST',
+    KEYWORD: 'keyword',
+    SYMBOL: 'symbol',
+    IDENTIFIER: 'identifier',
+    INTEGER_CONST: 'integerConst',
+    STRING_CONST: 'stringConst',
 };
+
+const validTokens = new Set(Object.keys(TOKENS).map((k) => TOKENS[k]));
 
 const KEYWORDS = {
     class: 'class',
@@ -32,7 +34,7 @@ const KEYWORDS = {
 
 class Token {
     constructor(type, value) {
-        if (!TOKENS[type]) {
+        if (!validTokens.has(type)) {
             throw new Error(`Unknown type of token ${type}`);
         }
         if (value === undefined) {
@@ -40,6 +42,9 @@ class Token {
         }
         this._type = type;
         this._value = value;
+    }
+    toXML() {
+        return `<${this.getType()}> ${this.getValue()} </${this.getType()}>`
     }
     getType() {
         return this._type;

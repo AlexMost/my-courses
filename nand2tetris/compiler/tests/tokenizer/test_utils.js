@@ -7,11 +7,11 @@ describe('tokenizer utils parseTokens', () => {
         const tokens = parseTokens(input);
         const result = tokens.map((token) => [token.getType(), token.getValue()]);
         expect(result).to.eql([
-                ['KEYWORD', 'let'],
-                ['IDENTIFIER', 'x'],
-                ['SYMBOL', '='],
-                ['INTEGER_CONST', 5],
-                ['SYMBOL', ';'],
+                ['keyword', 'let'],
+                ['identifier', 'x'],
+                ['symbol', '='],
+                ['integerConst', 5],
+                ['symbol', ';'],
         ]
         );
     });
@@ -25,11 +25,11 @@ describe('tokenizer utils parseTokens', () => {
         const tokens = parseTokens(input);
         const result = tokens.map((token) => [token.getType(), token.getValue()]);
         expect(result).to.eql([
-                ['KEYWORD', 'let'],
-                ['IDENTIFIER', 'x'],
-                ['SYMBOL', '='],
-                ['STRING_CONST', '"test"'],
-                ['SYMBOL', ';'],
+                ['keyword', 'let'],
+                ['identifier', 'x'],
+                ['symbol', '='],
+                ['stringConst', '"test"'],
+                ['symbol', ';'],
         ]
         );
     });
