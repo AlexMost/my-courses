@@ -32,6 +32,13 @@ const KEYWORDS = {
     return: 'return',
 };
 
+const XMLEncode = {
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    '&': '&amp;',
+};
+
 class Token {
     constructor(type, value) {
         if (!validTokens.has(type)) {
@@ -43,9 +50,17 @@ class Token {
         this._type = type;
         this._value = value;
     }
+
     toXML() {
-        return `<${this.getType()}> ${this.getValue()} </${this.getType()}>`;
+        let value = this.getValue();
+
+        if (XMLEncode[value]) {
+            value = XMLEncode[value];
+        }
+
+        return `<${this.getType()}> ${value} </${this.getType()}>`;
     }
+
     getType() {
         return this._type;
     }

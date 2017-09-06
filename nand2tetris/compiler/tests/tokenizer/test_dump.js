@@ -26,4 +26,11 @@ describe('tokenizer utils parseTokens', () => {
         const xmlResult = dumpTokens(tokens);
         expect(xmlResult).to.eql(xmlMain);
     });
+    it('should parse ArrayTest', () => {
+        const rawFile = fs.readFileSync('./tests/fixtures/ArrayTest.jack').toString();
+        const xmlMain = fs.readFileSync('./tests/fixtures/ArrayTestT.xml').toString();
+        const tokens = parseTokens(rawFile);
+        const xmlResult = dumpTokens(tokens);
+        expect(xmlResult).to.eql(xmlMain);
+    });
 });
