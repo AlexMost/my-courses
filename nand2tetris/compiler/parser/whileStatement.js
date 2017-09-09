@@ -1,19 +1,17 @@
 const { ASTNode } = require('./types');
 const { KEYWORDS } = require('../tokenizer/types');
-const parseExpression = require('./expression');
-const p = require('./parse');
+const Parser = require('./parse');
 
 function parse(tokenizer) {
-    const parseStatements = require('./statements');
-
+    const p = new Parser(tokenizer);
     return new ASTNode('whileStatement', [
-        p.keyword(KEYWORDS.while, tokenizer),
-        p.symbol('(', tokenizer),
-        parseExpression(tokenizer),
-        p.symbol(')', tokenizer),
-        p.symbol('{', tokenizer),
-        parseStatements(tokenizer),
-        p.symbol('}', tokenizer),
+        p.keyword(KEYWORDS.while),
+        p.symbol('('),
+        p.expression(),
+        p.symbol(')'),
+        p.symbol('{'),
+        p.statements(),
+        p.symbol('}'),
     ]);
 }
 

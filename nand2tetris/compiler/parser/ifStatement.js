@@ -1,51 +1,23 @@
 const { ASTNode } = require('./types');
-const { validateKeyword, validateSymbol } = require('./validate');
-const { KEYWORDS, isKeyword } = require('../tokenizer/types');
-const parseExpression = require('./expression');
+const { KEYWORDS } = require('../tokenizer/types');
+const Parser = require('./parse');
 
 function parse(tokenizer) {
-    const parseStatements = require('./statements');
-
+    const p = new Parser(tokenizer);
     const children = [];
+    children.push(p.keyword(KEYWORDS.if));
+    children.push(p.symbol('('));
+    children.push(p.expression());
+    children.push(p.symbol(')'));
+    children.push(p.symbol('{'));
+    children.push(p.statements());
+    children.push(p.symbol('}'));
 
-    const ifKeyword = tokenizer.next();
-    validateKeyword(ifKeyword, KEYWORDS.if);
-    children.push(ifKeyword);
-
-    const leftParen = tokenizer.next();
-    validateSymbol(leftParen, '(');
-    children.push(leftParen);
-
-    children.push(parseExpression(tokenizer));
-
-    const rightParen = tokenizer.next();
-    validateSymbol(rightParen, ')');
-    children.push(rightParen);
-
-    const openCurly = tokenizer.next();
-    validateSymbol(openCurly, '{');
-    children.push(openCurly);
-
-    children.push(parseStatements(tokenizer));
-
-    const closingCurly = tokenizer.next();
-    validateSymbol(closingCurly, '}');
-    children.push(closingCurly);
-
-    const maybeElse = tokenizer.next();
-
-    if (maybeElse && isKeyword(maybeElse) && maybeElse.getValue() === 'else') {
-        children.push(maybeElse);
-
-        const openElseCurly = tokenizer.next();
-        validateSymbol(openElseCurly, '{');
-        children.push(openElseCurly);
-
-        children.push(parseStatements(tokenizer));
-
-        const closingElseCurly = tokenizer.next();
-        validateSymbol(closingElseCurly, '}');
-        children.push(closingElseCurly);
+    if (p.isNextKeyword(KEYWORDS.else)) {
+        children.push(p.keyword(KEYWORDS.else));
+        children.push(p.symbol('{'));
+        children.push(p.statements());
+        children.push(p.symbol('}'));
     } else {
         tokenizer.back();
     }
