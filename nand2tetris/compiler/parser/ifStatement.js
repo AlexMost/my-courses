@@ -4,23 +4,25 @@ const Parser = require('./parse');
 
 function parse(tokenizer) {
     const p = new Parser(tokenizer);
-    const children = [];
-    children.push(p.keyword(KEYWORDS.if));
-    children.push(p.symbol('('));
-    children.push(p.expression());
-    children.push(p.symbol(')'));
-    children.push(p.symbol('{'));
-    children.push(p.statements());
-    children.push(p.symbol('}'));
+    let children = [
+        p.keyword(KEYWORDS.if),
+        p.symbol('('),
+        p.expression(),
+        p.symbol(')'),
+        p.symbol('{'),
+        p.statements(),
+        p.symbol('}'),
+    ];
 
     if (p.isNextKeyword(KEYWORDS.else)) {
-        children.push(p.keyword(KEYWORDS.else));
-        children.push(p.symbol('{'));
-        children.push(p.statements());
-        children.push(p.symbol('}'));
-    } else {
-        tokenizer.back();
+        children = children.concat([
+            p.keyword(KEYWORDS.else),
+            p.symbol('{'),
+            p.statements(),
+            p.symbol('}'),
+        ]);
     }
+
     return new ASTNode('ifStatement', children);
 }
 
