@@ -13,7 +13,6 @@ function parse(tokenizer) {
 			return parseletStatement(tokenizer);
 		default:
 			throw new ParserError(firstToken, 'let, if, while, do, return');
-
 	}
 }
 

@@ -38,7 +38,6 @@ function parse(tokenizer) {
 	const semi = tokenizer.next();
 	validateSymbol(semi, ';');
 	children.push(semi);
-
 	return new ASTNode('letStatement', children);
 }
 

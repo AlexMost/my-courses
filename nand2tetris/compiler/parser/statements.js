@@ -10,12 +10,13 @@ const statementKeywords = new Set(
 function parse(tokenizer) {
 	const children = []
 	let maybeStatementToken = tokenizer.next();
-
+	tokenizer.back();
 	while(maybeStatementToken && statementKeywords.has(maybeStatementToken.getValue())) {
-		tokenizer.back();
 		children.push(parseStatement(tokenizer));
 		maybeStatementToken = tokenizer.next();
+		tokenizer.back();
 	}
+	
 	return new ASTNode('statements', children);
 }
 
