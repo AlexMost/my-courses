@@ -58,4 +58,21 @@ describe('parser statements', () => {
         const astNode = parseStatements(tokenizer);
         expect(astNode.toXML()).to.eql(expectedSimple);
     });
+    it('should not throw', () => {
+        const input = `
+        if (i) {
+            let s = i;
+            let s = j;
+            let a[i] = j;
+        }
+        else {              // There is no else keyword in the Square files.
+            let i = i;
+            let j = j;
+            let i = i;
+        }
+        `;
+        const tokenizer = new Tokenizer(input);
+        const fn = () => parseStatements(tokenizer);
+        expect(fn).to.not.throw();
+    });
 });

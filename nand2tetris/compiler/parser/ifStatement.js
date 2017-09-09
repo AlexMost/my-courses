@@ -2,10 +2,10 @@ const { ASTNode } = require('./types');
 const { validateKeyword, validateSymbol } = require('./validate');
 const { KEYWORDS, isKeyword } = require('../tokenizer/types');
 const parseExpression = require('./expression');
-const parseVarname = require('./varName');
-const parseStatements = require('./statements');
 
 function parse(tokenizer) {
+	const parseStatements = require('./statements');
+	
 	const children = []
 
 	const ifKeyword = tokenizer.next();
