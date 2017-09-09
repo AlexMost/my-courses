@@ -34,7 +34,7 @@ const expectedComputed =
 </term>
 </expression>
 <symbol> ; </symbol>
-</letStatement>`
+</letStatement>`;
 
 describe('parser letStatement', () => {
     it('should parse simple statement', () => {
