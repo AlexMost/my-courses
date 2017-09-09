@@ -5,6 +5,7 @@ const { Tokenizer } = require('../../tokenizer');
 
 const expectedSimple =
 `<whileStatement>
+<keyword> while </keyword>
 <symbol> ( </symbol>
 <expression>
 <term>

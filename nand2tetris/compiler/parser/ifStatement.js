@@ -4,52 +4,52 @@ const { KEYWORDS, isKeyword } = require('../tokenizer/types');
 const parseExpression = require('./expression');
 
 function parse(tokenizer) {
-	const parseStatements = require('./statements');
-	
-	const children = []
+    const parseStatements = require('./statements');
 
-	const ifKeyword = tokenizer.next();
-	validateKeyword(ifKeyword, KEYWORDS.if);
-	children.push(ifKeyword);
+    const children = [];
 
-	const leftParen = tokenizer.next();
-	validateSymbol(leftParen, '(');
-	children.push(leftParen);
+    const ifKeyword = tokenizer.next();
+    validateKeyword(ifKeyword, KEYWORDS.if);
+    children.push(ifKeyword);
 
-	children.push(parseExpression(tokenizer));
+    const leftParen = tokenizer.next();
+    validateSymbol(leftParen, '(');
+    children.push(leftParen);
 
-	const rightParen = tokenizer.next();
-	validateSymbol(rightParen, ')');
-	children.push(rightParen);
+    children.push(parseExpression(tokenizer));
 
-	const openCurly = tokenizer.next();
-	validateSymbol(openCurly, '{');
-	children.push(openCurly);
+    const rightParen = tokenizer.next();
+    validateSymbol(rightParen, ')');
+    children.push(rightParen);
 
-	children.push(parseStatements(tokenizer));
+    const openCurly = tokenizer.next();
+    validateSymbol(openCurly, '{');
+    children.push(openCurly);
 
-	const closingCurly = tokenizer.next();
-	validateSymbol(closingCurly, '}');
-	children.push(closingCurly);
+    children.push(parseStatements(tokenizer));
 
-	let maybeElse = tokenizer.next();
+    const closingCurly = tokenizer.next();
+    validateSymbol(closingCurly, '}');
+    children.push(closingCurly);
 
-	if (maybeElse && isKeyword(maybeElse) && maybeElse.getValue() === 'else') {
-		children.push(maybeElse);
+    const maybeElse = tokenizer.next();
 
-		const openElseCurly = tokenizer.next();
-		validateSymbol(openElseCurly, '{');
-		children.push(openElseCurly);
+    if (maybeElse && isKeyword(maybeElse) && maybeElse.getValue() === 'else') {
+        children.push(maybeElse);
 
-		children.push(parseStatements(tokenizer));
+        const openElseCurly = tokenizer.next();
+        validateSymbol(openElseCurly, '{');
+        children.push(openElseCurly);
 
-		const closingElseCurly = tokenizer.next();
-		validateSymbol(closingElseCurly, '}');
-		children.push(closingElseCurly);
-	} else {
-		tokenizer.back();
-	}
-	return new ASTNode('ifStatement', children);
+        children.push(parseStatements(tokenizer));
+
+        const closingElseCurly = tokenizer.next();
+        validateSymbol(closingElseCurly, '}');
+        children.push(closingElseCurly);
+    } else {
+        tokenizer.back();
+    }
+    return new ASTNode('ifStatement', children);
 }
 
 module.exports = parse;

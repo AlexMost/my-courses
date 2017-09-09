@@ -7,7 +7,7 @@
     "test": "npm run fix && NODE_ENV=test mocha tests/**/*.js",
     "rawtest": "NODE_ENV=test mocha tests/**/*.js",
     "lint": "eslint *.js tests tokenizer",
-    "fix": "eslint --fix *.js tests tokenizer"
+    "fix": "eslint --fix *.js tests tokenizer parser"
   },
   "author": "",
   "license": "ISC",
