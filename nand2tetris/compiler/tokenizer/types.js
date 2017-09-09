@@ -80,4 +80,6 @@ module.exports = {
     isKeyword: isKindaOf(TOKENS.KEYWORD),
     isSymbol: isKindaOf(TOKENS.SYMBOL),
     isIdentifier: isKindaOf(TOKENS.IDENTIFIER),
+    isIntegerConst: isKindaOf(TOKENS.INTEGER_CONST),
+    isStringConst: isKindaOf(TOKENS.STRING_CONST),
 };

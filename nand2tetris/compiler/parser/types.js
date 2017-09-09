@@ -7,7 +7,7 @@ class ASTNode {
 	}
 	toXML() {
 		const childXML = this.children.map((ch) => ch.toXML()).join(EOL);
-		return `<${this.type}>${EOL}${childXML}${EOL}</${this.type}>${EOL}`
+		return `<${this.type}>${EOL}${childXML}${EOL}</${this.type}>`
 	}
 }
 

@@ -11,8 +11,7 @@ const expectedMul =
 <symbol> , </symbol>
 <identifier> sum </identifier>
 <symbol> ; </symbol>
-</varDec>
-`;
+</varDec>`;
 
 const expectedSingle =
 `<varDec>
@@ -20,8 +19,7 @@ const expectedSingle =
 <keyword> int </keyword>
 <identifier> x </identifier>
 <symbol> ; </symbol>
-</varDec>
-`;
+</varDec>`;
 
 describe('parser varDec', () => {
     it('should parse varDec', () => {
