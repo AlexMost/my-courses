@@ -69,6 +69,9 @@ describe('parser statements', () => {
             let i = i;
             let j = j;
             let i = i;
+            while(i) {
+                let i = 1;
+            }
         }
         `;
         const tokenizer = new Tokenizer(input);

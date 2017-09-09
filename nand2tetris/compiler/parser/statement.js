@@ -1,6 +1,9 @@
 const { validateKeyword, validateSymbol } = require('./validate');
+
 const parseletStatement = require('./letStatement');
 const parseifStatement = require('./ifStatement');
+const parsewhileStatement = require('./whileStatement');
+
 const fs = require('fs');
 const { ASTNode } = require('./types');
 const { KEYWORDS } = require('../tokenizer/types');
@@ -15,6 +18,8 @@ function parse(tokenizer) {
 			return parseletStatement(tokenizer);
 		case KEYWORDS.if:
 			return parseifStatement(tokenizer);
+		case KEYWORDS.while:
+			return parsewhileStatement(tokenizer);
 		default:
 			throw new ParserError(firstToken, 'let, if, while, do, return');
 	}
