@@ -1,5 +1,5 @@
 const { validateSymbol, validateKeyword } = require('./validate');
-const { isKeyword } = require('../tokenizer/types');
+const { isKeyword, isSymbol } = require('../tokenizer/types');
 
 const parseExpression = require('./expression');
 
@@ -27,6 +27,12 @@ function Parser(tokenizer) {
         const isKw = token && isKeyword(token) && token.getValue() === kw;
         tokenizer.back();
         return isKw;
+    };
+    this.isNexSymbol = (symb) => {
+        const token = tokenizer.next();
+        const isSym = token && isSymbol(token) && token.getValue() === symb;
+        tokenizer.back();
+        return isSym;
     };
 }
 
