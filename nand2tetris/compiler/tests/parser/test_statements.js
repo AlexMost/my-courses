@@ -73,6 +73,7 @@ describe('parser statements', () => {
                 let i = 1;
             }
         }
+        return x;
         `;
         const tokenizer = new Tokenizer(input);
         const fn = () => parseStatements(tokenizer);
