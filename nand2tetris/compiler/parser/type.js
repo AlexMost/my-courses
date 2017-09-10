@@ -17,5 +17,4 @@ function parse(tokenizer) {
     return token;
 }
 
-
 module.exports = parse;

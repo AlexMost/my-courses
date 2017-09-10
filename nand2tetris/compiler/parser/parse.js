@@ -1,5 +1,5 @@
 const { validateSymbol, validateKeyword } = require('./validate');
-const { isKeyword, isSymbol } = require('../tokenizer/types');
+const { isKeyword, isSymbol, isIdentifier } = require('../tokenizer/types');
 const { ParseError } = require('./errors');
 
 const parseExpression = require('./expression');
@@ -7,6 +7,9 @@ const parseClassName = require('./className');
 const parseVarName = require('./varName');
 const parseType = require('./type');
 const parseVarDec = require('./varDec');
+const parseclassVarDec = require('./classVarDec');
+const parsesubroutineBody = require('./subroutineBody');
+const parsesubroutineName = require('./subroutineName');
 
 const symbol = (tokenizer) => (rawSymbol) => {
     const token = tokenizer.next();
@@ -43,12 +46,21 @@ function Parser(tokenizer) {
     this.varName = () => parseVarName(tokenizer);
     this.type = () => parseType(tokenizer);
     this.varDec = () => parseVarDec(tokenizer);
+    this.classVarDec = () => parseclassVarDec(tokenizer);
+    this.subroutineBody = () => parsesubroutineBody(tokenizer);
+    this.subroutineName = () => parsesubroutineName(tokenizer);
 
     this.isNextKeyword = (kw) => {
         const token = tokenizer.next();
         const isKw = token && isKeyword(token) && token.getValue() === kw;
         tokenizer.back();
         return isKw;
+    };
+    this.isNextIdentifier = () => {
+        const token = tokenizer.next();
+        const isId = isIdentifier(token);
+        tokenizer.back();
+        return isId;
     };
     this.isNexSymbol = (symb) => {
         const token = tokenizer.next();
