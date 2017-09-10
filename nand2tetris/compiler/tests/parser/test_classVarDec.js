@@ -21,7 +21,6 @@ const expectedMul =
 <symbol> ; </symbol>
 </classVarDec>`;
 
-// field int x, y;
 describe('parser classVarDec', () => {
     it('should parse single declaration', () => {
         const input = `static boolean test;`;
