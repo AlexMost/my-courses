@@ -19,6 +19,10 @@ function Tokenizer(rawStr) {
     this.getTokens = () => this._tokens;
 
     this.hasNext = () => {
+        return Boolean(this._tokens[this._i + 1]);
+    };
+
+    this.getNext = () => {
         return this._tokens[this._i + 1];
     };
 

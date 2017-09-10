@@ -1,14 +1,19 @@
-const { ASTNode } = require('./types');
-const { isIdentifier, isIntegerConst, isStringConst } = require('../tokenizer/types');
+const { ASTNode, isOp } = require('./types');
 
 function parse(tokenizer) {
-    const token = tokenizer.next();
-    const exprChildren = [];
-    if (isIdentifier(token) || isIntegerConst(token) || isStringConst(token)) {
-        exprChildren.push(new ASTNode('term', [token]));
-    }
+    const Parser = require('./parse');
+    const p = new Parser(tokenizer);
+    const children = [];
 
-    return new ASTNode('expression', exprChildren);
+    children.push(p.term());
+    let maybeOp = tokenizer.next();
+    while (maybeOp && isOp(maybeOp)) {
+        children.push(maybeOp);
+        children.push(p.term());
+        maybeOp = tokenizer.next();
+    }
+    tokenizer.back();
+    return new ASTNode('expression', children);
 }
 
 module.exports = parse;

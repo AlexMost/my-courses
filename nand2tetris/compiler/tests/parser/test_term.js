@@ -11,17 +11,17 @@ const expectedIntegerConst =
 const expectedStringConst =
 `<term>
 <stringConstant> 5 </stringConstant>
-</term>`
+</term>`;
 
 const expectedKeywordConst =
 `<term>
 <keyword> true </keyword>
-</term>`
+</term>`;
 
 const expectedIdentifier =
 `<term>
 <identifier> x </identifier>
-</term>`
+</term>`;
 
 describe('parser term', () => {
     it('should parse integer constant', () => {
