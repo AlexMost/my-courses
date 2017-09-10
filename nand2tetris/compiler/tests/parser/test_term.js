@@ -33,7 +33,7 @@ const expectedComputed =
 </term>
 </expression>
 <symbol> ] </symbol>
-</term>`
+</term>`;
 
 describe('parser term', () => {
     it('should parse integer constant', () => {

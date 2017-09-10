@@ -20,7 +20,6 @@ function parse(tokenizer) {
             p.symbol(']')
         ];
         return new ASTNode('term', children);
-        
     } else if (isIdentifier(token)) {
         return new ASTNode('term', [token]);
     }
