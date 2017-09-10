@@ -1,4 +1,6 @@
 const EOL = require('os').EOL;
+const { KEYWORDS } = require('../tokenizer/types');
+const { isKeyword } = require('../tokenizer/types');
 
 class ASTNode {
     constructor(type, children = []) {
@@ -14,4 +16,11 @@ class ASTNode {
     }
 }
 
-module.exports = { ASTNode };
+const KEYWORD_CONSTANT = new Set(
+    [KEYWORDS.true, KEYWORDS.false, KEYWORDS.null, KEYWORDS.this]);
+
+function isKeywordConstant(token) {
+    return isKeyword(token) && KEYWORD_CONSTANT.has(token.getValue());
+}
+
+module.exports = { ASTNode, isKeywordConstant };
