@@ -23,6 +23,18 @@ const expectedIdentifier =
 <identifier> x </identifier>
 </term>`;
 
+const expectedComputed =
+`<term>
+<identifier> x </identifier>
+<symbol> [ </symbol>
+<expression>
+<term>
+<identifier> i </identifier>
+</term>
+</expression>
+<symbol> ] </symbol>
+</term>`
+
 describe('parser term', () => {
     it('should parse integer constant', () => {
         const input = `5`;
@@ -47,5 +59,11 @@ describe('parser term', () => {
         const tokenizer = new Tokenizer(input);
         const astNode = parseTerm(tokenizer);
         expect(astNode.toXML()).to.eql(expectedIdentifier);
+    });
+    it('should parse computed properties', () => {
+        const input = `x[i]`;
+        const tokenizer = new Tokenizer(input);
+        const astNode = parseTerm(tokenizer);
+        expect(astNode.toXML()).to.eql(expectedComputed);
     });
 });
