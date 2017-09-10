@@ -1,8 +1,8 @@
 const { ASTNode } = require('./types');
 const { KEYWORDS } = require('../tokenizer/types');
-const Parser = require('./parse');
 
 function parse(tokenizer) {
+    const Parser = require('./parse');
     const p = new Parser(tokenizer);
     const children = [
         p.oneOfKeywords([KEYWORDS.static, KEYWORDS.field]),

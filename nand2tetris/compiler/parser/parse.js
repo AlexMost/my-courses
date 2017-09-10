@@ -11,6 +11,7 @@ const parseclassVarDec = require('./classVarDec');
 const parsesubroutineBody = require('./subroutineBody');
 const parsesubroutineName = require('./subroutineName');
 const parseparameterList = require('./parameterList');
+const parsesubroutineDec = require('./subroutineDec');
 
 const symbol = (tokenizer) => (rawSymbol) => {
     const token = tokenizer.next();
@@ -50,6 +51,7 @@ function Parser(tokenizer) {
     this.classVarDec = () => parseclassVarDec(tokenizer);
     this.subroutineBody = () => parsesubroutineBody(tokenizer);
     this.subroutineName = () => parsesubroutineName(tokenizer);
+    this.subroutineDec = () => parsesubroutineDec(tokenizer);
     this.parameterList = () => parseparameterList(tokenizer);
 
     this.isNextKeyword = (kw) => {
