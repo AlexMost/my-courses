@@ -18,6 +18,9 @@ function parse(tokenizer) {
 
     children.push(p.subroutineName());
     children.push(p.symbol('('));
+    children.push(p.parameterList());
+    children.push(p.symbol(')'));
+    children.push(p.subroutineBody());
 
     return new ASTNode('subroutineDec', children);
 }
