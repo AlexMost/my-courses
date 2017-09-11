@@ -31,6 +31,10 @@ const expectedComputed =
 <term>
 <identifier> i </identifier>
 </term>
+<symbol> + </symbol>
+<term>
+<identifier> y </identifier>
+</term>
 </expression>
 <symbol> ] </symbol>
 </term>`;
@@ -61,7 +65,7 @@ describe('parser term', () => {
         expect(astNode.toXML()).to.eql(expectedIdentifier);
     });
     it('should parse computed properties', () => {
-        const input = `x[i]`;
+        const input = `x[i + y]`;
         const tokenizer = new Tokenizer(input);
         const astNode = parseTerm(tokenizer);
         expect(astNode.toXML()).to.eql(expectedComputed);

@@ -30,4 +30,9 @@ function isOp(token) {
     return isSymbol(token) && OPS.has(token.getValue());
 }
 
-module.exports = { ASTNode, isKeywordConstant, isOp, OPS };
+const UNARY = new Set(['-', '~']);
+function isUnary(token) {
+    return UNARY.has(token.getValue());
+}
+
+module.exports = { ASTNode, isKeywordConstant, isOp, OPS, isUnary };

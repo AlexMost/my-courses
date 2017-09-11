@@ -1,7 +1,7 @@
 const { ASTNode } = require('./types');
 const { isIntegerConst, isStringConst, isIdentifier, isSymbol } = require('../tokenizer/types');
 const { isKeywordConstant } = require('./types');
-const { ParserErrror } = require('./errors');
+const { ParserError } = require('./errors');
 
 
 function parse(tokenizer) {
@@ -24,7 +24,7 @@ function parse(tokenizer) {
         return new ASTNode('term', [token]);
     }
 
-    throw new ParserErrror(token, 'Expression term');
+    throw new ParserError(token, 'Expression term');
 }
 
 
