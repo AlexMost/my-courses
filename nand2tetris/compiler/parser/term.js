@@ -26,10 +26,10 @@ function parse(tokenizer) {
         return new ASTNode('term', children);
     } else if (isIdentifier(token) && second && isSymbol(second) && second.getValue() === '(') {
         const p = new Parser(tokenizer);
-        return new ASTNode('term', [p.subroutineCall()]);
+        return new ASTNode('term', p.subroutineCall());
     } else if (isIdentifier(token) && second && isSymbol(second) && second.getValue() === '.') {
         const p = new Parser(tokenizer);
-        return new ASTNode('term', [p.subroutineCall()]);
+        return new ASTNode('term', p.subroutineCall());
     } else if (isIdentifier(token)) {
         tokenizer.next();
         return new ASTNode('term', [token]);

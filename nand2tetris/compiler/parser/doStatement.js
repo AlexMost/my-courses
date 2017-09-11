@@ -4,11 +4,11 @@ const Parser = require('./parse');
 
 function parse(tokenizer) {
     const p = new Parser(tokenizer);
-    return new ASTNode('doStatement', [
-        p.keyword(KEYWORDS.do),
-        p.subroutineCall(),
-        p.symbol(';'),
-    ]);
+    let children = [];
+    children.push(p.keyword(KEYWORDS.do));
+    children = children.concat(p.subroutineCall());
+    children.push(p.symbol(';'));
+    return new ASTNode('doStatement', children);
 }
 
 module.exports = parse;

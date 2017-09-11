@@ -41,7 +41,6 @@ const expectedComputed =
 
 const subroutineCall =
 `<term>
-<subroutineCall>
 <identifier> x </identifier>
 <symbol> ( </symbol>
 <expressionList>
@@ -52,7 +51,6 @@ const subroutineCall =
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-</subroutineCall>
 </term>`;
 
 const unaryTerm =

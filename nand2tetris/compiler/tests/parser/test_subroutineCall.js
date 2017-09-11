@@ -1,20 +1,21 @@
 const { expect } = require('chai');
 const parseCall = require('../../parser/subroutineCall');
 const { Tokenizer } = require('../../tokenizer');
+const { ASTNode } = require('../../parser/types');
 
 
 const expectedSingle =
-`<subroutineCall>
+`<term>
 <identifier> x </identifier>
 <symbol> ( </symbol>
 <expressionList>
 </expressionList>
 <symbol> ) </symbol>
-</subroutineCall>`;
+</term>`;
 
 
 const methodCall =
-`<subroutineCall>
+`<term>
 <identifier> User </identifier>
 <symbol> . </symbol>
 <identifier> test </identifier>
@@ -39,19 +40,19 @@ const methodCall =
 </expression>
 </expressionList>
 <symbol> ) </symbol>
-</subroutineCall>`;
+</term>`;
 
 describe('parser expression', () => {
     it('should parse function call', () => {
         const input = `x()`;
         const tokenizer = new Tokenizer(input);
-        const astNode = parseCall(tokenizer);
+        const astNode = new ASTNode('term', parseCall(tokenizer));
         expect(astNode.toXML()).to.eql(expectedSingle);
     });
     it('should parse method call', () => {
         const input = `User.test(a, b, c)`;
         const tokenizer = new Tokenizer(input);
-        const astNode = parseCall(tokenizer);
+        const astNode = new ASTNode('term', parseCall(tokenizer));
         expect(astNode.toXML()).to.eql(methodCall);
     });
 });

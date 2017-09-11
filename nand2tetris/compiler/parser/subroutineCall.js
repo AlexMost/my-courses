@@ -1,4 +1,3 @@
-const { ASTNode } = require('./types');
 const { ParserError } = require('./errors');
 const { validateIdentifier } = require('./validate');
 
@@ -26,7 +25,7 @@ function parse(tokenizer) {
         throw new ParserError(token, 'Expression term');
     }
 
-    return new ASTNode('subroutineCall', children);
+    return children;
 }
 
 module.exports = parse;
