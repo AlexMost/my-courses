@@ -16,7 +16,7 @@ const parseparameterList = require('./parameterList');
 const parsesubroutineDec = require('./subroutineDec');
 const parseUnaryOp = require('./unaryOp');
 const parseExpressionList = require('./expressionList');
-
+const parseSubRoutineCall = require('./subroutineCall');
 
 const symbol = (tokenizer) => (rawSymbol) => {
     const token = tokenizer.next();
@@ -62,6 +62,7 @@ function Parser(tokenizer) {
     this.op = () => parseOp(tokenizer);
     this.unaryOp = () => parseUnaryOp(tokenizer);
     this.expressionList = () => parseExpressionList(tokenizer);
+    this.subroutineCall = () => parseSubRoutineCall(tokenizer);
 
     this.isNextKeyword = (kw) => {
         const token = tokenizer.next();

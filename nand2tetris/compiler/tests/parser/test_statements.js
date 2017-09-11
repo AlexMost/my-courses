@@ -64,6 +64,7 @@ describe('parser statements', () => {
             let s = i;
             let s = j;
             let a[i] = j;
+            do x();
         }
         else {              // There is no else keyword in the Square files.
             let i = i;

@@ -39,6 +39,30 @@ const expectedComputed =
 <symbol> ] </symbol>
 </term>`;
 
+const subroutineCall =
+`<term>
+<subroutineCall>
+<identifier> x </identifier>
+<symbol> ( </symbol>
+<expressionList>
+<expression>
+<term>
+<integerConstant> 5 </integerConstant>
+</term>
+</expression>
+</expressionList>
+<symbol> ) </symbol>
+</subroutineCall>
+</term>`;
+
+const unaryTerm =
+`<term>
+<symbol> - </symbol>
+<term>
+<integerConstant> 5 </integerConstant>
+</term>
+</term>`;
+
 describe('parser term', () => {
     it('should parse integer constant', () => {
         const input = `5`;
@@ -69,5 +93,17 @@ describe('parser term', () => {
         const tokenizer = new Tokenizer(input);
         const astNode = parseTerm(tokenizer);
         expect(astNode.toXML()).to.eql(expectedComputed);
+    });
+    it('should parse subroutine call', () => {
+        const input = `x(5)`;
+        const tokenizer = new Tokenizer(input);
+        const astNode = parseTerm(tokenizer);
+        expect(astNode.toXML()).to.eql(subroutineCall);
+    });
+    it('should parse unary op', () => {
+        const input = `-5`;
+        const tokenizer = new Tokenizer(input);
+        const astNode = parseTerm(tokenizer);
+        expect(astNode.toXML()).to.eql(unaryTerm);
     });
 });
