@@ -51,14 +51,15 @@ class Token {
         this._value = value;
     }
 
-    toXML() {
+    toXML(l=0) {
+        const level = '  '.repeat(l);
         let value = this.getValue();
 
         if (XMLEncode[value]) {
             value = XMLEncode[value];
         }
 
-        return `<${this.getType()}> ${value} </${this.getType()}>`;
+        return `${level}<${this.getType()}> ${value} </${this.getType()}>`;
     }
 
     getType() {

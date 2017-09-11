@@ -7,12 +7,13 @@ class ASTNode {
         this.type = type;
         this.children = children;
     }
-    toXML() {
+    toXML(l=0) {
+        const level = '  '.repeat(l);
         if (this.children.length) {
-            const childXML = this.children.map((ch) => ch.toXML()).join(EOL);
-            return `<${this.type}>${EOL}${childXML}${EOL}</${this.type}>`;
+            const childXML = this.children.map((ch) => ch.toXML(l + 1)).join(EOL);
+            return `${level}<${this.type}>${EOL}${childXML}${EOL}${level}</${this.type}>`;
         }
-        return `<${this.type}>${EOL}</${this.type}>`;
+        return `${level}<${this.type}>${EOL}${level}</${this.type}>`;
     }
 }
 
