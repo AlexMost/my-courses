@@ -7,3 +7,4 @@ CProgrammingLanguage/dist/
 *.log
 node_modules
 nand2tetris/vm/dist/
+nand2tetris/compiler/dist
