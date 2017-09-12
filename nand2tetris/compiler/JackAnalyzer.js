@@ -15,8 +15,7 @@ function processFile(filepath) {
 
 function processDir(dirpath) {
     fs.readdirSync(dirpath)
-    .filter((f) => fs.lstatSync(path.resolve(dirpath, f)).isFile())
-    .filter((f) => f.endsWith('.jack'))
+    .filter((f) => fs.lstatSync(path.resolve(dirpath, f)).isFile() && f.endsWith('.jack'))
     .forEach((f) => processFile(path.resolve(dirpath, f)));
 }
 
