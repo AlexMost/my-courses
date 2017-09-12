@@ -23,12 +23,7 @@ function processDir(dirpath) {
 
 function main(entryPath) {
     const lstat = fs.lstatSync(entryPath);
-    if(lstat.isFile()) {
-        processFile(entryPath);    
-    } else {
-        processDir(entryPath);
-    }
-    
+    return lstat.isFile() ? processFile(entryPath) : processDir(entryPath);
 }
 
 main(process.argv[2]);
