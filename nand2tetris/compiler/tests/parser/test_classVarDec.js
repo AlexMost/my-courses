@@ -5,20 +5,20 @@ const { Tokenizer } = require('../../tokenizer');
 
 const expectedSingle =
 `<classVarDec>
-<keyword> static </keyword>
-<keyword> boolean </keyword>
-<identifier> test </identifier>
-<symbol> ; </symbol>
+  <keyword> static </keyword>
+  <keyword> boolean </keyword>
+  <identifier> test </identifier>
+  <symbol> ; </symbol>
 </classVarDec>`;
 
 const expectedMul =
 `<classVarDec>
-<keyword> field </keyword>
-<keyword> int </keyword>
-<identifier> x </identifier>
-<symbol> , </symbol>
-<identifier> y </identifier>
-<symbol> ; </symbol>
+  <keyword> field </keyword>
+  <keyword> int </keyword>
+  <identifier> x </identifier>
+  <symbol> , </symbol>
+  <identifier> y </identifier>
+  <symbol> ; </symbol>
 </classVarDec>`;
 
 describe('parser classVarDec', () => {

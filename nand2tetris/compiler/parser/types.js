@@ -7,7 +7,7 @@ class ASTNode {
         this.type = type;
         this.children = children;
     }
-    toXML(l=0) {
+    toXML(l = 0) {
         const level = '  '.repeat(l);
         if (this.children.length) {
             const childXML = this.children.map((ch) => ch.toXML(l + 1)).join(EOL);

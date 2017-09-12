@@ -17,7 +17,7 @@ function parse(tokenizer) {
     }
 
     // subRoutineDec*
-    while (p.isNextKeyword(KEYWORDS.constructor) ||
+    while (p.isNextKeyword(KEYWORDS.constr) ||
           p.isNextKeyword(KEYWORDS.function) ||
           p.isNextKeyword(KEYWORDS.method)) {
         children.push(p.subroutineDec());

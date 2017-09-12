@@ -5,30 +5,30 @@ const { Tokenizer } = require('../../tokenizer');
 
 const expectedSimple =
 `<subroutineDec>
-<keyword> function </keyword>
-<keyword> int </keyword>
-<identifier> test </identifier>
-<symbol> ( </symbol>
-<parameterList>
-<keyword> boolean </keyword>
-<identifier> a </identifier>
-</parameterList>
-<symbol> ) </symbol>
-<subroutineBody>
-<symbol> { </symbol>
-<statements>
-<returnStatement>
-<keyword> return </keyword>
-<expression>
-<term>
-<identifier> a </identifier>
-</term>
-</expression>
-<symbol> ; </symbol>
-</returnStatement>
-</statements>
-<symbol> } </symbol>
-</subroutineBody>
+  <keyword> function </keyword>
+  <keyword> int </keyword>
+  <identifier> test </identifier>
+  <symbol> ( </symbol>
+  <parameterList>
+    <keyword> boolean </keyword>
+    <identifier> a </identifier>
+  </parameterList>
+  <symbol> ) </symbol>
+  <subroutineBody>
+    <symbol> { </symbol>
+    <statements>
+      <returnStatement>
+        <keyword> return </keyword>
+        <expression>
+          <term>
+            <identifier> a </identifier>
+          </term>
+        </expression>
+        <symbol> ; </symbol>
+      </returnStatement>
+    </statements>
+    <symbol> } </symbol>
+  </subroutineBody>
 </subroutineDec>`;
 
 describe('parser soubroutine declaration', () => {

@@ -7,7 +7,7 @@ function parse(tokenizer) {
     const p = new Parser(tokenizer);
     const children = [];
     children.push(
-        p.oneOfKeywords([KEYWORDS.constructor, KEYWORDS.function, KEYWORDS.method])
+        p.oneOfKeywords([KEYWORDS.constr, KEYWORDS.function, KEYWORDS.method])
     );
 
     // (void | type)

@@ -10,7 +10,7 @@ const validTokens = new Set(Object.keys(TOKENS).map((k) => TOKENS[k]));
 
 const KEYWORDS = {
     class: 'class',
-    constructor: 'constructor',
+    constr: 'constructor',
     function: 'function',
     method: 'method',
     field: 'field',
@@ -40,7 +40,7 @@ const XMLEncode = {
 };
 
 class Token {
-    constructor(type, value) {
+    constructor(type, value, linenum) {
         if (!validTokens.has(type)) {
             throw new Error(`Unknown type of token ${type}`);
         }
@@ -49,13 +49,14 @@ class Token {
         }
         this._type = type;
         this._value = value;
+        this._linenum = linenum;
     }
 
-    toXML(l=0) {
+    toXML(l = 0) {
         const level = '  '.repeat(l);
         let value = this.getValue();
 
-        if (XMLEncode[value]) {
+        if (Object.prototype.hasOwnProperty.call(XMLEncode, value)) {
             value = XMLEncode[value];
         }
 
@@ -67,6 +68,9 @@ class Token {
     }
     getValue() {
         return this._value;
+    }
+    getLine() {
+        return this._linenum;
     }
 }
 

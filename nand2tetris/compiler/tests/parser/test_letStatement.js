@@ -5,35 +5,35 @@ const { Tokenizer } = require('../../tokenizer');
 
 const expectedSimple =
 `<letStatement>
-<keyword> let </keyword>
-<identifier> size </identifier>
-<symbol> = </symbol>
-<expression>
-<term>
-<identifier> size </identifier>
-</term>
-</expression>
-<symbol> ; </symbol>
+  <keyword> let </keyword>
+  <identifier> size </identifier>
+  <symbol> = </symbol>
+  <expression>
+    <term>
+      <identifier> size </identifier>
+    </term>
+  </expression>
+  <symbol> ; </symbol>
 </letStatement>`;
 
 const expectedComputed =
 `<letStatement>
-<keyword> let </keyword>
-<identifier> a </identifier>
-<symbol> [ </symbol>
-<expression>
-<term>
-<identifier> i </identifier>
-</term>
-</expression>
-<symbol> ] </symbol>
-<symbol> = </symbol>
-<expression>
-<term>
-<identifier> j </identifier>
-</term>
-</expression>
-<symbol> ; </symbol>
+  <keyword> let </keyword>
+  <identifier> a </identifier>
+  <symbol> [ </symbol>
+  <expression>
+    <term>
+      <identifier> i </identifier>
+    </term>
+  </expression>
+  <symbol> ] </symbol>
+  <symbol> = </symbol>
+  <expression>
+    <term>
+      <identifier> j </identifier>
+    </term>
+  </expression>
+  <symbol> ; </symbol>
 </letStatement>`;
 
 describe('parser letStatement', () => {

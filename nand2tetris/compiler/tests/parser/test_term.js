@@ -5,60 +5,60 @@ const { Tokenizer } = require('../../tokenizer');
 
 const expectedIntegerConst =
 `<term>
-<integerConstant> 5 </integerConstant>
+  <integerConstant> 5 </integerConstant>
 </term>`;
 
 const expectedStringConst =
 `<term>
-<stringConstant> 5 </stringConstant>
+  <stringConstant> 5 </stringConstant>
 </term>`;
 
 const expectedKeywordConst =
 `<term>
-<keyword> true </keyword>
+  <keyword> true </keyword>
 </term>`;
 
 const expectedIdentifier =
 `<term>
-<identifier> x </identifier>
+  <identifier> x </identifier>
 </term>`;
 
 const expectedComputed =
 `<term>
-<identifier> x </identifier>
-<symbol> [ </symbol>
-<expression>
-<term>
-<identifier> i </identifier>
-</term>
-<symbol> + </symbol>
-<term>
-<identifier> y </identifier>
-</term>
-</expression>
-<symbol> ] </symbol>
+  <identifier> x </identifier>
+  <symbol> [ </symbol>
+  <expression>
+    <term>
+      <identifier> i </identifier>
+    </term>
+    <symbol> + </symbol>
+    <term>
+      <identifier> y </identifier>
+    </term>
+  </expression>
+  <symbol> ] </symbol>
 </term>`;
 
 const subroutineCall =
 `<term>
-<identifier> x </identifier>
-<symbol> ( </symbol>
-<expressionList>
-<expression>
-<term>
-<integerConstant> 5 </integerConstant>
-</term>
-</expression>
-</expressionList>
-<symbol> ) </symbol>
+  <identifier> x </identifier>
+  <symbol> ( </symbol>
+  <expressionList>
+    <expression>
+      <term>
+        <integerConstant> 5 </integerConstant>
+      </term>
+    </expression>
+  </expressionList>
+  <symbol> ) </symbol>
 </term>`;
 
 const unaryTerm =
 `<term>
-<symbol> - </symbol>
-<term>
-<integerConstant> 5 </integerConstant>
-</term>
+  <symbol> - </symbol>
+  <term>
+    <integerConstant> 5 </integerConstant>
+  </term>
 </term>`;
 
 describe('parser term', () => {

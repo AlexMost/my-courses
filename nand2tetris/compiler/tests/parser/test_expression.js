@@ -5,20 +5,20 @@ const { Tokenizer } = require('../../tokenizer');
 
 const expectedSingle =
 `<expression>
-<term>
-<identifier> x </identifier>
-</term>
+  <term>
+    <identifier> x </identifier>
+  </term>
 </expression>`;
 
 const expectedMultiple =
 `<expression>
-<term>
-<identifier> x </identifier>
-</term>
-<symbol> + </symbol>
-<term>
-<identifier> y </identifier>
-</term>
+  <term>
+    <identifier> x </identifier>
+  </term>
+  <symbol> + </symbol>
+  <term>
+    <identifier> y </identifier>
+  </term>
 </expression>`;
 
 describe('parser expression', () => {

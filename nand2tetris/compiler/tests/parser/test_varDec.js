@@ -5,20 +5,20 @@ const { Tokenizer } = require('../../tokenizer');
 
 const expectedMul =
 `<varDec>
-<keyword> var </keyword>
-<keyword> int </keyword>
-<identifier> i </identifier>
-<symbol> , </symbol>
-<identifier> sum </identifier>
-<symbol> ; </symbol>
+  <keyword> var </keyword>
+  <keyword> int </keyword>
+  <identifier> i </identifier>
+  <symbol> , </symbol>
+  <identifier> sum </identifier>
+  <symbol> ; </symbol>
 </varDec>`;
 
 const expectedSingle =
 `<varDec>
-<keyword> var </keyword>
-<keyword> int </keyword>
-<identifier> x </identifier>
-<symbol> ; </symbol>
+  <keyword> var </keyword>
+  <keyword> int </keyword>
+  <identifier> x </identifier>
+  <symbol> ; </symbol>
 </varDec>`;
 
 describe('parser varDec', () => {

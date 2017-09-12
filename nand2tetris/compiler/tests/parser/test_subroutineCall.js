@@ -6,40 +6,40 @@ const { ASTNode } = require('../../parser/types');
 
 const expectedSingle =
 `<term>
-<identifier> x </identifier>
-<symbol> ( </symbol>
-<expressionList>
-</expressionList>
-<symbol> ) </symbol>
+  <identifier> x </identifier>
+  <symbol> ( </symbol>
+  <expressionList>
+  </expressionList>
+  <symbol> ) </symbol>
 </term>`;
 
 
 const methodCall =
 `<term>
-<identifier> User </identifier>
-<symbol> . </symbol>
-<identifier> test </identifier>
-<symbol> ( </symbol>
-<expressionList>
-<expression>
-<term>
-<identifier> a </identifier>
-</term>
-</expression>
-<symbol> , </symbol>
-<expression>
-<term>
-<identifier> b </identifier>
-</term>
-</expression>
-<symbol> , </symbol>
-<expression>
-<term>
-<identifier> c </identifier>
-</term>
-</expression>
-</expressionList>
-<symbol> ) </symbol>
+  <identifier> User </identifier>
+  <symbol> . </symbol>
+  <identifier> test </identifier>
+  <symbol> ( </symbol>
+  <expressionList>
+    <expression>
+      <term>
+        <identifier> a </identifier>
+      </term>
+    </expression>
+    <symbol> , </symbol>
+    <expression>
+      <term>
+        <identifier> b </identifier>
+      </term>
+    </expression>
+    <symbol> , </symbol>
+    <expression>
+      <term>
+        <identifier> c </identifier>
+      </term>
+    </expression>
+  </expressionList>
+  <symbol> ) </symbol>
 </term>`;
 
 describe('parser expression', () => {

@@ -5,21 +5,21 @@ const { Tokenizer } = require('../../tokenizer');
 
 const expectedSingle =
 `<expressionList>
-<expression>
-<term>
-<identifier> x </identifier>
-</term>
-</expression>
-<symbol> , </symbol>
-<expression>
-<term>
-<identifier> y </identifier>
-</term>
-<symbol> + </symbol>
-<term>
-<integerConstant> 1 </integerConstant>
-</term>
-</expression>
+  <expression>
+    <term>
+      <identifier> x </identifier>
+    </term>
+  </expression>
+  <symbol> , </symbol>
+  <expression>
+    <term>
+      <identifier> y </identifier>
+    </term>
+    <symbol> + </symbol>
+    <term>
+      <integerConstant> 1 </integerConstant>
+    </term>
+  </expression>
 </expressionList>`;
 
 

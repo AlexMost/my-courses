@@ -5,58 +5,58 @@ const { Tokenizer } = require('../../tokenizer');
 
 const expectedSimple =
 `<ifStatement>
-<keyword> if </keyword>
-<symbol> ( </symbol>
-<expression>
-<term>
-<identifier> i </identifier>
-</term>
-</expression>
-<symbol> ) </symbol>
-<symbol> { </symbol>
-<statements>
-<letStatement>
-<keyword> let </keyword>
-<identifier> s </identifier>
-<symbol> = </symbol>
-<expression>
-<term>
-<identifier> i </identifier>
-</term>
-</expression>
-<symbol> ; </symbol>
-</letStatement>
-<letStatement>
-<keyword> let </keyword>
-<identifier> s </identifier>
-<symbol> = </symbol>
-<expression>
-<term>
-<identifier> j </identifier>
-</term>
-</expression>
-<symbol> ; </symbol>
-</letStatement>
-<letStatement>
-<keyword> let </keyword>
-<identifier> a </identifier>
-<symbol> [ </symbol>
-<expression>
-<term>
-<identifier> i </identifier>
-</term>
-</expression>
-<symbol> ] </symbol>
-<symbol> = </symbol>
-<expression>
-<term>
-<identifier> j </identifier>
-</term>
-</expression>
-<symbol> ; </symbol>
-</letStatement>
-</statements>
-<symbol> } </symbol>
+  <keyword> if </keyword>
+  <symbol> ( </symbol>
+  <expression>
+    <term>
+      <identifier> i </identifier>
+    </term>
+  </expression>
+  <symbol> ) </symbol>
+  <symbol> { </symbol>
+  <statements>
+    <letStatement>
+      <keyword> let </keyword>
+      <identifier> s </identifier>
+      <symbol> = </symbol>
+      <expression>
+        <term>
+          <identifier> i </identifier>
+        </term>
+      </expression>
+      <symbol> ; </symbol>
+    </letStatement>
+    <letStatement>
+      <keyword> let </keyword>
+      <identifier> s </identifier>
+      <symbol> = </symbol>
+      <expression>
+        <term>
+          <identifier> j </identifier>
+        </term>
+      </expression>
+      <symbol> ; </symbol>
+    </letStatement>
+    <letStatement>
+      <keyword> let </keyword>
+      <identifier> a </identifier>
+      <symbol> [ </symbol>
+      <expression>
+        <term>
+          <identifier> i </identifier>
+        </term>
+      </expression>
+      <symbol> ] </symbol>
+      <symbol> = </symbol>
+      <expression>
+        <term>
+          <identifier> j </identifier>
+        </term>
+      </expression>
+      <symbol> ; </symbol>
+    </letStatement>
+  </statements>
+  <symbol> } </symbol>
 </ifStatement>`;
 
 

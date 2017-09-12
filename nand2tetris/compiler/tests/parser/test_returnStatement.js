@@ -5,20 +5,20 @@ const { Tokenizer } = require('../../tokenizer');
 
 const expectedSimple =
 `<returnStatement>
-<keyword> return </keyword>
-<symbol> ; </symbol>
+  <keyword> return </keyword>
+  <symbol> ; </symbol>
 </returnStatement>`;
 
 
 const expectedExpression =
 `<returnStatement>
-<keyword> return </keyword>
-<expression>
-<term>
-<identifier> x </identifier>
-</term>
-</expression>
-<symbol> ; </symbol>
+  <keyword> return </keyword>
+  <expression>
+    <term>
+      <identifier> x </identifier>
+    </term>
+  </expression>
+  <symbol> ; </symbol>
 </returnStatement>`;
 
 describe('parser return statement', () => {

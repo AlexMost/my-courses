@@ -5,53 +5,53 @@ const { Tokenizer } = require('../../tokenizer');
 
 const expectedSimple =
 `<subroutineBody>
-<symbol> { </symbol>
-<statements>
-<returnStatement>
-<keyword> return </keyword>
-<expression>
-<term>
-<identifier> x </identifier>
-</term>
-</expression>
-<symbol> ; </symbol>
-</returnStatement>
-</statements>
-<symbol> } </symbol>
+  <symbol> { </symbol>
+  <statements>
+    <returnStatement>
+      <keyword> return </keyword>
+      <expression>
+        <term>
+          <identifier> x </identifier>
+        </term>
+      </expression>
+      <symbol> ; </symbol>
+    </returnStatement>
+  </statements>
+  <symbol> } </symbol>
 </subroutineBody>`;
 
 const expectedWithVars =
 `<subroutineBody>
-<symbol> { </symbol>
-<varDec>
-<keyword> var </keyword>
-<keyword> int </keyword>
-<identifier> a </identifier>
-<symbol> ; </symbol>
-</varDec>
-<statements>
-<letStatement>
-<keyword> let </keyword>
-<identifier> a </identifier>
-<symbol> = </symbol>
-<expression>
-<term>
-<integerConstant> 5 </integerConstant>
-</term>
-</expression>
-<symbol> ; </symbol>
-</letStatement>
-<returnStatement>
-<keyword> return </keyword>
-<expression>
-<term>
-<identifier> x </identifier>
-</term>
-</expression>
-<symbol> ; </symbol>
-</returnStatement>
-</statements>
-<symbol> } </symbol>
+  <symbol> { </symbol>
+  <varDec>
+    <keyword> var </keyword>
+    <keyword> int </keyword>
+    <identifier> a </identifier>
+    <symbol> ; </symbol>
+  </varDec>
+  <statements>
+    <letStatement>
+      <keyword> let </keyword>
+      <identifier> a </identifier>
+      <symbol> = </symbol>
+      <expression>
+        <term>
+          <integerConstant> 5 </integerConstant>
+        </term>
+      </expression>
+      <symbol> ; </symbol>
+    </letStatement>
+    <returnStatement>
+      <keyword> return </keyword>
+      <expression>
+        <term>
+          <identifier> x </identifier>
+        </term>
+      </expression>
+      <symbol> ; </symbol>
+    </returnStatement>
+  </statements>
+  <symbol> } </symbol>
 </subroutineBody>`;
 
 describe('parser subroutineBody', () => {

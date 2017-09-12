@@ -36,6 +36,13 @@ function parse(tokenizer) {
     } else if (isUnary(token)) {
         const p = new Parser(tokenizer);
         return new ASTNode('term', [p.unaryOp(), p.term()]);
+    } else if (isSymbol(token) && token.getValue() === '(') {
+        const p = new Parser(tokenizer);
+        return new ASTNode('term', [
+            p.symbol('('),
+            p.expression(),
+            p.symbol(')')
+        ]);
     }
 
     throw new ParserError(token, 'Expression term');
