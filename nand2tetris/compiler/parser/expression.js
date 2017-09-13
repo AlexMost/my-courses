@@ -4,7 +4,6 @@ function parse(tokenizer) {
     const Parser = require('./parse');
     const p = new Parser(tokenizer);
     const children = [];
-
     children.push(p.term());
     let maybeOp = tokenizer.next();
     while (maybeOp && isOp(maybeOp)) {

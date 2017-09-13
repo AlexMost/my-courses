@@ -39,7 +39,11 @@ function parseTokens(rawLine) {
     /* eslint no-continue:0 complexity:0 */
     const tokens = [];
     let tmpToken = '';
+    let line = 0;
     for (let i = 0; i < rawLine.length; i += 1) {
+        if (rawLine[i] === EOL) {
+            line += 1;
+        }
         if (isSpace(rawLine[i])) continue;
 
         // simple comments
@@ -47,6 +51,7 @@ function parseTokens(rawLine) {
             while (rawLine[i] !== EOL) {
                 i += 1;
             }
+            line += 1;
             continue;
         }
 
@@ -61,7 +66,7 @@ function parseTokens(rawLine) {
         }
 
         if (isSymbol(rawLine[i])) {
-            tokens.push(new Token(TOKENS.SYMBOL, rawLine[i]));
+            tokens.push(new Token(TOKENS.SYMBOL, rawLine[i], line));
             continue;
         }
 
@@ -74,7 +79,7 @@ function parseTokens(rawLine) {
                 tmpToken += rawLine[i];
                 i += 1;
             }
-            tokens.push(new Token(TOKENS.STRING_CONST, tmpToken));
+            tokens.push(new Token(TOKENS.STRING_CONST, tmpToken, line));
             continue;
         }
 
@@ -87,12 +92,12 @@ function parseTokens(rawLine) {
         if (isIntegerConstant(tmpToken)) {
             const intConst = parseInt(tmpToken, 10);
             validateIntConst(intConst);
-            tokens.push(new Token(TOKENS.INTEGER_CONST, intConst));
+            tokens.push(new Token(TOKENS.INTEGER_CONST, intConst, line));
             continue;
         }
         if (isIdentifier(tmpToken)) {
             tokens.push(
-                new Token(isReserved(tmpToken) ? TOKENS.KEYWORD : TOKENS.IDENTIFIER, tmpToken));
+                new Token(isReserved(tmpToken) ? TOKENS.KEYWORD : TOKENS.IDENTIFIER, tmpToken, i));
 
             continue;
         }

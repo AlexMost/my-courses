@@ -8,8 +8,7 @@ function parse(tokenizer) {
     tokenizer.back();
     const p = new Parser(tokenizer);
     const children = [];
-
-    if (!isSymbol(next) || isUnary(next)) {
+    if (!isSymbol(next) || isUnary(next) || (isSymbol(next) && next.getValue() === '(')) {
         children.push(p.expression());
 
         while (p.isNexSymbol(',')) {

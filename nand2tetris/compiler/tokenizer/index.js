@@ -29,6 +29,17 @@ function Tokenizer(rawStr) {
     this.reset = () => {
         this._i = 0;
     };
+
+    this.printLastLine = () => {
+        /* eslint-disable no-console */
+        let j = 0;
+        console.log('------');
+        while (j !== this._i) {
+            process.stdout.write(tokens[j].getValue().toString());
+            j += 1;
+        }
+        console.log('------');
+    };
 }
 
 module.exports = { Tokenizer };
