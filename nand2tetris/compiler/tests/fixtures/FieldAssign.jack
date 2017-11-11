@@ -1,0 +1,12 @@
+class FieldAssign {
+    field int testField1;
+    field string testField2;
+    function int test(int arg1, string arg2) {
+        var int a;
+        var int b;
+        let a = 1;
+        let b = arg1;
+        let b = arg2;
+        return a;
+    }
+}
