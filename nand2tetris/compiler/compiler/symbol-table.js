@@ -33,6 +33,10 @@ class SymbolTable {
     toDict() {
         return this.nameHash;
     }
+
+    lookupSymbol(symbol) {
+        return this.nameHash[symbol];
+    }
 }
 
 module.exports = SymbolTable;

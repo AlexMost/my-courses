@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm run fix && NODE_ENV=test mocha tests/**/*.js",
+    "test": "npm run fix && NODE_ENV=test mocha tests/compiler/**/*.js",
     "rawtest": "NODE_ENV=test mocha tests/compiler/*.js",
     "lint": "eslint *.js tests tokenizer",
     "fix": "eslint --fix *.js tests tokenizer parser",
