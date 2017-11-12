@@ -78,12 +78,12 @@ function compileExpression(ast, cState) {
         }
     } else {
         const [symbol, term, ...tail] = ast.children;
-        cState.write(mapOp[symbol.getValue()]);
         compileTerm(term, cState);
         if (tail && tail.length) {
             ast.children = tail;
             compileExpression(ast, cState);
         }
+        cState.write(mapOp[symbol.getValue()]);
     }
 }
 

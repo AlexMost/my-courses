@@ -4,4 +4,6 @@ push constant 1
 push constant 4
 call Math.multiply 2
 add
+push constant 3
+add
 return
