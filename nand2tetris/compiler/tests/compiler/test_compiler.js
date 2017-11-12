@@ -35,6 +35,19 @@ push local 0
 return
 `;
 
+const voidRet =
+`class FieldAssign {
+    function void test(int arg1, string arg2) {
+        return;
+    }
+}`;
+
+const voidRetExpected =
+`function FieldAssign.test 0
+push constant 0
+return
+`;
+
 describe('compiler class', () => {
     it('should fill class symbol table', () => {
         const state = compile(classDefn);
@@ -45,5 +58,9 @@ describe('compiler class', () => {
     it('shlould create symbol table for methods', () => {
         const state = compile(classDefnWithAssign);
         expect(state.getVMCode()).to.eql(expectedDefnWithAssign);
+    });
+    it('shlould handle void return', () => {
+        const state = compile(voidRet);
+        expect(state.getVMCode()).to.eql(voidRetExpected);
     });
 });

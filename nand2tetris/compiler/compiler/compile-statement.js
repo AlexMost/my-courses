@@ -11,6 +11,8 @@ function compileReturnStatement(ast, cState) {
     const expNode = ast.children.find(({ type }) => type === 'expression');
     if (expNode) {
         expNode.children.forEach((exp) => compileExpression(exp, cState));
+    } else {
+        cState.write('push constant 0');
     }
     cState.write('return');
 }

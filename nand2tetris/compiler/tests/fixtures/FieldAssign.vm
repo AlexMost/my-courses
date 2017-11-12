@@ -1,9 +1,3 @@
-function FieldAssign.test 2
-push constant 1
-pop local 0
-push argument 0
-pop local 1
-push argument 1
-pop local 1
-push local 0
+function FieldAssign.test 0
+push constant 0
 return
