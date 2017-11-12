@@ -54,6 +54,19 @@ function compileIfStatement(ast, cState) {
     }
 }
 
+function compileWhileStatement(ast, cState) {
+    const [labelWhileExp, labelWhileEnd] = cState.getLabelsNames('WHILE_EXP', 'WHILE_END');
+    const whileExp = ast.children.find(({ type }) => type === 'expression');
+    const statements = ast.children.find(({ type }) => type === 'statements');
+    cState.write(`label ${labelWhileExp}`);
+    compileExpression(whileExp, cState);
+    cState.write('not');
+    cState.write(`if-goto ${labelWhileEnd}`);
+    statements.children.forEach((st) => compileStatement(st, cState));
+    cState.write(`goto ${labelWhileExp}`);
+    cState.write(`label ${labelWhileEnd}`);
+}
+
 function compileStatement(ast, cState) {
     switch (ast.type) {
         case 'letStatement':
@@ -67,6 +80,9 @@ function compileStatement(ast, cState) {
             break;
         case 'ifStatement':
             compileIfStatement(ast, cState);
+            break;
+        case 'whileStatement':
+            compileWhileStatement(ast, cState);
             break;
         default:
             throw new Error(`Unsupported statement ${ast.type}`);

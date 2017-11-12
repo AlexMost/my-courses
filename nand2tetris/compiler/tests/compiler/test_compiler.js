@@ -228,6 +228,47 @@ push constant 0
 return
 `;
 
+const whileStatement =
+`class Seven {
+    function void main() {
+        var int a;
+        let a = 0;
+        while (a < 5) {
+            do Output.printInt(1 + (2 * 3));
+            let a = a + 1;
+        }
+        return;
+    }
+}
+`;
+
+const whileStatementExpected =
+`function Seven.main 1
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 5
+lt
+not
+if-goto WHILE_END0
+push constant 1
+push constant 2
+push constant 3
+call Math.multiply 2
+add
+call Output.printInt 1
+pop temp 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+`;
+
 describe('compiler class', () => {
     it('should fill class symbol table', () => {
         const state = compile(classDefn);
@@ -270,5 +311,9 @@ describe('compiler class', () => {
     it('should compile if-else statement', () => {
         const state = compile(ifElseStatement);
         expect(state.getVMCode()).to.eql(ifElseStatementExpected);
+    });
+    it('should compile while statement', () => {
+        const state = compile(whileStatement);
+        expect(state.getVMCode()).to.eql(whileStatementExpected);
     });
 });

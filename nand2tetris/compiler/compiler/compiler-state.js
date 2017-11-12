@@ -5,21 +5,21 @@ class CompilerState {
         this.symbolTables = [];
         this.className = className;
         this.writerLines = [];
-        this.labelCount = 0;
+        this.labelCountMap = {};
+        this.getLabelName = this.getLabelName.bind(this);
     }
 
     getLabelName(name) {
-        const label = `${name}${this.labelCount}`;
-        this.labelCount += 1;
-        return label;
+        if (this.labelCountMap[name]) {
+            this.labelCountMap[name] = this.labelCountMap[name] + 1;
+        } else {
+            this.labelCountMap[name] = 0;
+        }
+        return `${name}${this.labelCountMap[name]}`;
     }
 
     getLabelsNames(...names) {
-        const labeledNames = names.map((name) => {
-            return `${name}${this.labelCount}`;
-        });
-        this.labelCount += 1;
-        return labeledNames;
+        return names.map(this.getLabelName);
     }
 
     pushSymbolTable(symbolTable) {

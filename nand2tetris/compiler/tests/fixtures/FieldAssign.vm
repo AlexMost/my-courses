@@ -1,10 +1,12 @@
-function FieldAssign.main 0
-push constant 1
-push constant 2
+function FieldAssign.main 1
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 5
 lt
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
+not
+if-goto WHILE_END0
 push constant 1
 push constant 2
 push constant 3
@@ -12,6 +14,11 @@ call Math.multiply 2
 add
 call Output.printInt 1
 pop temp 0
-label IF_FALSE0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
 push constant 0
 return
