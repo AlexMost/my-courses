@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations,no-use-before-define */
 
-const { ASTNode } = require('../parser/types');
+const { ASTNode, isUnary } = require('../parser/types');
 
 const mapOp = {
     '+': 'add',
@@ -31,12 +31,28 @@ function compileSingleExpression(ast, cState) {
     }
 }
 
+function writeUnary(op, cState) {
+    if (op === '-') {
+        cState.write('neg');
+    } else if (op === '~') {
+        cState.write('not');
+    }
+}
+
 function compileTerm(ast, cState) {
+    let unary = null;
     ast.children.forEach((child) => {
         if (child instanceof ASTNode) {
             switch (child.type) {
                 case 'expression':
                     compileExpression(child, cState);
+                    break;
+                case 'term':
+                    if (unary) {
+                        compileTerm(child, cState);
+                        writeUnary(unary, cState);
+                        unary = null;
+                    }
                     break;
                 default:
                     throw new Error(`Unsupported term expression ${ast.type}`);
@@ -53,6 +69,9 @@ function compileTerm(ast, cState) {
                 cState.write(`push ${symb.kind} ${symb.num}`);
                 break;
             case 'symbol':
+                if (isUnary(child)) {
+                    unary = child.getValue();
+                }
                 break;
             default:
                 throw new Error(`Unsupported term type ${JSON.stringify(child)}`);

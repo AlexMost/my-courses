@@ -1,5 +1,5 @@
 class FieldAssign {
     function int test() {
-        return 1 + (1 * 4) + 3;
+        return ~(2 + 4 * (- 1));
     }
 }

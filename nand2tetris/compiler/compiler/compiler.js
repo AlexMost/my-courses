@@ -2,7 +2,6 @@ const SymbolTable = require('./symbol-table');
 const CompilerState = require('./compiler-state');
 const parseAST = require('../analyzer');
 const { groupParameterList } = require('./utils');
-const { compileExpression } = require('./compile-expression');
 const { compileStatement } = require('./compile-statement');
 
 function compileClass(ast, cState) {
