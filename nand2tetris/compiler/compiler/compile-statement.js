@@ -17,6 +17,16 @@ function compileReturnStatement(ast, cState) {
     cState.write('return');
 }
 
+function compileDoStatement(ast, cState) {
+    const [doNode, classNode, dotNode, fnNode] = ast.children;
+    const subroutineName = `${classNode.getValue()}.${fnNode.getValue()}`;
+    const expressions = ast.children.find(({ type }) => type === 'expressionList')
+    .children.filter(({ type }) => type === 'expression');
+    expressions.forEach((exp) => compileExpression(exp, cState));
+    cState.write(`call ${subroutineName} ${expressions.length}`);
+    cState.write('pop temp 0');
+}
+
 function compileStatement(ast, cState) {
     switch (ast.type) {
         case 'letStatement':
@@ -24,6 +34,9 @@ function compileStatement(ast, cState) {
             break;
         case 'returnStatement':
             compileReturnStatement(ast, cState);
+            break;
+        case 'doStatement':
+            compileDoStatement(ast, cState);
             break;
         default:
             throw new Error(`Unsupported statement ${ast.type}`);

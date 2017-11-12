@@ -133,6 +133,30 @@ call FieldAssign.sum 2
 return
 `;
 
+const seven =
+`class Seven {
+    
+       function void main() {
+          do Output.printInt(1 + (2 * 3));
+          return;
+       }
+    
+    }
+`;
+
+const sevenExpected =
+`function Seven.main 0
+push constant 1
+push constant 2
+push constant 3
+call Math.multiply 2
+add
+call Output.printInt 1
+pop temp 0
+push constant 0
+return
+`;
+
 describe('compiler class', () => {
     it('should fill class symbol table', () => {
         const state = compile(classDefn);
@@ -163,5 +187,9 @@ describe('compiler class', () => {
     it('should compile fnCall in expression', () => {
         const state = compile(fnCall);
         expect(state.getVMCode()).to.eql(fnCallResult);
+    });
+    it('should compile do statement', () => {
+        const state = compile(seven);
+        expect(state.getVMCode()).to.eql(sevenExpected);
     });
 });
