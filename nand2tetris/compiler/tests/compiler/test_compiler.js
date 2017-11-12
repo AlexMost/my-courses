@@ -157,6 +157,47 @@ push constant 0
 return
 `;
 
+
+const ifStatement =
+`
+class Seven {
+    function void main() {
+        if (1 < 2) {
+            do Output.printInt(1 + (2 * 3));
+        } else {
+            do Output.printInt(0);
+        }
+        return;
+    }
+
+}
+`;
+
+const ifStatementExpected =
+`function Seven.main 0
+push constant 1
+push constant 2
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 1
+push constant 2
+push constant 3
+call Math.multiply 2
+add
+call Output.printInt 1
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push constant 0
+call Output.printInt 1
+pop temp 0
+label IF_END0
+push constant 0
+return
+`;
+
 describe('compiler class', () => {
     it('should fill class symbol table', () => {
         const state = compile(classDefn);
@@ -191,5 +232,9 @@ describe('compiler class', () => {
     it('should compile do statement', () => {
         const state = compile(seven);
         expect(state.getVMCode()).to.eql(sevenExpected);
+    });
+    it('should compile if statement', () => {
+        const state = compile(ifStatement);
+        expect(state.getVMCode()).to.eql(ifStatementExpected);
     });
 });

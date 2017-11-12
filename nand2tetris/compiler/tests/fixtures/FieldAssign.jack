@@ -1,8 +1,10 @@
 class FieldAssign {
-    function int sum(int a, int b) {
-        return a + (a + b);
-    }
-    function int test() {
-        return FieldAssign.sum(1, 1);
+    function void main() {
+        if (1 < 2) {
+            do Output.printInt(1 + (2 * 3));
+        } else {
+            do Output.printInt(0);
+        }
+        return;
     }
 }

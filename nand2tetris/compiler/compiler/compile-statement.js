@@ -1,3 +1,5 @@
+/* eslint-disable no-case-declarations,no-use-before-define */
+
 const { compileExpression } = require('./compile-expression');
 
 function compileLetStatement(ast, cState) {
@@ -27,6 +29,22 @@ function compileDoStatement(ast, cState) {
     cState.write('pop temp 0');
 }
 
+function compileIfStatement(ast, cState) {
+    const condExpr = ast.children.find(({ type }) => type === 'expression');
+    const [trueStatements, falseStatements] = ast.children.filter(({ type }) => type === 'statements');
+
+    const [labelTrue, labelFalse, ifEnd] = cState.getLabelsNames('IF_TRUE', 'IF_FALSE', 'IF_END');
+    compileExpression(condExpr, cState);
+    cState.write(`if-goto ${labelTrue}`);
+    cState.write(`goto ${labelFalse}`);
+    cState.write(`label ${labelTrue}`);
+    trueStatements.children.forEach((st) => compileStatement(st, cState));
+    cState.write(`goto ${ifEnd}`);
+    cState.write(`label ${labelFalse}`);
+    falseStatements.children.forEach((st) => compileStatement(st, cState));
+    cState.write(`label ${ifEnd}`);
+}
+
 function compileStatement(ast, cState) {
     switch (ast.type) {
         case 'letStatement':
@@ -37,6 +55,9 @@ function compileStatement(ast, cState) {
             break;
         case 'doStatement':
             compileDoStatement(ast, cState);
+            break;
+        case 'ifStatement':
+            compileIfStatement(ast, cState);
             break;
         default:
             throw new Error(`Unsupported statement ${ast.type}`);

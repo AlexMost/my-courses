@@ -5,6 +5,7 @@ const { ASTNode, isUnary } = require('../parser/types');
 const mapOp = {
     '+': 'add',
     '*': 'call Math.multiply 2',
+    '<': 'lt'
 };
 
 function compileToken(ast, cState) {

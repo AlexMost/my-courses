@@ -5,6 +5,21 @@ class CompilerState {
         this.symbolTables = [];
         this.className = className;
         this.writerLines = [];
+        this.labelCount = 0;
+    }
+
+    getLabelName(name) {
+        const label = `${name}${this.labelCount}`;
+        this.labelCount += 1;
+        return label;
+    }
+
+    getLabelsNames(...names) {
+        const labeledNames = names.map((name) => {
+            return `${name}${this.labelCount}`;
+        });
+        this.labelCount += 1;
+        return labeledNames;
     }
 
     pushSymbolTable(symbolTable) {

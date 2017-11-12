@@ -1,12 +1,22 @@
-function FieldAssign.sum 0
-push argument 0
-push argument 0
-push argument 1
-add
-add
-return
-function FieldAssign.test 0
+function FieldAssign.main 0
 push constant 1
+push constant 2
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
 push constant 1
-call FieldAssign.sum 2
+push constant 2
+push constant 3
+call Math.multiply 2
+add
+call Output.printInt 1
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push constant 0
+call Output.printInt 1
+pop temp 0
+label IF_END0
+push constant 0
 return
