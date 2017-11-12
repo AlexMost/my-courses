@@ -2,7 +2,7 @@ const { compileExpression } = require('./compile-expression');
 
 function compileLetStatement(ast, cState) {
     const [_, sourceNode, _2, expNode] = ast.children;
-    expNode.children.forEach((exp) => compileExpression(exp, cState));
+    compileExpression(expNode, cState);
     const sourceSymb = cState.lookupSymbol(sourceNode.getValue());
     cState.write(`pop ${sourceSymb.kind} ${sourceSymb.num}`);
 }
@@ -10,7 +10,7 @@ function compileLetStatement(ast, cState) {
 function compileReturnStatement(ast, cState) {
     const expNode = ast.children.find(({ type }) => type === 'expression');
     if (expNode) {
-        expNode.children.forEach((exp) => compileExpression(exp, cState));
+        compileExpression(expNode, cState);
     } else {
         cState.write('push constant 0');
     }

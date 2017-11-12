@@ -48,6 +48,24 @@ push constant 0
 return
 `;
 
+const expOpExp =
+`class FieldAssign {
+    function int test() {
+        return 1 + (1 * 4);
+    }
+}
+`;
+
+const expectedOpExp =
+`function FieldAssign.test 0
+push constant 1
+push constant 1
+push constant 4
+call Math.multiply 2
+add
+return
+`;
+
 describe('compiler class', () => {
     it('should fill class symbol table', () => {
         const state = compile(classDefn);
@@ -62,5 +80,9 @@ describe('compiler class', () => {
     it('shlould handle void return', () => {
         const state = compile(voidRet);
         expect(state.getVMCode()).to.eql(voidRetExpected);
+    });
+    it('should compile exp op exp', () => {
+        const state = compile(expOpExp);
+        expect(state.getVMCode()).to.eql(expectedOpExp);
     });
 });

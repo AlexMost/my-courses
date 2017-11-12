@@ -1,5 +1,5 @@
 class FieldAssign {
-    function void test(int arg1, string arg2) {
-        return;
+    function int test() {
+        return 1 + (1 * 4);
     }
 }

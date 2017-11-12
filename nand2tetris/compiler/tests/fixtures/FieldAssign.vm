@@ -1,3 +1,7 @@
 function FieldAssign.test 0
-push constant 0
+push constant 1
+push constant 1
+push constant 4
+call Math.multiply 2
+add
 return
