@@ -32,17 +32,26 @@ function compileDoStatement(ast, cState) {
 function compileIfStatement(ast, cState) {
     const condExpr = ast.children.find(({ type }) => type === 'expression');
     const [trueStatements, falseStatements] = ast.children.filter(({ type }) => type === 'statements');
-
-    const [labelTrue, labelFalse, ifEnd] = cState.getLabelsNames('IF_TRUE', 'IF_FALSE', 'IF_END');
-    compileExpression(condExpr, cState);
-    cState.write(`if-goto ${labelTrue}`);
-    cState.write(`goto ${labelFalse}`);
-    cState.write(`label ${labelTrue}`);
-    trueStatements.children.forEach((st) => compileStatement(st, cState));
-    cState.write(`goto ${ifEnd}`);
-    cState.write(`label ${labelFalse}`);
-    falseStatements.children.forEach((st) => compileStatement(st, cState));
-    cState.write(`label ${ifEnd}`);
+    if (falseStatements) { // with else branch
+        const [labelTrue, labelFalse, ifEnd] = cState.getLabelsNames('IF_TRUE', 'IF_FALSE', 'IF_END');
+        compileExpression(condExpr, cState);
+        cState.write(`if-goto ${labelTrue}`);
+        cState.write(`goto ${labelFalse}`);
+        cState.write(`label ${labelTrue}`);
+        trueStatements.children.forEach((st) => compileStatement(st, cState));
+        cState.write(`goto ${ifEnd}`);
+        cState.write(`label ${labelFalse}`);
+        falseStatements.children.forEach((st) => compileStatement(st, cState));
+        cState.write(`label ${ifEnd}`);
+    } else { // without else branch
+        const [labelTrue, labelFalse] = cState.getLabelsNames('IF_TRUE', 'IF_FALSE');
+        compileExpression(condExpr, cState);
+        cState.write(`if-goto ${labelTrue}`);
+        cState.write(`goto ${labelFalse}`);
+        cState.write(`label ${labelTrue}`);
+        trueStatements.children.forEach((st) => compileStatement(st, cState));
+        cState.write(`label ${labelFalse}`);
+    }
 }
 
 function compileStatement(ast, cState) {

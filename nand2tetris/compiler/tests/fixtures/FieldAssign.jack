@@ -2,8 +2,6 @@ class FieldAssign {
     function void main() {
         if (1 < 2) {
             do Output.printInt(1 + (2 * 3));
-        } else {
-            do Output.printInt(0);
         }
         return;
     }
