@@ -2,6 +2,8 @@ const SymbolTable = require('./symbol-table');
 const CompilerState = require('./compiler-state');
 const parseAST = require('../analyzer');
 const { groupParameterList } = require('./utils');
+const { compileExpression } = require('./compile-expression');
+const { compileStatement } = require('./compile-statement');
 
 function compileClass(ast, cState) {
     const symbolTable = new SymbolTable();
@@ -24,6 +26,13 @@ function compileFunction(ast, cState) {
     const fnName = `${cState.getClassName()}.${nameNode.getValue()}`;
     const localsCount = cState.getLocalsCount();
     cState.write(`function ${fnName} ${localsCount}`);
+
+    const statements = ast.children
+    .find(({ type }) => type === 'subroutineBody').children
+    .find(({ type }) => type === 'statements');
+
+    statements.children
+    .forEach((statement) => compileStatement(statement, cState));
 }
 
 function fillSubroutineSymbolTable(ast, cState) {

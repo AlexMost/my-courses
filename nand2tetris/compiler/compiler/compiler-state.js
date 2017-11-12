@@ -1,3 +1,5 @@
+const EOL = require('os').EOL;
+
 class CompilerState {
     constructor(className) {
         this.symbolTables = [];
@@ -41,7 +43,7 @@ class CompilerState {
     }
 
     getVMCode() {
-        return this.writerLines.join('\n');
+        return this.writerLines.join(EOL) + EOL;
     }
 }
 

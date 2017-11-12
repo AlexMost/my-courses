@@ -17,9 +17,22 @@ class FieldAssign {
         var int b;
         let a = 1;
         let b = arg1;
+        let b = arg2;
         return a;
     }
 }
+`;
+
+const expectedDefnWithAssign =
+`function FieldAssign.test 2
+push constant 1
+pop local 0
+push argument 0
+pop local 1
+push argument 1
+pop local 1
+push local 0
+return
 `;
 
 describe('compiler class', () => {
@@ -31,6 +44,6 @@ describe('compiler class', () => {
     });
     it('shlould create symbol table for methods', () => {
         const state = compile(classDefnWithAssign);
-        console.log(state.getVMCode());
+        expect(state.getVMCode()).to.eql(expectedDefnWithAssign);
     });
 });
