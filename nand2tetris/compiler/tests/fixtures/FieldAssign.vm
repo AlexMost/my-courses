@@ -1,9 +1,12 @@
-function FieldAssign.test 0
-push constant 2
-push constant 4
+function FieldAssign.sum 0
+push argument 0
+push argument 0
+push argument 1
 add
+add
+return
+function FieldAssign.test 0
 push constant 1
-neg
-call Math.multiply 2
-not
+push constant 1
+call FieldAssign.sum 2
 return

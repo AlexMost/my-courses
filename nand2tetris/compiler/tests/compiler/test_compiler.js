@@ -108,6 +108,31 @@ not
 return
 `;
 
+const fnCall =
+`class FieldAssign {
+    function int sum(int a, int b) {
+        return a + (a + b);
+    }
+    function int test() {
+        return FieldAssign.sum(1, 1);
+    }
+}`;
+
+const fnCallResult =
+`function FieldAssign.sum 0
+push argument 0
+push argument 0
+push argument 1
+add
+add
+return
+function FieldAssign.test 0
+push constant 1
+push constant 1
+call FieldAssign.sum 2
+return
+`;
+
 describe('compiler class', () => {
     it('should fill class symbol table', () => {
         const state = compile(classDefn);
@@ -134,5 +159,9 @@ describe('compiler class', () => {
     it('sould compile op exp', () => {
         const state = compile(opExp);
         expect(state.getVMCode()).to.eql(opExpExpected);
+    });
+    it('should compile fnCall in expression', () => {
+        const state = compile(fnCall);
+        expect(state.getVMCode()).to.eql(fnCallResult);
     });
 });

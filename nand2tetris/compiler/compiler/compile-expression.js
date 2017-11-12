@@ -39,8 +39,31 @@ function writeUnary(op, cState) {
     }
 }
 
+function isFunctionCall(ast) {
+    if (ast.children.length === 6) {
+        const [classNode, dotNode, funcNode, parenNode] = ast.children;
+        return (classNode.getType() === 'identifier' &&
+        dotNode.getValue() === '.' &&
+        funcNode.getType() === 'identifier' &&
+        parenNode.getValue() === '(');
+    }
+    return false;
+}
+
+function compileFunction(ast, cState) {
+    const args = ast.children[4].children.filter((ch) => ch.type === 'expression');
+    args.forEach((exp) => compileExpression(exp, cState));
+    const [classNode, dotNode, funcNode] = ast.children;
+    const name = `${classNode.getValue()}.${funcNode.getValue()}`;
+    cState.write(`call ${name} ${args.length}`);
+}
+
 function compileTerm(ast, cState) {
     let unary = null;
+    if (isFunctionCall(ast)) {
+        compileFunction(ast, cState);
+        return;
+    }
     ast.children.forEach((child) => {
         if (child instanceof ASTNode) {
             switch (child.type) {
