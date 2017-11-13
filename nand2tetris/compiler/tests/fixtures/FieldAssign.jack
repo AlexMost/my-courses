@@ -1,7 +1,11 @@
 class FieldAssign {
-    function Point newPoint(int arg1, string arg2) {
-        var Point p1;
-        let p1 = Point.new(arg1, arg2);
-        return p1;
+    field int x, y;
+    method int getX() {
+        return x;
+    }
+    method int test() {
+        var int a;
+        let a = getX();
+        return a;
     }
 }

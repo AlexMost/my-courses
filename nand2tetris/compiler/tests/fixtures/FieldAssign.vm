@@ -1,7 +1,13 @@
-function FieldAssign.newPoint 1
+function FieldAssign.getX 0
 push argument 0
-push argument 1
-call Point.new 2
+pop pointer 0
+push this 0
+return
+function FieldAssign.test 1
+push argument 0
+pop pointer 0
+push pointer 0
+call FieldAssign.getX 1
 pop local 0
 push local 0
 return

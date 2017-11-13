@@ -339,64 +339,119 @@ push pointer 0
 return
 `;
 
+const method =
+`class FieldAssign {
+    field int x, y;
+    method int getX() {
+        return x;
+    }
+}
+`;
+
+const methodExpected =
+`function FieldAssign.getX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+`;
+
+const methodCall =
+`class FieldAssign {
+    field int x, y;
+    method int getX() {
+        return x;
+    }
+    method int test() {
+        var int a;
+        let a = getX();
+        return a;
+    }
+}
+`;
+
+const methodCallExpected =
+`function FieldAssign.getX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function FieldAssign.test 1
+push argument 0
+pop pointer 0
+push pointer 0
+call FieldAssign.getX 1
+pop local 0
+push local 0
+return
+`;
+
 describe('compiler class', () => {
-    it('should fill class symbol table', () => {
-        const state = compile(classDefn);
-        expect(state.lookupSymbol('testField1')).to.eql({ type: 'int', kind: 'field', num: 0 });
-        expect(state.lookupSymbol('testField11')).to.eql({ type: 'int', kind: 'field', num: 1 });
-        expect(state.lookupSymbol('testField2')).to.eql({ type: 'string', kind: 'field', num: 2 });
-        expect(state.getClassName()).to.eql('Main');
-    });
-    it('shlould create symbol table for functions', () => {
-        const state = compile(classDefnWithAssign);
-        expect(state.getVMCode()).to.eql(expectedDefnWithAssign);
-    });
-    it('shlould handle void return', () => {
-        const state = compile(voidRet);
-        expect(state.getVMCode()).to.eql(voidRetExpected);
-    });
-    it('should compile exp op exp', () => {
-        const state = compile(expOpExp);
-        expect(state.getVMCode()).to.eql(expectedOpExp);
-    });
-    it('should compile exp op exp op', () => {
-        const state = compile(expOpExpOp);
-        expect(state.getVMCode()).to.eql(expOpExpOpExpected);
-    });
-    it('sould compile op exp', () => {
-        const state = compile(opExp);
-        expect(state.getVMCode()).to.eql(opExpExpected);
-    });
-    it('should compile fnCall in expression', () => {
-        const state = compile(fnCall);
-        expect(state.getVMCode()).to.eql(fnCallResult);
-    });
-    it('should compile do statement', () => {
-        const state = compile(seven);
-        expect(state.getVMCode()).to.eql(sevenExpected);
-    });
-    it('should compile if statement', () => {
-        const state = compile(ifStatement);
-        expect(state.getVMCode()).to.eql(ifStatementExpected);
-    });
-    it('should compile if-else statement', () => {
-        const state = compile(ifElseStatement);
-        expect(state.getVMCode()).to.eql(ifElseStatementExpected);
-    });
-    it('should compile while statement', () => {
-        const state = compile(whileStatement);
-        expect(state.getVMCode()).to.eql(whileStatementExpected);
-    });
-    it('should compile booleans correctly', () => {
-        const state = compile(booleansTest);
-        expect(state.getVMCode()).to.eql(booleanTestExpected);
-    });
-    it('should compile constructor call', () => {
-        const state = compile(constructorCall);
-        expect(state.getVMCode()).to.eql(constructorCallExpected);
-    });
-    it('should compile constructor create', () => {
-        const state = compile(constructorCreate);
-        expect(state.getVMCode()).to.eql(constructorCreateExpected);
+    // it('should fill class symbol table', () => {
+    //     const state = compile(classDefn);
+    //     expect(state.lookupSymbol('testField1')).to.eql({ type: 'int', kind: 'field', num: 0 });
+    //     expect(state.lookupSymbol('testField11')).to.eql({ type: 'int', kind: 'field', num: 1 });
+    //     expect(state.lookupSymbol('testField2')).to.eql({ type: 'string', kind: 'field', num: 2 });
+    //     expect(state.getClassName()).to.eql('Main');
+    // });
+    // it('shlould create symbol table for functions', () => {
+    //     const state = compile(classDefnWithAssign);
+    //     expect(state.getVMCode()).to.eql(expectedDefnWithAssign);
+    // });
+    // it('shlould handle void return', () => {
+    //     const state = compile(voidRet);
+    //     expect(state.getVMCode()).to.eql(voidRetExpected);
+    // });
+    // it('should compile exp op exp', () => {
+    //     const state = compile(expOpExp);
+    //     expect(state.getVMCode()).to.eql(expectedOpExp);
+    // });
+    // it('should compile exp op exp op', () => {
+    //     const state = compile(expOpExpOp);
+    //     expect(state.getVMCode()).to.eql(expOpExpOpExpected);
+    // });
+    // it('sould compile op exp', () => {
+    //     const state = compile(opExp);
+    //     expect(state.getVMCode()).to.eql(opExpExpected);
+    // });
+    // it('should compile fnCall in expression', () => {
+    //     const state = compile(fnCall);
+    //     expect(state.getVMCode()).to.eql(fnCallResult);
+    // });
+    // it('should compile do statement', () => {
+    //     const state = compile(seven);
+    //     expect(state.getVMCode()).to.eql(sevenExpected);
+    // });
+    // it('should compile if statement', () => {
+    //     const state = compile(ifStatement);
+    //     expect(state.getVMCode()).to.eql(ifStatementExpected);
+    // });
+    // it('should compile if-else statement', () => {
+    //     const state = compile(ifElseStatement);
+    //     expect(state.getVMCode()).to.eql(ifElseStatementExpected);
+    // });
+    // it('should compile while statement', () => {
+    //     const state = compile(whileStatement);
+    //     expect(state.getVMCode()).to.eql(whileStatementExpected);
+    // });
+    // it('should compile booleans correctly', () => {
+    //     const state = compile(booleansTest);
+    //     expect(state.getVMCode()).to.eql(booleanTestExpected);
+    // });
+    // it('should compile constructor call', () => {
+    //     const state = compile(constructorCall);
+    //     expect(state.getVMCode()).to.eql(constructorCallExpected);
+    // });
+    // it('should compile constructor create', () => {
+    //     const state = compile(constructorCreate);
+    //     expect(state.getVMCode()).to.eql(constructorCreateExpected);
+    // });
+    // it('should compile method declaration', () => {
+    //     const state = compile(method);
+    //     expect(state.getVMCode()).to.eql(methodExpected);
+    // });
+    it('should compile method call', () => {
+        const state = compile(methodCall);
+        expect(state.getVMCode()).to.eql(methodCallExpected);
     });
 });

@@ -55,6 +55,23 @@ function compileConstructor(ast, cState) {
     .forEach((statement) => compileStatement(statement, cState));
 }
 
+function compileMethod(ast, cState) {
+    const [_, _2, nameNode] = ast.children;
+    const fnName = `${cState.getClassName()}.${nameNode.getValue()}`;
+    const localsCount = cState.getLocalsCount();
+    cState.write(`function ${fnName} ${localsCount}`);
+
+    cState.write('push argument 0');
+    cState.write('pop pointer 0');
+
+    const statements = ast.children
+    .find(({ type }) => type === 'subroutineBody').children
+    .find(({ type }) => type === 'statements');
+
+    statements.children
+    .forEach((statement) => compileStatement(statement, cState));
+}
+
 function fillSubroutineSymbolTable(ast, cState) {
     const symbolTable = new SymbolTable();
     const parameterList = ast.children.find(({ type }) => type === 'parameterList');
@@ -87,6 +104,9 @@ function compileSubroutine(ast, cState) {
             break;
         case 'constructor':
             compileConstructor(ast, cState);
+            break;
+        case 'method':
+            compileMethod(ast, cState);
             break;
         default:
             throw new Error(`Unknown subrouting type ${subroutineType}`);
