@@ -1,8 +1,8 @@
 class FieldAssign {
     function boolean main() {
-        var boolean a;
+        var string a;
         var boolean b;
-        let a = false;
+        let a = "test";
         let b = true;
         return a;
     }

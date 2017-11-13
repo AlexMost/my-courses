@@ -7,15 +7,17 @@ const { compileStatement } = require('./compile-statement');
 function compileClass(ast, cState) {
     const symbolTable = new SymbolTable();
     const classVarDec = ast.children.filter(({ type }) => type === 'classVarDec');
-
     if (!classVarDec.length) return; // no need to create symbol table if there is no declarations
 
     classVarDec.forEach((varDec) => {
-        const [kindNode, typeNode, nameNode] = varDec.children;
+        const [kindNode, typeNode] = varDec.children;
+        const identifiers = varDec.children.slice(2).filter((token) => token.getType() === 'identifier');
         const kind = kindNode.getValue();
         const type = typeNode.getValue();
-        const name = nameNode.getValue();
-        symbolTable.define(name, type, kind);
+        identifiers.forEach((ident) => {
+            const name = ident.getValue();
+            symbolTable.define(name, type, kind);
+        })
     });
     cState.pushSymbolTable(symbolTable);
 }

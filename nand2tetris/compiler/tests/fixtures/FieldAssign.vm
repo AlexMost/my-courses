@@ -1,5 +1,14 @@
 function FieldAssign.main 2
-push constant 0
+push constant 4
+call String.new 1
+push constant 116
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
 pop local 0
 push constant 0
 not

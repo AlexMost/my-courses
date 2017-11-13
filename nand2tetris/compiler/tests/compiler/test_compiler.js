@@ -3,7 +3,7 @@ const { compile } = require('../../compiler/compiler');
 
 const classDefn = `
 class Main {
-    field int testField1;
+    field int testField1, testField11;
     field string testField2;
 }
 `;
@@ -295,7 +295,8 @@ describe('compiler class', () => {
     it('should fill class symbol table', () => {
         const state = compile(classDefn);
         expect(state.lookupSymbol('testField1')).to.eql({ type: 'int', kind: 'field', num: 0 });
-        expect(state.lookupSymbol('testField2')).to.eql({ type: 'string', kind: 'field', num: 1 });
+        expect(state.lookupSymbol('testField11')).to.eql({ type: 'int', kind: 'field', num: 1 });
+        expect(state.lookupSymbol('testField2')).to.eql({ type: 'string', kind: 'field', num: 2 });
         expect(state.getClassName()).to.eql('Main');
     });
     it('shlould create symbol table for methods', () => {
