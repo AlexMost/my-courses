@@ -121,6 +121,10 @@ function compileTerm(ast, cState) {
                     cState.write('push constant 0');
                     return;
                 }
+                if (child.getValue() === 'this') {
+                    cState.write('push pointer 0');
+                    return;
+                }
                 throw new Error(`Unsupported keyword ${JSON.stringify(child)}`);
             default:
                 throw new Error(`Unsupported term type ${JSON.stringify(child)}`);

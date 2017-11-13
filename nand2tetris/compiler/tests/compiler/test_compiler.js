@@ -314,6 +314,31 @@ push local 0
 return
 `;
 
+const constructorCreate =
+`class Point {
+    field int x;
+    field int y;
+    constructor Point new(int dx, int dy) {
+        let x = dx;
+        let y = dy;
+        return this;
+    }
+}
+`;
+
+const constructorCreateExpected =
+`function Point.new 0
+push constant 2
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 0
+push argument 1
+pop this 1
+push pointer 0
+return
+`;
+
 describe('compiler class', () => {
     it('should fill class symbol table', () => {
         const state = compile(classDefn);
@@ -369,5 +394,9 @@ describe('compiler class', () => {
     it('should compile constructor call', () => {
         const state = compile(constructorCall);
         expect(state.getVMCode()).to.eql(constructorCallExpected);
+    });
+    it('should compile constructor create', () => {
+        const state = compile(constructorCreate);
+        expect(state.getVMCode()).to.eql(constructorCreateExpected);
     });
 });

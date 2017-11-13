@@ -6,11 +6,11 @@ describe('test ConvertToBin', () => {
     it('should match with the working version', () => {
         const sourcePath = path.resolve(
             __dirname,
-            '../fixtures/ConvertToBin/Main.jack')
+            '../fixtures/ConvertToBin/Main.jack');
         const expectedPath = path.resolve(
             __dirname,
             '../fixtures/ConvertToBin/Main.vm'
-        )
+        );
         const rawFile = fs.readFileSync(sourcePath).toString();
         const { compile } = require('../../compiler/compiler');
 

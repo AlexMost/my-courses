@@ -70,6 +70,17 @@ class CompilerState {
     getVMCode() {
         return this.writerLines.join(EOL) + EOL;
     }
+
+    fieldsCount() {
+        let count = 0;
+        for (const st of this.symbolTables) {
+            for (const name of Object.keys(st.toDict())) {
+                const kind = st.kindOf(name);
+                if (kind === 'field') count += 1;
+            }
+        }
+        return count;
+    }
 }
 
 module.exports = CompilerState;
