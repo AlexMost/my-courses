@@ -10,7 +10,7 @@ class CompilerState {
     }
 
     getLabelName(name) {
-        if (this.labelCountMap[name]) {
+        if (this.labelCountMap[name] !== undefined) {
             this.labelCountMap[name] = this.labelCountMap[name] + 1;
         } else {
             this.labelCountMap[name] = 0;

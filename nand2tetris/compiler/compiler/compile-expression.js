@@ -4,6 +4,7 @@ const { ASTNode, isUnary } = require('../parser/types');
 
 const mapOp = {
     '+': 'add',
+    '-': 'sub',
     '*': 'call Math.multiply 2',
     '<': 'lt',
     '>': 'gt',
@@ -128,6 +129,9 @@ function compileExpression(ast, cState) {
         const [term1, symbol, term2, ...tail] = ast.children;
         compileTerm(term1, cState);
         compileTerm(term2, cState);
+        if (!mapOp[symbol.getValue()]) {
+            throw new Error(`Unexpected symbol ${symbol.getValue()}`);
+        }
         cState.write(mapOp[symbol.getValue()]);
         if (tail && tail.length) {
             ast.children = tail;
