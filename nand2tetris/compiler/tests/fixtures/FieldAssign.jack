@@ -1,9 +1,13 @@
 class FieldAssign {
-    function boolean main() {
-        var string a;
-        var boolean b;
-        let a = "test";
-        let b = true;
+    field int testField1;
+    field string testField2;
+    function int test(int arg1, string arg2) {
+        var int a;
+        var int b, c;
+        let a = 1;
+        let b = arg1;
+        let b = arg2;
+        let c = a;
         return a;
     }
 }

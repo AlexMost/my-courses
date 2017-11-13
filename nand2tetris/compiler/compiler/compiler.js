@@ -49,10 +49,13 @@ function fillSubroutineSymbolTable(ast, cState) {
     .filter(({ type }) => type === 'varDec');
 
     varDecs.forEach((varDec) => {
-        const [_, typeNode, nameNode] = varDec.children;
+        const [_, typeNode] = varDec.children;
+        const identifiers = varDec.children.slice(2).filter((token) => token.getType() === 'identifier');
         const type = typeNode.getValue();
-        const name = nameNode.getValue();
-        symbolTable.define(name, type, 'local');
+        identifiers.forEach((ident) => {
+            const name = ident.getValue();
+            symbolTable.define(name, type, 'local');
+        });
     });
     cState.pushSymbolTable(symbolTable);
 }

@@ -1,17 +1,11 @@
-function FieldAssign.main 2
-push constant 4
-call String.new 1
-push constant 116
-call String.appendChar 2
-push constant 101
-call String.appendChar 2
-push constant 115
-call String.appendChar 2
-push constant 116
-call String.appendChar 2
+function FieldAssign.test 3
+push constant 1
 pop local 0
-push constant 0
-not
+push argument 0
 pop local 1
+push argument 1
+pop local 1
+push local 0
+pop local 2
 push local 0
 return

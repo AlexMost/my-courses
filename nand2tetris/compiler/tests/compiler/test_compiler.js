@@ -14,23 +14,26 @@ class FieldAssign {
     field string testField2;
     function int test(int arg1, string arg2) {
         var int a;
-        var int b;
+        var int b, c;
         let a = 1;
         let b = arg1;
         let b = arg2;
+        let c = a;
         return a;
     }
 }
 `;
 
 const expectedDefnWithAssign =
-`function FieldAssign.test 2
+`function FieldAssign.test 3
 push constant 1
 pop local 0
 push argument 0
 pop local 1
 push argument 1
 pop local 1
+push local 0
+pop local 2
 push local 0
 return
 `;
@@ -299,7 +302,7 @@ describe('compiler class', () => {
         expect(state.lookupSymbol('testField2')).to.eql({ type: 'string', kind: 'field', num: 2 });
         expect(state.getClassName()).to.eql('Main');
     });
-    it('shlould create symbol table for methods', () => {
+    it('shlould create symbol table for functions', () => {
         const state = compile(classDefnWithAssign);
         expect(state.getVMCode()).to.eql(expectedDefnWithAssign);
     });
