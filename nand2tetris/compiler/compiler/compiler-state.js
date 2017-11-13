@@ -7,6 +7,7 @@ class CompilerState {
         this.writerLines = [];
         this.labelCountMap = {};
         this.getLabelName = this.getLabelName.bind(this);
+        this.hasSymbol = this.hasSymbol.bind(this);
     }
 
     getLabelName(name) {
@@ -28,6 +29,15 @@ class CompilerState {
 
     popSymbolTable() {
         this.symbolTables.pop();
+    }
+
+    hasSymbol(symbol) {
+        try {
+            this.lookupSymbol(symbol);
+            return true;
+        } catch (err) {
+            return false;
+        }
     }
 
     lookupSymbol(symbol) {

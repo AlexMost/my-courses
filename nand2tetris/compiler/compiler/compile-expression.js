@@ -44,13 +44,21 @@ function writeUnary(op, cState) {
     }
 }
 
-function isFunctionCall(ast) {
+function isSubRoutineCall(ast) {
     if (ast.children.length === 6) {
         const [classNode, dotNode, funcNode, parenNode] = ast.children;
         return (classNode.getType() === 'identifier' &&
         dotNode.getValue() === '.' &&
         funcNode.getType() === 'identifier' &&
         parenNode.getValue() === '(');
+    }
+    return false;
+}
+
+function isFunctionCall(ast, cState) {
+    if (ast.children.length === 6) {
+        const [classNode] = ast.children;
+        return !cState.hasSymbol(classNode.getValue());
     }
     return false;
 }
@@ -65,8 +73,10 @@ function compileFunction(ast, cState) {
 
 function compileTerm(ast, cState) {
     let unary = null;
-    if (isFunctionCall(ast)) {
-        compileFunction(ast, cState);
+    if (isSubRoutineCall(ast)) {
+        if (isFunctionCall(ast, cState)) {
+            compileFunction(ast, cState);
+        }
         return;
     }
     ast.children.forEach((child) => {

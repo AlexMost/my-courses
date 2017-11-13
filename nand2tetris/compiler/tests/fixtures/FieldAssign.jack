@@ -1,13 +1,7 @@
 class FieldAssign {
-    field int testField1;
-    field string testField2;
-    function int test(int arg1, string arg2) {
-        var int a;
-        var int b, c;
-        let a = 1;
-        let b = arg1;
-        let b = arg2;
-        let c = a;
-        return a;
+    function Point newPoint(int arg1, string arg2) {
+        var Point p1;
+        let p1 = Point.new(arg1, arg2);
+        return p1;
     }
 }

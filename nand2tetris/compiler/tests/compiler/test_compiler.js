@@ -294,6 +294,26 @@ push local 0
 return
 `;
 
+const constructorCall =
+`class FieldAssign {
+    function Point newPoint(int arg1, string arg2) {
+        var Point p1;
+        let p1 = Point.new(arg1, arg2);
+        return p1;
+    }
+}
+`;
+
+const constructorCallExpected =
+`function FieldAssign.newPoint 1
+push argument 0
+push argument 1
+call Point.new 2
+pop local 0
+push local 0
+return
+`;
+
 describe('compiler class', () => {
     it('should fill class symbol table', () => {
         const state = compile(classDefn);
@@ -345,5 +365,9 @@ describe('compiler class', () => {
     it('should compile booleans correctly', () => {
         const state = compile(booleansTest);
         expect(state.getVMCode()).to.eql(booleanTestExpected);
+    });
+    it('should compile constructor call', () => {
+        const state = compile(constructorCall);
+        expect(state.getVMCode()).to.eql(constructorCallExpected);
     });
 });
