@@ -100,6 +100,17 @@ function compileTerm(ast, cState) {
                     unary = child.getValue();
                 }
                 break;
+            case 'keyword':
+                if (child.getValue() === 'true') {
+                    cState.write('push constant 0');
+                    cState.write('not');
+                    return;
+                }
+                if (child.getValue() === 'false') {
+                    cState.write('push constant 0');
+                    return;
+                }
+                throw new Error(`Unsupported keyword ${JSON.stringify(child)}`);
             default:
                 throw new Error(`Unsupported term type ${JSON.stringify(child)}`);
         }

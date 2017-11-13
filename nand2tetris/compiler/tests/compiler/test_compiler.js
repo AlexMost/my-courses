@@ -269,6 +269,28 @@ push constant 0
 return
 `;
 
+const booleansTest =
+`class FieldAssign {
+    function boolean main() {
+        var boolean a;
+        var boolean b;
+        let a = false;
+        let b = true;
+        return a;
+    }
+}`;
+
+const booleanTestExpected =
+`function FieldAssign.main 2
+push constant 0
+pop local 0
+push constant 0
+not
+pop local 1
+push local 0
+return
+`;
+
 describe('compiler class', () => {
     it('should fill class symbol table', () => {
         const state = compile(classDefn);
@@ -315,5 +337,9 @@ describe('compiler class', () => {
     it('should compile while statement', () => {
         const state = compile(whileStatement);
         expect(state.getVMCode()).to.eql(whileStatementExpected);
+    });
+    it('should compile booleans correctly', () => {
+        const state = compile(booleansTest);
+        expect(state.getVMCode()).to.eql(booleanTestExpected);
     });
 });
