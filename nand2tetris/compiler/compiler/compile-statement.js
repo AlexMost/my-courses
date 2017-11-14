@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations,no-use-before-define */
-
+const { ASTNode } = require('../parser/types');
 const { compileExpression } = require('./compile-expression');
 
 function compileLetStatement(ast, cState) {
@@ -25,11 +25,14 @@ function compileReturnStatement(ast, cState) {
 
 function compileDoStatement(ast, cState) {
     const [doNode, classNode, dotNode, fnNode] = ast.children;
-    const subroutineName = `${classNode.getValue()}.${fnNode.getValue()}`;
-    const expressions = ast.children.find(({ type }) => type === 'expressionList')
-    .children.filter(({ type }) => type === 'expression');
-    expressions.forEach((exp) => compileExpression(exp, cState));
-    cState.write(`call ${subroutineName} ${expressions.length}`);
+    const term = new ASTNode('term', ast.children.slice(1, -1));
+    const expr = new ASTNode('expression', [term]);
+    compileExpression(expr, cState);
+    // const subroutineName = `${classNode.getValue()}.${fnNode.getValue()}`;
+    // const expressions = ast.children.find(({ type }) => type === 'expressionList')
+    // .children.filter(({ type }) => type === 'expression');
+    // expressions.forEach((exp) => compileExpression(exp, cState));
+    // cState.write(`call ${subroutineName} ${expressions.length}`);
     cState.write('pop temp 0');
 }
 

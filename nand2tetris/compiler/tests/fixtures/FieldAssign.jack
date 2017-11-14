@@ -1,7 +1,9 @@
 class FieldAssign {
+    method int getY() {
+        return 1;
+    }
     method int getX() {
-        var Point p1;
-        let p1 = Point.new(1, 1);
-        return p1.getX();
+        do getY();
+        return 1;
     }
 }

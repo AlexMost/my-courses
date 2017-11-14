@@ -409,6 +409,34 @@ call Point.getX 1
 return
 `;
 
+const doObjMethodCall =
+`class FieldAssign {
+    method int getY() {
+        return 1;
+    }
+    method int getX() {
+        do getY();
+        return 1;
+    }
+}
+`;
+
+const doObjMethodCallExpected =
+`function FieldAssign.getY 0
+push argument 0
+pop pointer 0
+push constant 1
+return
+function FieldAssign.getX 0
+push argument 0
+pop pointer 0
+push pointer 0
+call FieldAssign.getY 1
+pop temp 0
+push constant 1
+return
+`;
+
 describe('compiler class', () => {
     it('should fill class symbol table', () => {
         const state = compile(classDefn);
@@ -480,5 +508,9 @@ describe('compiler class', () => {
     it('should call object method', () => {
         const state = compile(objMethodCall);
         expect(state.getVMCode()).to.eql(objMethodCallExpected);
+    });
+    it('should compile obj do method call', () => {
+        const state = compile(doObjMethodCall);
+        expect(state.getVMCode()).to.eql(doObjMethodCallExpected);
     });
 });
