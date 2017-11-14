@@ -80,6 +80,17 @@ function compileMethodCall(ast, cState) {
         const methodName = ast.children[0].getValue();
         const name = `${cState.getClassName()}.${methodName}`;
         cState.write(`call ${name} ${args.length + 1}`);
+        return;
+    }
+    if (ast.children.length === 6) {
+        const instanceNode = ast.children[0];
+        const methodNode = ast.children[2];
+        const instanceSymbol = cState.lookupSymbol(instanceNode.getValue());
+        const className = instanceSymbol.type;
+        const args = ast.children[4].children.filter((ch) => ch.type === 'expression');
+        cState.write(`push ${instanceSymbol.kind} ${instanceSymbol.num}`);
+        args.forEach((exp) => compileExpression(exp, cState));
+        cState.write(`call ${className}.${methodNode.getValue()} ${args.length + 1}`);
     }
 }
 

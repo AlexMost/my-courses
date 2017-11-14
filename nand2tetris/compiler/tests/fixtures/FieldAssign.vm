@@ -1,13 +1,10 @@
-function FieldAssign.getX 0
+function FieldAssign.getX 1
 push argument 0
 pop pointer 0
-push this 0
-return
-function FieldAssign.test 1
-push argument 0
-pop pointer 0
-push pointer 0
-call FieldAssign.getX 1
+push constant 1
+push constant 1
+call Point.new 2
 pop local 0
 push local 0
+call Point.getX 1
 return
