@@ -12,30 +12,6 @@ const mapOp = {
     '&': 'and'
 };
 
-function compileToken(ast, cState) {
-    switch (ast.getType()) {
-        case 'integerConstant':
-            cState.write(`push constant ${ast.getValue()}`);
-            break;
-        case 'identifier':
-            const symb = cState.lookupSymbol(ast.getValue());
-            cState.write(`push ${symb.kind} ${symb.num}`);
-            break;
-        default:
-            throw new Error(`Unsupported term type ${ast.getType()}`);
-    }
-}
-
-function compileSingleExpression(ast, cState) {
-    switch (ast.type) {
-        case 'term':
-            ast.children.forEach((t) => compileToken(t, cState));
-            break;
-        default:
-            throw new Error(`Unsupported compile for expression type ${ast.type}`);
-    }
-}
-
 function writeUnary(op, cState) {
     if (op === '-') {
         cState.write('neg');
@@ -88,7 +64,11 @@ function compileMethodCall(ast, cState) {
         const instanceSymbol = cState.lookupSymbol(instanceNode.getValue());
         const className = instanceSymbol.type;
         const args = ast.children[4].children.filter((ch) => ch.type === 'expression');
-        cState.write(`push ${instanceSymbol.kind} ${instanceSymbol.num}`);
+        if (instanceSymbol.kind === 'field') {
+            cState.write(`push this ${instanceSymbol.num}`);
+        } else {
+            cState.write(`push ${instanceSymbol.kind} ${instanceSymbol.num}`);
+        }
         args.forEach((exp) => compileExpression(exp, cState));
         cState.write(`call ${className}.${methodNode.getValue()} ${args.length + 1}`);
     }

@@ -1,13 +1,10 @@
-function FieldAssign.getY 0
+function FieldAssign.dispose 0
 push argument 0
 pop pointer 0
-push constant 1
-return
-function FieldAssign.getX 0
-push argument 0
-pop pointer 0
-push pointer 0
-call FieldAssign.getY 1
+call square.dispose 0
 pop temp 0
-push constant 1
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
 return

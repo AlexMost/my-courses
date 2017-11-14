@@ -1,9 +1,7 @@
 class FieldAssign {
-    method int getY() {
-        return 1;
-    }
-    method int getX() {
-        do getY();
-        return 1;
-    }
+    method void dispose() {
+      do square.dispose();
+      do Memory.deAlloc(this);
+      return;
+   }
 }
