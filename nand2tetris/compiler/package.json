@@ -7,7 +7,7 @@
     "test": "npm run fix && NODE_ENV=test mocha tests/compiler/**/*.js",
     "rawtest": "NODE_ENV=test mocha tests/compiler/*.js",
     "lint": "eslint *.js tests tokenizer",
-    "fix": "eslint --fix *.js tests tokenizer parser",
+    "fix": "eslint --fix *.js tests tokenizer parser compiler",
     "wp": "webpack",
     "lang": "echo 'nodejs' >> ./dist/lang.txt",
     "build": "npm run wp && npm run lang"
