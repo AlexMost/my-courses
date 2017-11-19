@@ -1,6 +1,7 @@
 class FieldAssign {
     function void main() {
-      do Output.printString("test ");
+      var Array a; 
+      let a[0] = 7;
       return;
    }
 }

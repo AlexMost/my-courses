@@ -2,7 +2,28 @@
 const { ASTNode } = require('../parser/types');
 const { compileExpression } = require('./compile-expression');
 
+function isArrayAssignment(ast) {
+    return ast.children[2].getValue() === '[';
+}
+
+function compileArrayAssignment(ast, cState) {
+    const [_, arrBaseNode, _2, indexExpr, _3, _4, expNode] = ast.children;
+    const symbol = cState.lookupSymbol(arrBaseNode.getValue());
+    compileExpression(indexExpr, cState);
+    cState.write(`push ${symbol.kind} ${symbol.num}`);
+    cState.write('add');
+    compileExpression(expNode, cState);
+    cState.write('pop temp 0');
+    cState.write('pop pointer 1');
+    cState.write('push temp 0');
+    cState.write('pop that 0');
+}
+
 function compileLetStatement(ast, cState) {
+    if (isArrayAssignment(ast)) {
+        compileArrayAssignment(ast, cState);
+        return;
+    }
     const [_, sourceNode, _2, expNode] = ast.children;
     compileExpression(expNode, cState);
     const sourceSymb = cState.lookupSymbol(sourceNode.getValue());
@@ -28,11 +49,6 @@ function compileDoStatement(ast, cState) {
     const term = new ASTNode('term', ast.children.slice(1, -1));
     const expr = new ASTNode('expression', [term]);
     compileExpression(expr, cState);
-    // const subroutineName = `${classNode.getValue()}.${fnNode.getValue()}`;
-    // const expressions = ast.children.find(({ type }) => type === 'expressionList')
-    // .children.filter(({ type }) => type === 'expression');
-    // expressions.forEach((exp) => compileExpression(exp, cState));
-    // cState.write(`call ${subroutineName} ${expressions.length}`);
     cState.write('pop temp 0');
 }
 
