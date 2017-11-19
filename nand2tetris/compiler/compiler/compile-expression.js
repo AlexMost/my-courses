@@ -1,6 +1,7 @@
 /* eslint-disable no-case-declarations,no-use-before-define */
 
 const { ASTNode, isUnary } = require('../parser/types');
+const { Token } = require('../tokenizer/types');
 
 const mapOp = {
     '+': 'add',
@@ -64,11 +65,7 @@ function compileMethodCall(ast, cState) {
         const instanceSymbol = cState.lookupSymbol(instanceNode.getValue());
         const className = instanceSymbol.type;
         const args = ast.children[4].children.filter((ch) => ch.type === 'expression');
-        if (instanceSymbol.kind === 'field') {
-            cState.write(`push this ${instanceSymbol.num}`);
-        } else {
-            cState.write(`push ${instanceSymbol.kind} ${instanceSymbol.num}`);
-        }
+        cState.writePushValue(instanceNode.getValue());
         args.forEach((exp) => compileExpression(exp, cState));
         cState.write(`call ${className}.${methodNode.getValue()} ${args.length + 1}`);
     }
@@ -84,6 +81,23 @@ function compileString(str, cState) {
     }
 }
 
+function isArrayAccess(ast) {
+    return (
+        ast.children.length > 2 &&
+        ast.children[1] instanceof Token &&
+        ast.children[1].getValue() === '['
+    );
+}
+
+function compileArrayAccess(ast, cState) {
+    const [arrNode, _, indexExprNode] = ast.children;
+    compileExpression(indexExprNode, cState);
+    cState.writePushValue(arrNode.getValue());
+    cState.write('add');
+    cState.write('pop pointer 1');
+    cState.write('push that 0');
+}
+
 function compileTerm(ast, cState) {
     let unary = null;
     if (isSubRoutineCall(ast)) {
@@ -92,6 +106,10 @@ function compileTerm(ast, cState) {
         } else {
             compileMethodCall(ast, cState);
         }
+        return;
+    }
+    if (isArrayAccess(ast)) {
+        compileArrayAccess(ast, cState);
         return;
     }
     ast.children.forEach((child) => {
@@ -118,13 +136,7 @@ function compileTerm(ast, cState) {
                 cState.write(`push constant ${child.getValue()}`);
                 break;
             case 'identifier':
-                const symb = cState.lookupSymbol(child.getValue());
-                if (symb.kind === 'field') {
-                    cState.write(`push this ${symb.num}`);
-                } else {
-                    cState.write(`push ${symb.kind} ${symb.num}`);
-                }
-
+                cState.writePushValue(child.getValue());
                 break;
             case 'symbol':
                 if (isUnary(child)) {

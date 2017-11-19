@@ -1,11 +1,9 @@
-function FieldAssign.main 1
-push constant 0
+function FieldAssign.main 2
+push constant 2
 push local 0
 add
-push constant 7
-pop temp 0
 pop pointer 1
-push temp 0
-pop that 0
+push that 0
+pop local 1
 push constant 0
 return

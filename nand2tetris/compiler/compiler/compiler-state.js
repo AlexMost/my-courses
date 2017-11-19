@@ -81,6 +81,15 @@ class CompilerState {
         }
         return count;
     }
+
+    writePushValue(value) {
+        const symb = this.lookupSymbol(value);
+        if (symb.kind === 'field') {
+            this.write(`push this ${symb.num}`);
+        } else {
+            this.write(`push ${symb.kind} ${symb.num}`);
+        }
+    }
 }
 
 module.exports = CompilerState;

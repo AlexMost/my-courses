@@ -511,6 +511,28 @@ push constant 0
 return
 `;
 
+const testArrayAccess =
+`class FieldAssign {
+    function void main() {
+      var Array a; 
+      var int c;
+      let c = a[2];
+      return;
+   }
+}`;
+
+const testArrayAccessExpected =
+`function FieldAssign.main 2
+push constant 2
+push local 0
+add
+pop pointer 1
+push that 0
+pop local 1
+push constant 0
+return
+`;
+
 describe('compiler class', () => {
     it('should fill class symbol table', () => {
         const state = compile(classDefn);
@@ -598,5 +620,9 @@ describe('compiler class', () => {
     it('should compile simple array assignment', () => {
         const state = compile(testArrayAssign);
         expect(state.getVMCode()).to.eql(testArrayAssignExpected);
+    });
+    it('should compile array access', () => {
+        const state = compile(testArrayAccess);
+        expect(state.getVMCode()).to.eql(testArrayAccessExpected);
     });
 });

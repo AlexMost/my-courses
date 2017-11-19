@@ -8,9 +8,8 @@ function isArrayAssignment(ast) {
 
 function compileArrayAssignment(ast, cState) {
     const [_, arrBaseNode, _2, indexExpr, _3, _4, expNode] = ast.children;
-    const symbol = cState.lookupSymbol(arrBaseNode.getValue());
     compileExpression(indexExpr, cState);
-    cState.write(`push ${symbol.kind} ${symbol.num}`);
+    cState.writePushValue(arrBaseNode.getValue());
     cState.write('add');
     compileExpression(expNode, cState);
     cState.write('pop temp 0');

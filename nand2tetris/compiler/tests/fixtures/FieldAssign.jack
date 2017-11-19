@@ -1,7 +1,8 @@
 class FieldAssign {
     function void main() {
       var Array a; 
-      let a[0] = 7;
+      var int c;
+      let c = a[2];
       return;
    }
 }
