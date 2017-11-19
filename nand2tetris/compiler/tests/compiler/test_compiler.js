@@ -459,6 +459,35 @@ push constant 0
 return
 `;
 
+const testStrings =
+`class FieldAssign {
+    function void main() {
+      do Output.printString("test ");
+      return;
+   }
+}
+`;
+
+const testStringExpected =
+`function FieldAssign.main 0
+push constant 5
+call String.new 1
+push constant 116
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push constant 0
+return
+`;
+
 describe('compiler class', () => {
     it('should fill class symbol table', () => {
         const state = compile(classDefn);
@@ -538,5 +567,9 @@ describe('compiler class', () => {
     it('should use this as a fn argument', () => {
         const state = compile(testThisAsArg);
         expect(state.getVMCode()).to.eql(testThisAsArgExpected);
+    });
+    it('should compile strings', () => {
+        const state = compile(testStrings);
+        expect(state.getVMCode()).to.eql(testStringExpected);
     });
 });

@@ -1,7 +1,6 @@
 class FieldAssign {
-    method void dispose() {
-      do square.dispose();
-      do Memory.deAlloc(this);
+    function void main() {
+      do Output.printString("test ");
       return;
    }
 }

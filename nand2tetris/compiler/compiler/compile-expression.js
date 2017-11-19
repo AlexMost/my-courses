@@ -74,6 +74,16 @@ function compileMethodCall(ast, cState) {
     }
 }
 
+function compileString(str, cState) {
+    const length = str.length;
+    cState.write(`push constant ${length}`);
+    cState.write('call String.new 1');
+    for (let i = 0; i < str.length; i += 1) {
+        cState.write(`push constant ${str.charCodeAt(i)}`);
+        cState.write('call String.appendChar 2');
+    }
+}
+
 function compileTerm(ast, cState) {
     let unary = null;
     if (isSubRoutineCall(ast)) {
@@ -136,6 +146,9 @@ function compileTerm(ast, cState) {
                     return;
                 }
                 throw new Error(`Unsupported keyword ${JSON.stringify(child)}`);
+            case 'stringConstant':
+                compileString(child.getValue(), cState);
+                break;
             default:
                 throw new Error(`Unsupported term type ${JSON.stringify(child)}`);
         }
