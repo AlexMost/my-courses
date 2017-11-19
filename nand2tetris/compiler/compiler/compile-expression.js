@@ -10,7 +10,9 @@ const mapOp = {
     '<': 'lt',
     '>': 'gt',
     '=': 'eq',
-    '&': 'and'
+    '&': 'and',
+    '|': 'or',
+    '/': 'call Math.divide 2',
 };
 
 function writeUnary(op, cState) {
@@ -149,7 +151,7 @@ function compileTerm(ast, cState) {
                     cState.write('not');
                     return;
                 }
-                if (child.getValue() === 'false') {
+                if (child.getValue() === 'false' || child.getValue() === 'null') {
                     cState.write('push constant 0');
                     return;
                 }

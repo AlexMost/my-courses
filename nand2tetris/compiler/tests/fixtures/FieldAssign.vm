@@ -1,5 +1,7 @@
 function FieldAssign.main 2
 push constant 2
+push constant 1
+call Math.divide 2
 push local 0
 add
 pop pointer 1
