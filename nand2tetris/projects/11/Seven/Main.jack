@@ -10,8 +10,13 @@
 class Main {
 
    function void main() {
-      do Output.printInt(1 + (2 * 3));
-      return;
+       var int i;
+       let i = 0;
+       while (i < 5) {
+           do Output.printInt(1 + (2 * 3));
+           let i = i + 1;
+       }
+       return;
    }
 
 }
