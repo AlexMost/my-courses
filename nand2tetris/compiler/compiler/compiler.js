@@ -72,9 +72,12 @@ function compileMethod(ast, cState) {
     .forEach((statement) => compileStatement(statement, cState));
 }
 
-function fillSubroutineSymbolTable(ast, cState) {
+function fillSubroutineSymbolTable(ast, cState, subroutineType) {
     const symbolTable = new SymbolTable();
     const parameterList = ast.children.find(({ type }) => type === 'parameterList');
+    if (subroutineType === 'method') {
+        symbolTable.define('this', cState.getClassName(), 'argument');
+    }
     groupParameterList(parameterList).forEach(([type, name]) => {
         symbolTable.define(name, type, 'argument');
     });
@@ -96,8 +99,8 @@ function fillSubroutineSymbolTable(ast, cState) {
 }
 
 function compileSubroutine(ast, cState) {
-    fillSubroutineSymbolTable(ast, cState);
     const subroutineType = ast.children[0].getValue();
+    fillSubroutineSymbolTable(ast, cState, subroutineType);
     switch (subroutineType) {
         case 'function':
             compileFunction(ast, cState);
