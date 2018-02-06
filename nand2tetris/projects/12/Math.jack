@@ -40,7 +40,7 @@ class Math {
         let shiftedX = x;
 
         let startAdressY = Memory.alloc(16);
-        let bitNum = Main.convert(y, startAdressY);
+        let bitNum = Math.convert(y, startAdressY);
 
         let i = 0;
         while (i < bitNum) {
@@ -87,7 +87,7 @@ class Math {
         let loop = true;
     	while (loop) {
     	    let position = position + 1;
-    	    let mask = Main.nextMask(mask);
+    	    let mask = Math.nextMask(mask);
     	
     	    if (~(position > 16)) {
     	
