@@ -1,0 +1,164 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Math.jack
+
+/**
+ * A library of commonly used mathematical functions.
+ * Note: Jack compilers implement multiplication and division using OS method calls.
+ */
+class Math {
+    static Array twoToThe;
+    /** Initializes the library. */
+    function void init() {
+        let twoToThe = Array.new(16);
+        let twoToThe[0] = 1;
+        let twoToThe[1] = 2;
+        let twoToThe[2] = 4;
+        let twoToThe[3] = 8;
+        let twoToThe[4] = 16;
+        let twoToThe[5] = 32;
+        let twoToThe[6] = 64;
+        let twoToThe[7] = 128;
+        let twoToThe[8] = 256;
+        let twoToThe[9] = 512;
+        let twoToThe[10] = 1024;
+        let twoToThe[11] = 2048;
+        let twoToThe[12] = 4096;
+        let twoToThe[13] = 8192;
+        let twoToThe[14] = 16384;
+        return;
+    }
+
+    /** Returns the absolute value of x. */
+    function int abs(int x) {
+        if (x < 0) {
+            return (-x);
+        }
+        return x;
+    }
+
+    /** Returns the product of x and y. 
+     *  When a Jack compiler detects the multiplication operator '*' in the 
+     *  program's code, it handles it by invoking this method. In other words,
+     *  the Jack expressions x*y and multiply(x,y) return the same value.
+     */
+    function int multiply(int x, int y) {
+        var int sum, bitNum, i, bit, shiftedX;
+        var boolean neg;
+        if (x = 0 | y = 0) {
+            return 0;
+        }
+        let neg = ~(((x > 0) & (y > 0)) | ((x < 0) & (y < 0)));
+        if (x < 0) {
+            let x = -x;
+        }
+        if (y < 0) {
+            let y = -y;
+        }
+        let sum = 0;
+        let shiftedX = x;
+        let bitNum = Math.bitLen(y);
+        let i = 0;
+        while (i < bitNum) {
+            if (Math.bit(y, i)) {
+                let sum = sum + shiftedX;
+            }
+            let shiftedX = shiftedX + shiftedX;
+            let i = i + 1;
+        }
+        if (neg) {
+            return -sum;
+        }
+        return sum;
+    }
+
+    /** Converts the given decimal value to binary, and puts **/
+    function int bitLen(int value) {
+    	var int position, bitNums;
+    	var boolean loop, isOne;
+    	
+        let bitNums = 0;
+        let loop = true;
+        let position = 0;
+    	while (loop) {
+    	    let isOne = Math.bit(value, position);
+    	    if (~(position > 15)) {
+    	        if (isOne) {
+                    let bitNums = position + 1;
+       	        }
+    	    } else {
+    	        let loop = false;
+    	    }
+            let position = position + 1;
+    	}
+    	return bitNums;
+    }
+
+    function boolean bit(int x, int i) {
+        if ((x & twoToThe[i]) > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /** Returns the integer part of x/y.
+     *  When a Jack compiler detects the multiplication operator '/' in the 
+     *  program's code, it handles it by invoking this method. In other words,
+     *  the Jack expressions x/y and divide(x,y) return the same value.
+     */
+    function int divide(int x, int y) {
+        var int q, result;
+        var boolean neg;
+        let neg = false;
+        if ((x < 0) | (y < 0)) {
+            let neg = true;
+            let x = Math.abs(x);
+            let y = Math.abs(y);
+        }
+        if (y > x) {
+            return 0;
+        }
+
+        let q = Math.divide(x, 2 * y);
+        if (neg) {
+          let q = (-q);
+        }
+        if ((x - (2 * q * y)) < y) {
+            return 2 * q;
+        }
+        let result = 2 * q + 1;
+        return result;
+    }
+
+    /** Returns the integer part of the square root of x. */
+    function int sqrt(int x) {
+        var int iterator, isSquared;
+        let iterator = 0;
+        let isSquared = 0;
+        while(isSquared < x) {
+          if ((0 > isSquared) | (x < isSquared)) {
+            return iterator - 1;
+          }
+          let iterator = iterator + 1;
+          let isSquared = iterator * iterator;
+        }
+        return iterator;
+    }
+
+    /** Returns the greater number. */
+    function int max(int a, int b) {
+        if (a > b) {
+            return a;
+        }
+        return b;
+    }
+
+    /** Returns the smaller number. */
+    function int min(int a, int b) {
+        if (a < b) {
+            return a;
+        }
+        return b;
+    }
+}
