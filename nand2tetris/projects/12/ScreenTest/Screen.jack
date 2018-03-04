@@ -29,6 +29,7 @@ class Screen {
         let twoToThe[12] = 4096;
         let twoToThe[13] = 8192;
         let twoToThe[14] = 16384;
+        let twoToThe[15] = 32767;
         return;
     }
 
@@ -50,13 +51,96 @@ class Screen {
         let address = 16384 + (32 * y) + real;
         let value = Memory.peek(address);
         let bit = x - (real * 16);
-        let value = value | twoToThe[bit];
+        if (bit = 15) {
+            let value = value | (twoToThe[bit] + 1);
+        } else {
+            let value = value | twoToThe[bit];
+        }
         do Memory.poke(address, value);
+        return;
+    }
+
+    function void drawStraightLine(int x1, int y1, int x2, int y2) {
+        var int tmp, i;
+        if (x1 = x2) { // vertical
+            if (~(y1 < y2)) {
+                let tmp = y1;
+                let y1 = y2;
+                let y2 = tmp;
+            }
+            let i = y1;
+            while(i < (y2 +1)) {
+                do Screen.drawPixel(x1, i);
+                let i = i + 1;
+            }
+            return;
+        }
+        if (y1 = y2) { // horizontal
+            // assume only south direction
+            if (~(x1 < x2)) {
+                let tmp = x1;
+                let x1 = x2;
+                let x2 = tmp;
+            }
+            let i = x1;
+            while(i < (x2 +1)) {
+                do Screen.drawPixel(i, y1);
+                let i = i + 1;
+            }
+        }
         return;
     }
 
     /** Draws a line from pixel (x1,y1) to pixel (x2,y2), using the current color. */
     function void drawLine(int x1, int y1, int x2, int y2) {
+        var int a, b, diff, dx, dy, tmp;
+        if ((x1 = x2) | (y1 = y2)) {
+            do Screen.drawStraightLine(x1, y1, x2, y2);
+            return;
+        }
+        if (x1 > x2) {
+            // switch, assume that x1 is always less than x2
+            let tmp = x1;
+            let x1 = x2;
+            let x2 = tmp;
+
+            let tmp = y1;
+            let y1 = y2;
+            let y2 = tmp;
+        }
+        // ascending rule (y1 > y2)
+        let a = 0;
+        let b = 0;
+        let dx = x2 - x1;
+        let dy = y1 - y2;
+        let diff = 0;
+        if (y1 > y2) {
+            let dy = y1 - y2;
+            while((a < (dx + 1)) | (b < (dy + 1))) {
+                do Screen.drawPixel(x1 + a, y1 - b);
+                if (diff < 0) {
+                    let a = a + 1;
+                    let diff = diff + dy;
+                } else {
+                    let b = b + 1;
+                    let diff = diff - dx;
+                }
+            }
+            return;
+        } else {
+            let dy = y2 - y1;
+            while((a < (dx + 1)) | (b < (dy + 1))) {
+                do Screen.drawPixel(x1 + a, y1 + b);
+                if (diff < 0) {
+                    let a = a + 1;
+                    let diff = diff + dy;
+                } else {
+                    let b = b + 1;
+                    let diff = diff - dx;
+                }
+            }
+        }
+        
         return;
     }
 
