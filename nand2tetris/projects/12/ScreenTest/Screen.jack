@@ -11,6 +11,7 @@
  */
 class Screen {
     static Array twoToThe;
+    static boolean color;
     /** Initializes the Screen. */
     function void init() {
         let twoToThe = Array.new(16);
@@ -30,6 +31,7 @@ class Screen {
         let twoToThe[13] = 8192;
         let twoToThe[14] = 16384;
         let twoToThe[15] = 32767;
+        let color = true;
         return;
     }
 
@@ -41,20 +43,25 @@ class Screen {
     /** Sets the current color, to be used for all subsequent drawXXX commands.
      *  Black is represented by true, white by false. */
     function void setColor(boolean b) {
+        let color = b;
         return;
     }
 
     /** Draws the (x,y) pixel, using the current color. */
     function void drawPixel(int x, int y) {
-        var int address, value, real, bit;
+        var int address, value, real, bit, mask;
         let real = x/16;
         let address = 16384 + (32 * y) + real;
         let value = Memory.peek(address);
         let bit = x - (real * 16);
+        let mask = twoToThe[bit];
         if (bit = 15) {
-            let value = value | (twoToThe[bit] + 1);
+            let mask = mask + 1;
+        }
+        if (color) {
+            let value = value | mask;
         } else {
-            let value = value | twoToThe[bit];
+            let value = value & (~mask);
         }
         do Memory.poke(address, value);
         return;
@@ -147,6 +154,12 @@ class Screen {
     /** Draws a filled rectangle whose top left corner is (x1, y1)
      * and bottom right corner is (x2,y2), using the current color. */
     function void drawRectangle(int x1, int y1, int x2, int y2) {
+        var int i;
+        let i = y1;
+        while(i < (y2 + 1)) {
+            do Screen.drawLine(x1, i, x2, i);
+            let i = i + 1;
+        }
         return;
     }
 
