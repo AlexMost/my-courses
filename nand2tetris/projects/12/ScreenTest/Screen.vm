@@ -135,7 +135,25 @@ not
 pop static 1
 push constant 0
 return
-function Screen.clearScreen 0
+function Screen.clearScreen 1
+push constant 16384
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 24576
+lt
+not
+if-goto WHILE_END0
+push local 0
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
 push constant 0
 return
 function Screen.setColor 0
@@ -488,6 +506,90 @@ goto WHILE_EXP0
 label WHILE_END0
 push constant 0
 return
-function Screen.drawCircle 0
+function Screen.drawCircle 6
+push argument 2
+pop local 3
+push argument 2
+push argument 2
+call Math.multiply 2
+pop local 4
+label WHILE_EXP0
+push local 3
+push constant 1
+neg
+gt
+not
+if-goto WHILE_END0
+push local 4
+push local 3
+push local 3
+call Math.multiply 2
+sub
+call Math.sqrt 1
+pop local 5
+push argument 0
+push local 5
+sub
+pop local 0
+push argument 0
+push local 5
+add
+pop local 1
+push argument 1
+push local 3
+add
+pop local 2
+push local 0
+push local 2
+push local 1
+push local 2
+call Screen.drawLine 4
+pop temp 0
+push local 3
+push constant 1
+sub
+pop local 3
+goto WHILE_EXP0
+label WHILE_END0
+push argument 2
+pop local 3
+label WHILE_EXP1
+push local 3
+push constant 1
+neg
+gt
+not
+if-goto WHILE_END1
+push local 4
+push local 3
+push local 3
+call Math.multiply 2
+sub
+call Math.sqrt 1
+pop local 5
+push argument 0
+push local 5
+sub
+pop local 0
+push argument 0
+push local 5
+add
+pop local 1
+push argument 1
+push local 3
+sub
+pop local 2
+push local 0
+push local 2
+push local 1
+push local 2
+call Screen.drawLine 4
+pop temp 0
+push local 3
+push constant 1
+sub
+pop local 3
+goto WHILE_EXP1
+label WHILE_END1
 push constant 0
 return

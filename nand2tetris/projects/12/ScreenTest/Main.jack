@@ -16,11 +16,11 @@ class Main {
         do Screen.drawRectangle(292,120,332,150); // window
         
         do Screen.setColor(true); 
-        // do Screen.drawCircle(360,170,3);          // door handle
+        do Screen.drawCircle(360,170,3);          // door handle
         do Screen.drawLine(280,90,345,35);        // roof
         do Screen.drawLine(345,35,410,90);        // roof
 
-        // do Screen.drawCircle(140,60,30);          // sun
+        do Screen.drawCircle(140,60,30);          // sun
         do Screen.drawLine(140,26, 140, 6);       
         do Screen.drawLine(163,35,178,20);       
         do Screen.drawLine(174,60,194,60);       
@@ -29,7 +29,6 @@ class Main {
         do Screen.drawLine(117,85,102,100);       
         do Screen.drawLine(106,60,86,60);       
         do Screen.drawLine(117,35,102,20);       
-        
         return;
     }
 }

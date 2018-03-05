@@ -30,6 +30,11 @@ push constant 0
 not
 call Screen.setColor 1
 pop temp 0
+push constant 360
+push constant 170
+push constant 3
+call Screen.drawCircle 3
+pop temp 0
 push constant 280
 push constant 90
 push constant 345
@@ -41,6 +46,11 @@ push constant 35
 push constant 410
 push constant 90
 call Screen.drawLine 4
+pop temp 0
+push constant 140
+push constant 60
+push constant 30
+call Screen.drawCircle 3
 pop temp 0
 push constant 140
 push constant 26
