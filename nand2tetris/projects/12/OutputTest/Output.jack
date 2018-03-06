@@ -222,6 +222,14 @@ class Output {
     /** displays the given string starting at the cursor location,
      *  and advances the cursor appropriately. */
     function void printString(String s) {
+      var int len, i;
+      let len = s.length();
+      let i = 0;
+      while(i < len) {
+        do Output.printChar(s.charAt(i));
+        let i = i + 1;
+      }
+
       return;
     }
 
@@ -234,6 +242,7 @@ class Output {
     /** Advances the cursor to the beginning of the next line. */
     function void println() {
       let row = row + 1;
+      let col = 0;
       if (row = 23) {
         let row = 0;
       }

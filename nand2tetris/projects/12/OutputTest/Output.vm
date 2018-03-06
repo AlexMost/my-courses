@@ -1583,15 +1583,113 @@ pop static 1
 label IF_FALSE2
 push constant 0
 return
-function Output.printString 0
+function Output.printString 2
+push argument 0
+call String.length 1
+pop local 0
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 1
+push local 0
+lt
+not
+if-goto WHILE_END0
+push argument 0
+push local 1
+call String.charAt 2
+call Output.printChar 1
+pop temp 0
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
 push constant 0
 return
-function Output.printInt 0
+function Output.printInt 2
+push constant 5
+call String.new 1
+pop local 1
+label WHILE_EXP0
+push argument 0
+push constant 10
+gt
+not
+if-goto WHILE_END0
+push argument 0
+push argument 0
+sub
+push constant 10
+call Math.divide 2
+pop argument 0
+push local 1
+push argument 0
+push constant 48
+add
+call String.appendChar 2
+pop temp 0
+goto WHILE_EXP0
+label WHILE_END0
+push local 1
+push argument 0
+push constant 48
+add
+call String.appendChar 2
+pop temp 0
+push local 1
+call String.length 1
+pop local 0
+label WHILE_EXP1
+push local 0
+push constant 1
+neg
+gt
+not
+if-goto WHILE_END1
+push local 1
+push local 0
+call String.charAt 2
+call Output.printChar 1
+pop temp 0
+push local 0
+push constant 1
+sub
+pop local 0
+goto WHILE_EXP1
+label WHILE_END1
 push constant 0
 return
 function Output.println 0
+push static 1
+push constant 1
+add
+pop static 1
+push constant 0
+pop static 2
+push static 1
+push constant 23
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+pop static 1
+label IF_FALSE0
 push constant 0
 return
 function Output.backSpace 0
+push static 2
+push constant 0
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push static 2
+push constant 1
+sub
+pop static 2
+label IF_FALSE0
 push constant 0
 return
