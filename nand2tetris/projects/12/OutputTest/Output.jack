@@ -204,7 +204,15 @@ class Output {
           let value = value * 256;
         }
         let oldVal = Memory.peek(address);
-        do Memory.poke(address, (oldVal + value));
+
+        // clearing the old value
+        if (~isEven) {
+          let oldVal = oldVal & 255;
+        } else {
+          let oldVal = oldVal & (-256);
+        }
+
+        do Memory.poke(address, (oldVal | value));
         let address = address + 32;
         let i = i + 1;
       }
@@ -236,6 +244,30 @@ class Output {
     /** Displays the given integer starting at the cursor location,
      *  and advances the cursor appropriately. */
     function void printInt(int i) {
+      var String s;
+      var int len, rem, real;
+      var boolean neg;
+      let neg = false;
+      let s = String.new(5);
+      if (i < 0) {
+        let i = -i;
+        let neg = true;
+      }
+      while(i > 10) {
+        let real = i / 10;
+        let rem = i - (real * 10);
+        do s.appendChar(rem + 48);
+        let i = real;
+      }
+      do s.appendChar(i + 48);
+      let len = s.length();
+      if (neg) {
+        do Output.printChar(45);
+      }
+      while(len > 0) {
+        do Output.printChar(s.charAt(len - 1));
+        let len = len - 1;
+      }
       return;
     }
 
@@ -253,6 +285,8 @@ class Output {
     function void backSpace() {
       if (col > 0) {
         let col = col - 1;
+        do Output.printChar(32);
+        let col = col - 2;
       }
       return;
     }
