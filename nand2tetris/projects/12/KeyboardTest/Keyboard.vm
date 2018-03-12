@@ -52,18 +52,149 @@ call Output.printChar 1
 pop temp 0
 push local 0
 return
-function Keyboard.readLine 0
-push constant 4
+function Keyboard.readLine 2
+push constant 500
 call String.new 1
-push constant 102
-call String.appendChar 2
-push constant 106
-call String.appendChar 2
-push constant 100
-call String.appendChar 2
-push constant 107
-call String.appendChar 2
+pop local 0
+push argument 0
+call Output.printString 1
+pop temp 0
+label WHILE_EXP0
+push constant 0
+not
+not
+if-goto WHILE_END0
+call Keyboard.readChar 0
+pop local 1
+push local 1
+push constant 128
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
 return
-function Keyboard.readInt 0
+goto IF_END0
+label IF_FALSE0
+push local 1
+push constant 129
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push local 0
+call String.eraseLastChar 1
+pop temp 0
+goto IF_END1
+label IF_FALSE1
+push local 0
+push local 1
+call String.appendChar 2
+pop local 0
+label IF_END1
+label IF_END0
+goto WHILE_EXP0
+label WHILE_END0
+push local 0
+return
+function Keyboard.readInt 7
+push argument 0
+call Keyboard.readLine 1
+pop local 0
+push local 0
+call String.length 1
+pop local 2
+push constant 0
+pop local 1
+push constant 0
+pop local 4
 push constant 1
+pop local 3
+push constant 0
+pop local 6
+label WHILE_EXP0
+push local 1
+push local 2
+lt
+not
+if-goto WHILE_END0
+push local 0
+push local 1
+call String.charAt 2
+pop local 5
+push local 1
+push constant 0
+eq
+push local 5
+push constant 45
+eq
+and
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+pop local 6
+push local 1
+push constant 1
+add
+pop local 1
+push local 0
+push local 1
+call String.charAt 2
+pop local 5
+label IF_FALSE0
+push local 5
+push constant 47
+gt
+push local 5
+push constant 58
+lt
+and
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push local 4
+push local 5
+push constant 48
+sub
+push local 3
+call Math.multiply 2
+add
+pop local 4
+push local 3
+push constant 10
+call Math.multiply 2
+pop local 3
+push local 1
+push constant 1
+add
+pop local 1
+goto IF_END1
+label IF_FALSE1
+push local 6
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push local 4
+neg
+pop local 4
+label IF_FALSE2
+push local 4
+return
+label IF_END1
+goto WHILE_EXP0
+label WHILE_END0
+push local 0
+call String.dispose 1
+pop temp 0
+push local 6
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push local 4
+neg
+pop local 4
+label IF_FALSE3
+push local 4
 return

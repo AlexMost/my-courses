@@ -68,7 +68,23 @@ class Keyboard {
      * and returns its value. Also handles user backspaces.
      */
     function String readLine(String message) {
-      return "fjdk";
+      var String str;
+      var char ch;
+      let str = String.new(500);
+      do Output.printString(message);
+      while(true) {
+        let ch = Keyboard.readChar();
+        if (ch = 128) {
+          return str;
+        } else {
+          if (ch = 129) {
+            do str.eraseLastChar();
+          } else {
+            let str = str.appendChar(ch);
+          }
+        }
+      }
+      return str;
     }   
 
     /**								
@@ -78,6 +94,38 @@ class Keyboard {
      * entered text is detected). Also handles user backspaces. 
      */
     function int readInt(String message) {
-      return 1;
+      var String str;
+      var int i, len, k, result;
+      var char ch;
+      var boolean neg;
+      let str = Keyboard.readLine(message);
+      let len = str.length();
+      let i = 0;
+      let result = 0;
+      let k = 1;
+      let neg = false;
+      while(i < len) {
+        let ch = str.charAt(i);
+        if ((i = 0) & (ch = 45)) { // minus sign
+          let neg = true;
+          let i = i + 1;
+          let ch = str.charAt(i);
+        }
+        if ((ch > 47) & (ch < 58)) {
+          let result = result + ((ch - 48) * k);
+          let k = k * 10;
+          let i = i + 1;
+        } else {
+          if (neg) {
+            let result = -result;
+          }
+          return result;
+        }
+      }
+      do str.dispose();
+      if (neg) {
+        let result = -result;
+      }
+      return result;
     }
 }
