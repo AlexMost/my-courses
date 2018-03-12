@@ -10,6 +10,7 @@ class Keyboard {
 
     /** Initializes the keyboard. */
     function void init() {
+      return;
     } 
 
     /**
@@ -33,6 +34,7 @@ class Keyboard {
      * F1 - F12 = 141 - 152
      */
     function char keyPressed() {
+      return Memory.peek(24576);
     }
 
     /**								
@@ -41,6 +43,23 @@ class Keyboard {
      * of the pressed key.
      */
     function char readChar() {
+      var char input;
+      var boolean keydown, keyup;
+      let keydown = false;
+      let keyup = false;
+      while(~keydown) {
+        let input = Keyboard.keyPressed();
+        if (~(input = 0)) {
+          let keydown = true;
+        }
+      }
+      while(~keyup) {
+        if (Keyboard.keyPressed() = 0) {
+          let keyup = true;
+        }
+      }
+      do Output.printChar(input);
+      return input;
     }
 
     /**								
@@ -49,6 +68,7 @@ class Keyboard {
      * and returns its value. Also handles user backspaces.
      */
     function String readLine(String message) {
+      return "fjdk";
     }   
 
     /**								
@@ -58,5 +78,6 @@ class Keyboard {
      * entered text is detected). Also handles user backspaces. 
      */
     function int readInt(String message) {
+      return 1;
     }
 }
