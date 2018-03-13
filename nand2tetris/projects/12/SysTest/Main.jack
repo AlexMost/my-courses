@@ -9,7 +9,7 @@ class Main {
     /** Tests the wait method of the Sys class. */
     function void main() {
         var char key;
-
+        
         do Output.printString("Wait test:");
         do Output.println();
         do Output.printString("Press any key. After 2 seconds, another message will be printed:");
