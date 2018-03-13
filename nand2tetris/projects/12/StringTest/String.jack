@@ -13,18 +13,24 @@
 class String {
     field Array str;
     field int length;
+    field boolean hasArray;
     /** constructs a new empty string with a maximum length of maxLength
      *  and initial length of 0. */
     constructor String new(int maxLength) {
+        let hasArray = false;
         if (maxLength > 0) {
             let str = Array.new(maxLength);
             let length = 0;
+            let hasArray = true;
         }
         return this;
     }
 
     /** Disposes this string. */
     method void dispose() {
+        if (hasArray) {
+            do str.dispose();
+        }
         return;
     }
 
