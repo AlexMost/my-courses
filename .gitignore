@@ -8,3 +8,4 @@ CProgrammingLanguage/dist/
 node_modules
 nand2tetris/vm/dist/
 nand2tetris/compiler/dist
+ComputerSystems/build/
