@@ -28,7 +28,8 @@ void show_short(short x) {
 }
 
 void run_255() {
-  printf("exersize 2.55: \n");
+  printf("\nexersize 2.55: \n");
+  show_int(1);
   show_short(12345);
   show_int(12345);
   show_long(12345);

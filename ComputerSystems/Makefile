@@ -1,5 +1,5 @@
 CC = gcc
-FILES_25 = pt2/2.5.c pt2/2.55.c
+FILES_25 = pt2/2.5.c pt2/2.55.c pt2/2.58.c
 
 build: 2.5-build
 
