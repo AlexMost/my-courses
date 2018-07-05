@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <assert.h>
 
 int swap_least_byte(int x, int y) {
   return (y & ~0xFF) | (x & 0xFF);
@@ -7,6 +8,5 @@ int swap_least_byte(int x, int y) {
 void run_259() {
   int x = 0x89abcdef;
   int y = 0x76543210;
-  printf("\nexersize 2.59\n");
-  printf("%x\n", swap_least_byte(x, y));
+  assert(swap_least_byte(x, y) == 0x765432ef);
 }

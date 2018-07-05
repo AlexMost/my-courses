@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <assert.h>
 
 int is_little_endian() {
   unsigned char* c;
@@ -8,10 +9,5 @@ int is_little_endian() {
 }
 
 void run_258() {
-  printf("\nexersize 2.58: \n");
-  if (is_little_endian()) {
-    printf("is little endian\n");
-  } else {
-    printf("is not little endian\n");
-  }
+  assert(is_little_endian());
 }
