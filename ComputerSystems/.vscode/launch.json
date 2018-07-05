@@ -5,10 +5,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "2.55 debug",
+      "name": "2.5 debug",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/pt2/2.55",
+      "program": "${workspaceFolder}/build/2.5",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
