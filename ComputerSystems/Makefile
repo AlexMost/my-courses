@@ -1,5 +1,5 @@
 CC = gcc
-FILES_CH2 = ch2/2.5.c ch2/2.55.c ch2/2.58.c
+FILES_CH2 = ch2/2.5.c ch2/2.55.c ch2/2.58.c ch2/2.59.c
 
 build: 2.5-build
 
