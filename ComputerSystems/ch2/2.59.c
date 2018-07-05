@@ -1,7 +1,7 @@
-#include <stdio.h>;
+#include <stdio.h>
 
 int swap_least_byte(int x, int y) {
-  return (y & 0xFFFFFF00) + (x & 0x000000FF);
+  return (y & ~0xFF) | (x & 0xFF);
 }
 
 void run_259() {
