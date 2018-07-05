@@ -1,13 +1,13 @@
 CC = gcc
-FILES_25 = pt2/2.5.c pt2/2.55.c pt2/2.58.c
+FILES_CH2 = ch2/2.5.c ch2/2.55.c ch2/2.58.c
 
 build: 2.5-build
 
-2.5-build: $(FILES_25)
-	$(CC) -o build/2.5 $(FILES_25)
+ch2-build: $(FILES_CH2)
+	$(CC) -o build/ch2 $(FILES_CH2)
 
-2.5-debug: $(FILES_25)
-	$(CC) -o build/2.5 -g $(FILES_25)
+ch2-debug: $(FILES_CH2)
+	$(CC) -o build/ch2 -g $(FILES_CH2)
 
-2.5: 2.5-build
-	build/2.5
+ch2: ch2-build
+	build/ch2
